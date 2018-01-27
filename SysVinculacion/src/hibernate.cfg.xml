@@ -13,5 +13,8 @@
  		
         <mapping class="com.vinculacion.app.model.Perfil"/>
         <mapping class="com.vinculacion.app.model.Usuarios"/>
+        <mapping class ="com.vinculacion.app.model.PeriodoAcademico"/>
+        <mapping class ="com.vinculacion.app.model.Nivel"/>
+        <mapping class ="com.vinculacion.app.model.Seccion"/>
     </session-factory>
 </hibernate-configuration>
