@@ -1,11 +1,15 @@
 package com.vinculacion.app.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +23,10 @@ public class Nivel implements Serializable{
     
     @Column(name="SEMESTRE")
     private String SEMESTRE;
-
+    
+    @OneToMany(mappedBy = "nivel", cascade = CascadeType.ALL)
+    private List<Estudiantes> estudiantes = new ArrayList<>();
+    
     public Nivel() {
     }
     
@@ -42,6 +49,14 @@ public class Nivel implements Serializable{
 
     public void setSEMESTRE(String SEMESTRE) {
         this.SEMESTRE = SEMESTRE;
+    }
+
+    public List<Estudiantes> getEstudiantes() {
+        return estudiantes;
+    }
+
+    public void setEstudiantes(List<Estudiantes> estudiantes) {
+        this.estudiantes = estudiantes;
     }
     
 }

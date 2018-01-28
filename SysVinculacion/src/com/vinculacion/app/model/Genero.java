@@ -13,34 +13,37 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="SECCION")
-public class Seccion implements Serializable{
+@Table(name="GENERO")
+public class Genero implements Serializable{
     
     @Id
-    @Column(name="ID_SECCION")
+    @Column(name="ID_GENERO")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int ID_SECCION;
+    private int ID_GENERO;
     
     @Column(name="DESCRIPCION")
     private String DESCRIPCION;
     
-    @OneToMany(mappedBy = "seccion", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "genero", cascade = CascadeType.ALL)
+    private List<Docente> docentes = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "genero", cascade = CascadeType.ALL)
     private List<Estudiantes> estudiantes = new ArrayList<>();
     
-    public Seccion() {
-    }
-
-    public Seccion(int ID_SECCION, String DESCRIPCION) {
-        this.ID_SECCION = ID_SECCION;
+    public Genero(int ID_GENERO, String DESCRIPCION) {
+        this.ID_GENERO = ID_GENERO;
         this.DESCRIPCION = DESCRIPCION;
     }
 
-    public int getID_SECCION() {
-        return ID_SECCION;
+    public Genero() {
     }
 
-    public void setID_SECCION(int ID_SECCION) {
-        this.ID_SECCION = ID_SECCION;
+    public int getID_GENERO() {
+        return ID_GENERO;
+    }
+
+    public void setID_GENERO(int ID_GENERO) {
+        this.ID_GENERO = ID_GENERO;
     }
 
     public String getDESCRIPCION() {
@@ -49,6 +52,14 @@ public class Seccion implements Serializable{
 
     public void setDESCRIPCION(String DESCRIPCION) {
         this.DESCRIPCION = DESCRIPCION;
+    }
+
+    public List<Docente> getDocentes() {
+        return docentes;
+    }
+
+    public void setDocentes(List<Docente> docentes) {
+        this.docentes = docentes;
     }
 
     public List<Estudiantes> getEstudiantes() {

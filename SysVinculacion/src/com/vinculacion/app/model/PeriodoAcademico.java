@@ -1,12 +1,16 @@
 package com.vinculacion.app.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,7 +33,10 @@ public class PeriodoAcademico implements Serializable{
 
     @Column(name="FECHA_FIN_PERIODO")
     private Date FECHA_FIN_PERIODO;
-
+    
+    @OneToMany(mappedBy = "periodoAcademico", cascade = CascadeType.ALL)
+    private List<Estudiantes> estudiantes = new ArrayList<>();
+    
     public PeriodoAcademico() {
     }
 
@@ -79,6 +86,14 @@ public class PeriodoAcademico implements Serializable{
 
     public void setFECHA_FIN_PERIODO(Date FECHA_FIN_PERIODO) {
         this.FECHA_FIN_PERIODO = FECHA_FIN_PERIODO;
+    }
+
+    public List<Estudiantes> getEstudiantes() {
+        return estudiantes;
+    }
+
+    public void setEstudiantes(List<Estudiantes> estudiantes) {
+        this.estudiantes = estudiantes;
     }
     
 }
