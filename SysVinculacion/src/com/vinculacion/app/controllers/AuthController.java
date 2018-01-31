@@ -1,76 +1,83 @@
 package com.vinculacion.app.controllers;
 
-import com.vinculacion.app.factory.FactorFactory;
+import com.vinculacion.app.dao.PerfilDAO;
+import com.vinculacion.app.dao.UsuariosDAO;
 import com.vinculacion.app.model.Perfil;
 import com.vinculacion.app.model.Usuarios;
 import com.vinculacion.app.views.Auth;
 import com.vinculacion.app.views.MenuPrincipal;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.JOptionPane;
 
-public class AuthController extends FactorFactory implements ActionListener{
+public class AuthController implements ActionListener{
     
-    Auth auth = new Auth();
+    private Auth auth = new Auth();
+    private MenuPrincipal mp = new MenuPrincipal();
+    private UsuariosDAO userdao;
+    private PerfilDAO perfildao;
     
-    public AuthController(Auth au) {
+    public AuthController(Auth au, MenuPrincipal menuP) {
         this.auth = au;
         this.auth.btnEntrar.addActionListener(this);
         this.auth.btnCancelar.addActionListener(this);
+        this.mp = menuP;
+        userdao = new UsuariosDAO();
+        perfildao = new PerfilDAO();
         
-        List<Perfil> perfiles = this.getSession().createQuery("FROM Perfil").list();
+        this.auth.comboPerfil.removeAllItems();
+        List<Perfil> perfiles = perfildao.AllPerfil();       
         for (Perfil perfil : perfiles) {
             this.auth.comboPerfil.addItem(perfil.getDescripcion());
         }
     }
     
-    public int Authenticable (){
-        int result = 0;
+    public void Authenticable (){
         try {       
-            Usuarios usuario = (Usuarios) this.getSession().createQuery("FROM Usuarios WHERE nom_usuario = :nom_user AND contrasena = :contra")
-                    .setParameter("nom_user",this.auth.txtUsuario.getText().toString())
-                    .setParameter("contra", this.auth.txtContrasena.getText().toString())
-                    .uniqueResult();
+            Usuarios usuario = userdao.findUsuarioByUserAndPass(this.auth.txtUsuario.getText().toString()
+                    , this.auth.txtContrasena.getText().toString());      
+            
             if (!usuario.getNom_usuario().equals(this.auth.txtUsuario.getText().toString())) {
-                result = 1;
+                this.auth.mensajeUser.setText("Nombre de usuario incorrecto");
             }else if (!usuario.getContrasena().equals(this.auth.txtContrasena.getText().toString())){
-                result = 2;
+                this.auth.mensajeContrasena.setText("Contraseña incorrecta");                
             }else if(!usuario.getPerfil().getDescripcion().equals(this.auth.comboPerfil.getSelectedItem().toString())){
-                result = 3;
+                this.auth.mensajePefil.setText("Perfil incorrecto");                
             }else{
-                result = 4;
+                this.auth.mensajeUser.setText("");
+                this.auth.mensajePefil.setText("");
+                this.auth.mensajeContrasena.setText("");
+                this.auth.AccesoConcedido.setForeground(Color.BLUE);
+                this.auth.AccesoConcedido.setText("Acceso Correcto !!");
+                
+                if (this.auth.comboPerfil.getSelectedItem().equals("ADMIN")) {
+                    mp.menuItemUsuarios.setVisible(true);
+                    mp.menuItemSeccion.setVisible(true);
+                    mp.menuItemGenero.setVisible(true);
+                    mp.menuUtb.setVisible(true);
+                    mp.menuItemNivel.setVisible(true); 
+                }else{
+                    mp.menuItemUsuarios.setVisible(false);
+                    mp.menuItemSeccion.setVisible(false);
+                    mp.menuItemGenero.setVisible(false);
+                    mp.menuUtb.setVisible(false);     
+                    mp.menuItemNivel.setVisible(false);
+                }
+                this.auth.hide();                        
+                this.mp.setVisible(true);
+                MenuController mc = new MenuController(mp, auth);
             }
         } catch (Exception e) {
-            result = 5;
-        }
-        return result;
+            this.auth.AccesoConcedido.setForeground(Color.RED);
+            this.auth.AccesoConcedido.setText("Usuario o contraseña incorrecta!!");
+        }        
     }
     
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == this.auth.btnEntrar) {
-            switch(Authenticable()){
-                case 1:
-                    JOptionPane.showMessageDialog(auth,"Nombre de usuario incorrecto");
-                    break;
-                case 2:
-                    JOptionPane.showMessageDialog(auth,"Contraseña incorrecta");
-                    break;
-                case 3:
-                    JOptionPane.showMessageDialog(auth,"Asegúrese que el perfil que seleccionó sea el correcto");
-                    break;
-                case 4:
-                        MenuPrincipal mp = new MenuPrincipal();
-                        JOptionPane.showMessageDialog(auth,"Bienvenido Usuario " + this.auth.txtUsuario.getText().toString());
-                        mp.setVisible(true);                
-                        this.auth.hide();
-                        MenuController mc = new MenuController(mp);
-                    break;
-                case 5:
-                    JOptionPane.showMessageDialog(auth,"Usuario o contraseña incorrecta!!");
-                    break;
-            }          
+           Authenticable();
         }
         if (ae.getSource() == this.auth.btnCancelar) {
             this.auth.txtContrasena.setText("");

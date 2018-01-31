@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class FactorFactory {
+    
     private Session sesion;
 	
     public FactorFactory(){
@@ -14,8 +15,10 @@ public class FactorFactory {
         conf.configure();
         sessionFact = conf.buildSessionFactory();
         sesion = sessionFact.openSession();
-    }	
+        sesion.beginTransaction();
+    }
+	
     public Session getSession(){	
         return sesion;
-    }
+    }		
 }

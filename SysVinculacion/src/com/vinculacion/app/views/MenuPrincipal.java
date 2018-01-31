@@ -14,7 +14,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Sistema de Gestión de pasantías SGP"); 
         this.getContentPane().setBackground(Color.lightGray);
-        Iconos.setIcono(this);
+        Iconos.setLogo(this);
     }
 
     /**
@@ -26,15 +26,60 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
+        menuItemListadoDocentes = new javax.swing.JMenuItem();
+        menuItemListadoPasantes = new javax.swing.JMenuItem();
+        menuItemInformePasantias = new javax.swing.JMenuItem();
+        menuItemListadoEmpresas = new javax.swing.JMenuItem();
         menuItemCerrar = new javax.swing.JMenuItem();
         menuItemSalir = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
+        menuItemAyudaRegPasantes = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        menuUtb = new javax.swing.JMenu();
+        menuItemFacultad = new javax.swing.JMenuItem();
+        menuItemEscuelas = new javax.swing.JMenuItem();
+        menuItemCarreras = new javax.swing.JMenuItem();
+        menuItemTipoDedicacionDocente = new javax.swing.JMenuItem();
+        menuItemDocentes = new javax.swing.JMenuItem();
+        menuItemAsignaturas = new javax.swing.JMenuItem();
+        menuItemCargosDocentes = new javax.swing.JMenuItem();
+        menuItemNivel = new javax.swing.JMenuItem();
+        menuItemPeriodosAcademicos = new javax.swing.JMenuItem();
+        menuItemGenero = new javax.swing.JMenuItem();
+        menuItemSeccion = new javax.swing.JMenuItem();
+        menuItemUsuarios = new javax.swing.JMenuItem();
+
+        jMenu3.setText("File");
+        jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("Edit");
+        jMenuBar2.add(jMenu4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         menuArchivo.setText("Archivo");
+
+        menuItemListadoDocentes.setText("Generar listado de docentes");
+        menuArchivo.add(menuItemListadoDocentes);
+
+        menuItemListadoPasantes.setText("Generar listado de pasantes");
+        menuArchivo.add(menuItemListadoPasantes);
+
+        menuItemInformePasantias.setText("Generar listado de informes de pasantias entregados");
+        menuArchivo.add(menuItemInformePasantias);
+
+        menuItemListadoEmpresas.setText("Generar listado de empresas donde los alumnos hayan realizados sus prácticas");
+        menuArchivo.add(menuItemListadoEmpresas);
 
         menuItemCerrar.setText("Cerrar");
         menuArchivo.add(menuItemCerrar);
@@ -45,7 +90,91 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(menuArchivo);
 
-        jMenu2.setText("Edit");
+        jMenu5.setText("Pasantías");
+        jMenuBar1.add(jMenu5);
+
+        jMenu6.setText("Ayuda");
+
+        menuItemAyudaRegPasantes.setText("Sobre registro de pasantes");
+        jMenu6.add(menuItemAyudaRegPasantes);
+
+        jMenu7.setText("Sobre Mantenimientos");
+
+        jMenuItem2.setText("Docentes");
+        jMenu7.add(jMenuItem2);
+
+        jMenuItem1.setText("Asignaturas");
+        jMenu7.add(jMenuItem1);
+
+        jMenuItem3.setText("Cargos de docentes");
+        jMenu7.add(jMenuItem3);
+
+        jMenu6.add(jMenu7);
+
+        jMenuBar1.add(jMenu6);
+
+        jMenu2.setText("Mantenimiento");
+
+        menuUtb.setText("UTB");
+
+        menuItemFacultad.setText("Facultad");
+        menuItemFacultad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemFacultadActionPerformed(evt);
+            }
+        });
+        menuUtb.add(menuItemFacultad);
+
+        menuItemEscuelas.setText("Escuelas");
+        menuUtb.add(menuItemEscuelas);
+
+        menuItemCarreras.setText("Carreras");
+        menuUtb.add(menuItemCarreras);
+
+        jMenu2.add(menuUtb);
+
+        menuItemTipoDedicacionDocente.setText("Tipo de dedicación del docente");
+        jMenu2.add(menuItemTipoDedicacionDocente);
+
+        menuItemDocentes.setText("Docentes");
+        jMenu2.add(menuItemDocentes);
+
+        menuItemAsignaturas.setText("Asignaturas");
+        jMenu2.add(menuItemAsignaturas);
+
+        menuItemCargosDocentes.setText("Cargos de los docentes");
+        menuItemCargosDocentes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCargosDocentesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItemCargosDocentes);
+
+        menuItemNivel.setText("Niveles académicos");
+        menuItemNivel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemNivelActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItemNivel);
+
+        menuItemPeriodosAcademicos.setText("Periodos Académicos");
+        jMenu2.add(menuItemPeriodosAcademicos);
+
+        menuItemGenero.setText("Generos");
+        menuItemGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemGeneroActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItemGenero);
+
+        menuItemSeccion.setText("Sección");
+        jMenu2.add(menuItemSeccion);
+
+        menuItemUsuarios.setText("Usuarios");
+        jMenu2.add(menuItemUsuarios);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -63,6 +192,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuItemFacultadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFacultadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItemFacultadActionPerformed
+
+    private void menuItemNivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNivelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItemNivelActionPerformed
+
+    private void menuItemGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGeneroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItemGeneroActionPerformed
+
+    private void menuItemCargosDocentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCargosDocentesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItemCargosDocentesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,9 +246,36 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
-    public javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenu menuArchivo;
+    public javax.swing.JMenuItem menuItemAsignaturas;
+    private javax.swing.JMenuItem menuItemAyudaRegPasantes;
+    public javax.swing.JMenuItem menuItemCargosDocentes;
+    public javax.swing.JMenuItem menuItemCarreras;
     public javax.swing.JMenuItem menuItemCerrar;
+    public javax.swing.JMenuItem menuItemDocentes;
+    public javax.swing.JMenuItem menuItemEscuelas;
+    public javax.swing.JMenuItem menuItemFacultad;
+    public javax.swing.JMenuItem menuItemGenero;
+    public javax.swing.JMenuItem menuItemInformePasantias;
+    public javax.swing.JMenuItem menuItemListadoDocentes;
+    public javax.swing.JMenuItem menuItemListadoEmpresas;
+    public javax.swing.JMenuItem menuItemListadoPasantes;
+    public javax.swing.JMenuItem menuItemNivel;
+    public javax.swing.JMenuItem menuItemPeriodosAcademicos;
     public javax.swing.JMenuItem menuItemSalir;
+    public javax.swing.JMenuItem menuItemSeccion;
+    private javax.swing.JMenuItem menuItemTipoDedicacionDocente;
+    public javax.swing.JMenuItem menuItemUsuarios;
+    public javax.swing.JMenu menuUtb;
     // End of variables declaration//GEN-END:variables
 }
