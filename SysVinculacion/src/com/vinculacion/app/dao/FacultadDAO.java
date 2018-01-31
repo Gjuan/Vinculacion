@@ -2,7 +2,9 @@ package com.vinculacion.app.dao;
 
 import com.vinculacion.app.Interface.FacultadDaoInterface;
 import com.vinculacion.app.factory.FactorFactory;
+import com.vinculacion.app.model.Escuela;
 import com.vinculacion.app.model.Facultad;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -30,8 +32,18 @@ public class FacultadDAO implements FacultadDaoInterface{
 
     @Override
     public void deleteFacultadById(int id) {
-        sesion.getSession().delete(id);
-        sesion.getSession().getTransaction().commit();
+        Facultad facultad = findFacultadById(id);
+        if (facultad != null) {
+            Iterator<Escuela> i = facultad.getEscuelas().iterator();
+            while(i.hasNext()){
+                Escuela escuela = i.next();
+                i.remove();
+                sesion.getSession().delete(escuela);
+            }
+            facultad.getEscuelas().clear();
+            sesion.getSession().delete(facultad);
+            sesion.getSession().getTransaction().commit();
+        }
     }
 
     @Override
@@ -42,6 +54,6 @@ public class FacultadDAO implements FacultadDaoInterface{
 
     @Override
     public Facultad findFacultadById(int id) {
-        return sesion.getSession().load(Facultad.class, id);
+        return (Facultad)sesion.getSession().get(Facultad.class, id);
     }
 }

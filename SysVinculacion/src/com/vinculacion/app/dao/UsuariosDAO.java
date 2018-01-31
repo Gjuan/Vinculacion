@@ -4,6 +4,8 @@ import com.vinculacion.app.factory.FactorFactory;
 import com.vinculacion.app.model.Usuarios;
 import java.util.List;
 import com.vinculacion.app.Interface.UsuariosDaoInterface;
+import com.vinculacion.app.model.Estudiantes;
+import java.util.Iterator;
 
 public class UsuariosDAO implements UsuariosDaoInterface{
     
@@ -26,8 +28,18 @@ public class UsuariosDAO implements UsuariosDaoInterface{
 
     @Override
     public void deleteUsuarioById(int id) {
-        sesion.getSession().delete(id);
-        sesion.getSession().getTransaction().commit();
+        Usuarios usuario = findUsuarioById(id);
+        if (usuario != null) {
+            Iterator<Estudiantes> i = usuario.getEstudiantes().iterator();
+            while(i.hasNext()){
+                Estudiantes estudiante = i.next();
+                i.remove();
+                sesion.getSession().delete(estudiante);
+            }
+            usuario.getEstudiantes().clear();
+            sesion.getSession().delete(usuario);
+            sesion.getSession().getTransaction().commit();    
+        }        
     }
 
     @Override
@@ -38,7 +50,7 @@ public class UsuariosDAO implements UsuariosDaoInterface{
 
     @Override
     public Usuarios findUsuarioById(int id) {
-        return sesion.getSession().load(Usuarios.class, id);
+        return (Usuarios)sesion.getSession().get(Usuarios.class, id);
     }
 
     @Override

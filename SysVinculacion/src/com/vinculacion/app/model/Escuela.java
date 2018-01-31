@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Escuela implements Serializable{
     
     @Id
-    @Column(name="ID_CARGO_EMPRESARIAL")
+    @Column(name="ID_ESCUELA")
     @GeneratedValue(strategy=GenerationType.IDENTITY)   
     private int ID_ESCUELA;
     

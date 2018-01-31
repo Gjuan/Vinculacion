@@ -38,7 +38,7 @@ public class PerfilDAO implements PerfilDaoInterface{
 
     @Override
     public Perfil findPerfilById(int id) {
-        return sesion.getSession().load(Perfil.class, id);
+        return (Perfil)sesion.getSession().get(Perfil.class, id);
     }    
     
 }
