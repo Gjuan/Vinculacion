@@ -27,20 +27,24 @@ public class Carreras implements Serializable{
     @Column(name="DESCRIPCION")
     private String DESCRIPCION;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_ESCUELA")   
     private Escuela escuela; 
     
-    @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+      
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carrera", cascade = CascadeType.ALL)
     private List<Docente> docentes = new ArrayList<>();
        
-    @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carrera", cascade = CascadeType.ALL)
     private List<Estudiantes> estudiantes = new ArrayList<>();
-    
-    public Carreras(int ID_CARRERA, String DESCRIPCION, Escuela escuela) {
+
+    public Carreras(int ID_CARRERA, String DESCRIPCION, Escuela escuela, String ESTADO) {
         this.ID_CARRERA = ID_CARRERA;
         this.DESCRIPCION = DESCRIPCION;
         this.escuela = escuela;
+        this.ESTADO = ESTADO;
     }
 
     public Carreras() {
@@ -70,6 +74,14 @@ public class Carreras implements Serializable{
         this.escuela = escuela;
     }
 
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
+    }
+    
     public List<Docente> getDocentes() {
         return docentes;
     }

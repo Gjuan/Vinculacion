@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,23 +30,27 @@ public class PeriodoAcademico implements Serializable{
     private String NOMBRE_PERIODO;
 
     @Column(name="FECHA_INICIO_PERIODO")
-    private Date FECHA_INICIO_PERIODO;
+    private String FECHA_INICIO_PERIODO;
 
     @Column(name="FECHA_FIN_PERIODO")
-    private Date FECHA_FIN_PERIODO;
+    private String FECHA_FIN_PERIODO;
     
-    @OneToMany(mappedBy = "periodoAcademico", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+      
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "periodoAcademico", cascade = CascadeType.ALL)
     private List<Estudiantes> estudiantes = new ArrayList<>();
     
     public PeriodoAcademico() {
     }
 
-    public PeriodoAcademico(int ID_PERIODO_ACADEMICO, int ANIO_ACADEMICO, String NOMBRE_PERIODO, Date FECHA_INICIO_PERIODO, Date FECHA_FIN_PERIODO) {
+    public PeriodoAcademico(int ID_PERIODO_ACADEMICO, int ANIO_ACADEMICO, String NOMBRE_PERIODO, String FECHA_INICIO_PERIODO, String FECHA_FIN_PERIODO, String ESTADO) {
         this.ID_PERIODO_ACADEMICO = ID_PERIODO_ACADEMICO;
         this.ANIO_ACADEMICO = ANIO_ACADEMICO;
         this.NOMBRE_PERIODO = NOMBRE_PERIODO;
         this.FECHA_INICIO_PERIODO = FECHA_INICIO_PERIODO;
         this.FECHA_FIN_PERIODO = FECHA_FIN_PERIODO;
+        this.ESTADO = ESTADO;
     }
 
     public int getID_PERIODO_ACADEMICO() {
@@ -72,22 +77,30 @@ public class PeriodoAcademico implements Serializable{
         this.NOMBRE_PERIODO = NOMBRE_PERIODO;
     }
 
-    public Date getFECHA_INICIO_PERIODO() {
+    public String getFECHA_INICIO_PERIODO() {
         return FECHA_INICIO_PERIODO;
     }
 
-    public void setFECHA_INICIO_PERIODO(Date FECHA_INICIO_PERIODO) {
+    public void setFECHA_INICIO_PERIODO(String FECHA_INICIO_PERIODO) {
         this.FECHA_INICIO_PERIODO = FECHA_INICIO_PERIODO;
     }
 
-    public Date getFECHA_FIN_PERIODO() {
+    public String getFECHA_FIN_PERIODO() {
         return FECHA_FIN_PERIODO;
     }
 
-    public void setFECHA_FIN_PERIODO(Date FECHA_FIN_PERIODO) {
+    public void setFECHA_FIN_PERIODO(String FECHA_FIN_PERIODO) {
         this.FECHA_FIN_PERIODO = FECHA_FIN_PERIODO;
     }
 
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
+    }
+    
     public List<Estudiantes> getEstudiantes() {
         return estudiantes;
     }

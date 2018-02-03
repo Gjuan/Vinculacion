@@ -30,20 +30,24 @@ public class Escuela implements Serializable{
     @Column(name="DESCRIPCION")
     private String DESCRIPCION;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_FACULTAD")   
     private Facultad facultad;
     
-    @OneToMany(mappedBy = "escuela", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+      
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "escuela", cascade = CascadeType.ALL)
     private List<Carreras> carreras = new ArrayList<>();
-            
-    public Escuela(int ID_ESCUELA, String NOMBRE_ESCUELA, String DESCRIPCION, Facultad facultad) {
+
+    public Escuela(int ID_ESCUELA, String NOMBRE_ESCUELA, String DESCRIPCION, Facultad facultad, String ESTADO) {
         this.ID_ESCUELA = ID_ESCUELA;
         this.NOMBRE_ESCUELA = NOMBRE_ESCUELA;
         this.DESCRIPCION = DESCRIPCION;
         this.facultad = facultad;
+        this.ESTADO = ESTADO;
     }
-
+            
     public Escuela() {
     }
 
@@ -79,6 +83,14 @@ public class Escuela implements Serializable{
         this.facultad = facultad;
     }
 
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
+    }
+    
     public List<Carreras> getCarreras() {
         return carreras;
     }

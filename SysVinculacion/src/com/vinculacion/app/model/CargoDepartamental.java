@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,15 +25,19 @@ public class CargoDepartamental implements Serializable{
     @Column(name="DESCRIPCION")
     private String DESCRIPCION;
     
-    @OneToMany(mappedBy = "cargoDepartamental", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cargoDepartamental", cascade = CascadeType.ALL)
     private List<Empleados> empleados = new ArrayList<>();
     
     public CargoDepartamental() {
     }
 
-    public CargoDepartamental(int ID_CARGO_EMPRESARIAL, String DESCRIPCION) {
+    public CargoDepartamental(int ID_CARGO_EMPRESARIAL, String DESCRIPCION, String ESTADO) {
         this.ID_CARGO_EMPRESARIAL = ID_CARGO_EMPRESARIAL;
         this.DESCRIPCION = DESCRIPCION;
+        this.ESTADO = ESTADO;
     }
 
     public int getID_CARGO_EMPRESARIAL() {
@@ -51,6 +56,14 @@ public class CargoDepartamental implements Serializable{
         this.DESCRIPCION = DESCRIPCION;
     }
 
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
+    }
+    
     public List<Empleados> getEmpleados() {
         return empleados;
     }

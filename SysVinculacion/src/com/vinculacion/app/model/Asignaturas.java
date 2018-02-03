@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,13 +25,18 @@ public class Asignaturas implements Serializable{
     @Column(name="NOMBRE_ASIGNATURA")
     private String NOMBRE_ASIGNATURA;
     
-    @OneToMany(mappedBy = "asignaturas", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "asignaturas", cascade = CascadeType.ALL)
     private List<DetalleDocenteAsignatura> detallesDocenteAsignatura = new ArrayList<>();
 
-    public Asignaturas(int ID_ASIGNATURA, String NOMBRE_ASIGNATURA) {
+    public Asignaturas(int ID_ASIGNATURA, String NOMBRE_ASIGNATURA, String ESTADO) {
         this.ID_ASIGNATURA = ID_ASIGNATURA;
         this.NOMBRE_ASIGNATURA = NOMBRE_ASIGNATURA;
+        this.ESTADO = ESTADO;
     }
+
 
     public Asignaturas() {
     }
@@ -57,6 +63,14 @@ public class Asignaturas implements Serializable{
 
     public void setDetallesDocenteAsignatura(List<DetalleDocenteAsignatura> detallesDocenteAsignatura) {
         this.detallesDocenteAsignatura = detallesDocenteAsignatura;
+    }
+
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
     }
     
 }

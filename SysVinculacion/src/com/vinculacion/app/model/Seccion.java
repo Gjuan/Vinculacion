@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class Seccion implements Serializable{
     @Column(name="DESCRIPCION")
     private String DESCRIPCION;
     
-    @OneToMany(mappedBy = "seccion", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seccion", cascade = CascadeType.ALL)
     private List<Estudiantes> estudiantes = new ArrayList<>();
     
     public Seccion() {

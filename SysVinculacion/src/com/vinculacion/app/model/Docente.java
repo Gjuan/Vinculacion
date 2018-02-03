@@ -24,15 +24,15 @@ public class Docente implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_DOCENTE;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_GENERO")  
     private Genero genero;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_CARRERA")
     private Carreras carrera;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_TIPO_DEDICACION")
     private TipoDedicacion tipoDedicacion;
     
@@ -51,16 +51,19 @@ public class Docente implements Serializable{
     @Column(name="CORREO")    
     private String CORREO;
     
-    @OneToMany(mappedBy = "docentes", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+      
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docentes", cascade = CascadeType.ALL)
     private List<DetalleDocenteAsignatura> detallesDocenteAsignatura = new ArrayList<>();
     
-    @OneToMany(mappedBy = "docentes", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docentes", cascade = CascadeType.ALL)
     private List<DetalleCargoDocente> detalleCargoDocente = new ArrayList<>();
     
-    @OneToMany(mappedBy = "docente", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docente", cascade = CascadeType.ALL)
     private List<Estudiantes> estudiantes = new ArrayList<>();
-    
-    public Docente(int ID_DOCENTE, Genero genero, Carreras carrera, TipoDedicacion tipoDedicacion, String CEDULA, String NOMBRES, String APELLIDOS, String TELEFONO, String CORREO) {
+
+    public Docente(int ID_DOCENTE, Genero genero, Carreras carrera, TipoDedicacion tipoDedicacion, String CEDULA, String NOMBRES, String APELLIDOS, String TELEFONO, String CORREO, String ESTADO) {
         this.ID_DOCENTE = ID_DOCENTE;
         this.genero = genero;
         this.carrera = carrera;
@@ -70,6 +73,7 @@ public class Docente implements Serializable{
         this.APELLIDOS = APELLIDOS;
         this.TELEFONO = TELEFONO;
         this.CORREO = CORREO;
+        this.ESTADO = ESTADO;
     }
 
     public Docente() {
@@ -147,6 +151,14 @@ public class Docente implements Serializable{
         this.CORREO = CORREO;
     }
 
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
+    }
+    
     public List<DetalleDocenteAsignatura> getDetallesDocenteAsignatura() {
         return detallesDocenteAsignatura;
     }

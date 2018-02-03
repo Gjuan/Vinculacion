@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,15 +25,19 @@ public class Genero implements Serializable{
     @Column(name="DESCRIPCION")
     private String DESCRIPCION;
     
-    @OneToMany(mappedBy = "genero", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+      
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "genero", cascade = CascadeType.ALL)
     private List<Docente> docentes = new ArrayList<>();
     
-    @OneToMany(mappedBy = "genero", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "genero", cascade = CascadeType.ALL)
     private List<Estudiantes> estudiantes = new ArrayList<>();
-    
-    public Genero(int ID_GENERO, String DESCRIPCION) {
+
+    public Genero(int ID_GENERO, String DESCRIPCION, String ESTADO) {
         this.ID_GENERO = ID_GENERO;
         this.DESCRIPCION = DESCRIPCION;
+        this.ESTADO = ESTADO;
     }
 
     public Genero() {
@@ -54,6 +59,14 @@ public class Genero implements Serializable{
         this.DESCRIPCION = DESCRIPCION;
     }
 
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
+    }
+    
     public List<Docente> getDocentes() {
         return docentes;
     }

@@ -20,20 +20,24 @@ public class DetalleDocenteAsignatura implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_DETALLE_DOCENTE_ASIG;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_DOCENTE")
     private Docente docentes;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_ASIGNATURA")
     private Asignaturas asignaturas;
+    
+    @Column(name="ESTADO")
+    private String ESTADO;
 
-    public DetalleDocenteAsignatura(int ID_DETALLE_DOCENTE_ASIG, Docente docentes, Asignaturas asignaturas) {
+    public DetalleDocenteAsignatura(int ID_DETALLE_DOCENTE_ASIG, Docente docentes, Asignaturas asignaturas, String ESTADO) {
         this.ID_DETALLE_DOCENTE_ASIG = ID_DETALLE_DOCENTE_ASIG;
         this.docentes = docentes;
         this.asignaturas = asignaturas;
+        this.ESTADO = ESTADO;
     }
-
+      
     public DetalleDocenteAsignatura() {
     }
 
@@ -59,6 +63,14 @@ public class DetalleDocenteAsignatura implements Serializable{
 
     public void setAsignaturas(Asignaturas asignaturas) {
         this.asignaturas = asignaturas;
+    }
+
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
     }
     
 }

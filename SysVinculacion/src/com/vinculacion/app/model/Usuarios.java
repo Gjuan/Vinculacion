@@ -39,14 +39,14 @@ public class Usuarios implements Serializable {
     @Column(name="contrasena")
     private String contrasena;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_perfil")    
     private Perfil perfil;
     
     @Column(name="estado")
     private String estado;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Estudiantes> estudiantes = new ArrayList<>();
     
     public Usuarios() {

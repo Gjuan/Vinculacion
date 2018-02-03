@@ -6,10 +6,10 @@ import com.vinculacion.app.model.Perfil;
 import com.vinculacion.app.model.Usuarios;
 import com.vinculacion.app.views.Auth;
 import com.vinculacion.app.views.MenuPrincipal;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class AuthController implements ActionListener{
     
@@ -23,10 +23,8 @@ public class AuthController implements ActionListener{
         this.auth.btnEntrar.addActionListener(this);
         this.auth.btnCancelar.addActionListener(this);
         this.mp = menuP;
+        perfildao = new PerfilDAO();        
         userdao = new UsuariosDAO();
-        perfildao = new PerfilDAO();
-        
-        this.auth.comboPerfil.removeAllItems();
         List<Perfil> perfiles = perfildao.AllPerfil();       
         for (Perfil perfil : perfiles) {
             this.auth.comboPerfil.addItem(perfil.getDescripcion());
@@ -34,23 +32,17 @@ public class AuthController implements ActionListener{
     }
     
     public void Authenticable (){
-        try {       
+        try {               
             Usuarios usuario = userdao.findUsuarioByUserAndPass(this.auth.txtUsuario.getText().toString()
                     , this.auth.txtContrasena.getText().toString());      
             
             if (!usuario.getNom_usuario().equals(this.auth.txtUsuario.getText().toString())) {
-                this.auth.mensajeUser.setText("Nombre de usuario incorrecto");
+                JOptionPane.showMessageDialog(auth, "Nombre de usuario incorrecto");
             }else if (!usuario.getContrasena().equals(this.auth.txtContrasena.getText().toString())){
-                this.auth.mensajeContrasena.setText("Contraseña incorrecta");                
+                JOptionPane.showMessageDialog(auth, "Contraseña incorrecta"); 
             }else if(!usuario.getPerfil().getDescripcion().equals(this.auth.comboPerfil.getSelectedItem().toString())){
-                this.auth.mensajePefil.setText("Perfil incorrecto");                
+                JOptionPane.showMessageDialog(auth, "Perfil incorrecto");
             }else{
-                this.auth.mensajeUser.setText("");
-                this.auth.mensajePefil.setText("");
-                this.auth.mensajeContrasena.setText("");
-                this.auth.AccesoConcedido.setForeground(Color.BLUE);
-                this.auth.AccesoConcedido.setText("Acceso Correcto !!");
-                
                 if (this.auth.comboPerfil.getSelectedItem().equals("ADMIN")) {
                     mp.menuItemUsuarios.setVisible(true);
                     mp.menuItemSeccion.setVisible(true);
@@ -64,13 +56,13 @@ public class AuthController implements ActionListener{
                     mp.menuUtb.setVisible(false);     
                     mp.menuItemNivel.setVisible(false);
                 }
-                this.auth.hide();                        
+                JOptionPane.showMessageDialog(auth, "Bienvenido usuario " + usuario.getNombres() + " " + usuario.getApellidos());
                 this.mp.setVisible(true);
-                MenuController mc = new MenuController(mp, auth);
+                this.mp.menuItemNomUser.setText(usuario.getNombres() +" " + usuario.getApellidos());
+                this.auth.hide();                                        
             }
         } catch (Exception e) {
-            this.auth.AccesoConcedido.setForeground(Color.RED);
-            this.auth.AccesoConcedido.setText("Usuario o contraseña incorrecta!!");
+           JOptionPane.showMessageDialog(auth,"Usuario o contraseña incorrecta, aségurese que este usuario exista en el sistema o que esté activo");
         }        
     }
     

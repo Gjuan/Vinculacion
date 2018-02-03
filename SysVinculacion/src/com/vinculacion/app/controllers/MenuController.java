@@ -1,6 +1,7 @@
 package com.vinculacion.app.controllers;
 
 import com.vinculacion.app.views.Auth;
+import com.vinculacion.app.views.JFrameEditFacultad;
 import com.vinculacion.app.views.JFrameFacultad;
 import com.vinculacion.app.views.JFrameNuevaFacultad;
 import com.vinculacion.app.views.MenuPrincipal;
@@ -13,7 +14,8 @@ public class MenuController implements ActionListener{
     Auth auth = new Auth();            
     JFrameFacultad facultad;
     JFrameNuevaFacultad newFacultad;
-    
+    JFrameEditFacultad editfacultad;
+   
     public MenuController(MenuPrincipal menu, Auth a) {
         this.mp = menu;
         this.auth = a;
@@ -27,7 +29,6 @@ public class MenuController implements ActionListener{
         if(e.getSource()== this.mp.menuItemCerrar){
             this.mp.hide();
             this.auth.setVisible(true);
-            AuthController ac = new AuthController(auth, mp);
         }
         if (e.getSource()== this.mp.menuItemSalir) {
             System.exit(0);
@@ -35,8 +36,9 @@ public class MenuController implements ActionListener{
         if (e.getSource() == this.mp.menuItemFacultad) {
             this.facultad = new JFrameFacultad(this.mp, false);
             this.facultad.setVisible(true);
-            this.newFacultad = new JFrameNuevaFacultad(mp, true);
-            FacultadController fcontrol = new FacultadController(mp, newFacultad, facultad);
+            this.newFacultad = new JFrameNuevaFacultad(mp, false);
+            this.editfacultad = new JFrameEditFacultad(mp, false);
+            FacultadController fcontrol = new FacultadController(mp, newFacultad, facultad, editfacultad);
         }
     } 
     

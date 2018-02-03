@@ -24,11 +24,11 @@ public class Empleados implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_EMPLEADO;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_CARGO_EMPRESARIAL")
     private CargoDepartamental cargoDepartamental;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_DEPARTAMENTO")
     private Departamentos departamentos;
     
@@ -47,10 +47,13 @@ public class Empleados implements Serializable{
     @Column(name="TELEFONO")
     private String TELEFONO;
     
-    @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+      
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "empleado", cascade = CascadeType.ALL)
     private List<Estudiantes> estudiantes = new ArrayList<>();
-    
-    public Empleados(int ID_EMPLEADO, CargoDepartamental cargoDepartamental, Departamentos departamentos, String NOMBRES, String APELLIDOS, String CEDULA, String CORREO, String TELEFONO) {
+
+    public Empleados(int ID_EMPLEADO, CargoDepartamental cargoDepartamental, Departamentos departamentos, String NOMBRES, String APELLIDOS, String CEDULA, String CORREO, String TELEFONO, String ESTADO) {
         this.ID_EMPLEADO = ID_EMPLEADO;
         this.cargoDepartamental = cargoDepartamental;
         this.departamentos = departamentos;
@@ -59,8 +62,9 @@ public class Empleados implements Serializable{
         this.CEDULA = CEDULA;
         this.CORREO = CORREO;
         this.TELEFONO = TELEFONO;
+        this.ESTADO = ESTADO;
     }
-
+    
     public Empleados() {
     }
 
@@ -128,6 +132,14 @@ public class Empleados implements Serializable{
         this.TELEFONO = TELEFONO;
     }
 
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
+    }
+    
     public List<Estudiantes> getEstudiantes() {
         return estudiantes;
     }

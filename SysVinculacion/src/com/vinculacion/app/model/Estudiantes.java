@@ -24,43 +24,43 @@ public class Estudiantes implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private String CODIGO;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_CARRERA")
     private Carreras carrera;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_NIVEL")
     private Nivel nivel;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_GENERO")
     private Genero genero;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_PERIODO_ACADEMICO")
     private PeriodoAcademico periodoAcademico;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_SECCION")
     private Seccion seccion;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_TUTOR_DOCENTE")
     private Docente docente;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_TUTOR_EMPRESARIAL")
     private Empleados empleado;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_USUARIO")
     private Usuarios usuario;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_TIPO_DOCUMENTO_PRACTICAS")
     private TipoDocumentoPracticas tipoDocumentoPracticas;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_HORARIO_PASANTIAS")
     private HorarioPasantias horarioPasantias;
     
@@ -88,10 +88,13 @@ public class Estudiantes implements Serializable{
     @Column(name="FOTO")
     private String FOTO;
     
-    @OneToMany(mappedBy = "estudiantes", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+      
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "estudiantes", cascade = CascadeType.ALL)
     private List<InformePasantias> informePasantias = new ArrayList<>();
     
-    public Estudiantes(String CODIGO, Carreras carrera, Nivel nivel, Genero genero, PeriodoAcademico periodoAcademico, Seccion seccion, Docente docente, Empleados empleado, Usuarios usuario, TipoDocumentoPracticas tipoDocumentoPracticas, HorarioPasantias horarioPasantias, String COD_MATRICULA, String NOMBRES, String APELLIDOS, String CEDULA, String DIRECCION, String TELEFONO, String CORREO, String FOTO) {
+    public Estudiantes(String CODIGO, Carreras carrera, Nivel nivel, Genero genero, PeriodoAcademico periodoAcademico, Seccion seccion, Docente docente, Empleados empleado, Usuarios usuario, TipoDocumentoPracticas tipoDocumentoPracticas, HorarioPasantias horarioPasantias, String COD_MATRICULA, String NOMBRES, String APELLIDOS, String CEDULA, String DIRECCION, String TELEFONO, String CORREO, String FOTO, String Estado) {
         this.CODIGO = CODIGO;
         this.carrera = carrera;
         this.nivel = nivel;
@@ -111,6 +114,7 @@ public class Estudiantes implements Serializable{
         this.TELEFONO = TELEFONO;
         this.CORREO = CORREO;
         this.FOTO = FOTO;
+        this.ESTADO = Estado;
     }
 
     public Estudiantes() {
@@ -268,6 +272,14 @@ public class Estudiantes implements Serializable{
         this.FOTO = FOTO;
     }
 
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
+    }
+    
     public List<InformePasantias> getInformePasantias() {
         return informePasantias;
     }

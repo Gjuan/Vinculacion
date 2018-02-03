@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class TipoDocumentoPracticas implements Serializable{
     @Column(name="descripcion")
     private String descripcion;
     
-    @OneToMany(mappedBy = "tipoDocumentoPracticas", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tipoDocumentoPracticas", cascade = CascadeType.ALL)
     private List<Estudiantes> estudiantes = new ArrayList<>();
     
     public TipoDocumentoPracticas(int id_tipo_documento_practicas, String descripcion) {

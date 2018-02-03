@@ -24,25 +24,29 @@ public class Departamentos implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY) 
     private int ID_DEPARTAMENTO;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_EMPRESA")    
     private Empresa empresa;
     
     @Column(name="NOMBRE_DEPARTAMENTO")
     private String NOMBRE_DEPARTAMENTO;
     
-    @OneToMany(mappedBy = "departamentos", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+      
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "departamentos", cascade = CascadeType.ALL)
     private List<Empleados> empleados = new ArrayList<>();
     
     public Departamentos() {
     }
 
-    public Departamentos(int ID_DEPARTAMENTO, Empresa empresa, String NOMBRE_DEPARTAMENTO) {
+    public Departamentos(int ID_DEPARTAMENTO, Empresa empresa, String NOMBRE_DEPARTAMENTO, String ESTADO) {
         this.ID_DEPARTAMENTO = ID_DEPARTAMENTO;
         this.empresa = empresa;
         this.NOMBRE_DEPARTAMENTO = NOMBRE_DEPARTAMENTO;
+        this.ESTADO = ESTADO;
     }
-
+    
     public int getID_DEPARTAMENTO() {
         return ID_DEPARTAMENTO;
     }
@@ -73,6 +77,14 @@ public class Departamentos implements Serializable{
 
     public void setEmpleados(List<Empleados> empleados) {
         this.empleados = empleados;
+    }
+
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
     }
     
 }

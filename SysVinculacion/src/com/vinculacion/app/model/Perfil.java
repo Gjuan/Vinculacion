@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,15 +25,19 @@ public class Perfil implements Serializable {
     @Column(name="descripcion")
     private String descripcion;
     
-    @OneToMany(mappedBy = "perfil", cascade = CascadeType.ALL)
+    @Column(name="ESTADO")
+    private String ESTADO;
+      
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "perfil", cascade = CascadeType.ALL)
     private List<Usuarios> usuarios = new ArrayList<>();
 
     public Perfil() {
     }
 
-    public Perfil(int id_perfil, String descripcion) {
+    public Perfil(int id_perfil, String descripcion, String ESTADO) {
         this.id_perfil = id_perfil;
         this.descripcion = descripcion;
+        this.ESTADO = ESTADO;
     }
 
     public int getId_perfil() {
@@ -49,6 +54,14 @@ public class Perfil implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
     }
     
     public List<Usuarios> getUsuarios() {

@@ -2,8 +2,6 @@ package com.vinculacion.app.views;
 
 import java.awt.Color;
 import java.awt.Frame;
-import java.awt.Image;
-import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 public class MenuPrincipal extends javax.swing.JFrame {
@@ -15,6 +13,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         this.setTitle("Sistema de Gestión de pasantías SGP"); 
         this.getContentPane().setBackground(Color.lightGray);
         Iconos.setLogo(this);
+        this.menuItemNomUser.setForeground(Color.RED);
     }
 
     /**
@@ -31,6 +30,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
+        menuItemNomUser = new javax.swing.JMenuItem();
         menuItemListadoDocentes = new javax.swing.JMenuItem();
         menuItemListadoPasantes = new javax.swing.JMenuItem();
         menuItemInformePasantias = new javax.swing.JMenuItem();
@@ -68,6 +68,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         menuArchivo.setText("Archivo");
+
+        menuItemNomUser.setText("user");
+        menuArchivo.add(menuItemNomUser);
 
         menuItemListadoDocentes.setText("Generar listado de docentes");
         menuArchivo.add(menuItemListadoDocentes);
@@ -271,6 +274,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public javax.swing.JMenuItem menuItemListadoEmpresas;
     public javax.swing.JMenuItem menuItemListadoPasantes;
     public javax.swing.JMenuItem menuItemNivel;
+    public javax.swing.JMenuItem menuItemNomUser;
     public javax.swing.JMenuItem menuItemPeriodosAcademicos;
     public javax.swing.JMenuItem menuItemSalir;
     public javax.swing.JMenuItem menuItemSeccion;

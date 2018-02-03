@@ -2,7 +2,6 @@ package com.vinculacion.app.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,24 +31,28 @@ public class Pasantias implements Serializable{
     private int TOTAL_HORAS;
     
     @Column(name="FECHA_INICIO")
-    private Date FECHA_INICIO;
+    private String FECHA_INICIO;
     
     @Column(name="FECHA_CULMINACION")
-    private Date FECHA_CULMINACION;
+    private String FECHA_CULMINACION;
     
+    @Column(name="ESTADO")
+    private String ESTADO;
+      
     @OneToMany(mappedBy = "pasantias", cascade = CascadeType.ALL)
     private List<InformePasantias> informePasantias = new ArrayList<>();
     
     public Pasantias() {
     }
 
-    public Pasantias(int ID_PASANTIAS, int TIEMPO_COMPLETO, int MEDIO_TIEMPO, int TOTAL_HORAS, Date FECHA_INICIO, Date FECHA_CULMINACION) {
+    public Pasantias(int ID_PASANTIAS, int TIEMPO_COMPLETO, int MEDIO_TIEMPO, int TOTAL_HORAS, String FECHA_INICIO, String FECHA_CULMINACION, String ESTADO) {
         this.ID_PASANTIAS = ID_PASANTIAS;
         this.TIEMPO_COMPLETO = TIEMPO_COMPLETO;
         this.MEDIO_TIEMPO = MEDIO_TIEMPO;
         this.TOTAL_HORAS = TOTAL_HORAS;
         this.FECHA_INICIO = FECHA_INICIO;
         this.FECHA_CULMINACION = FECHA_CULMINACION;
+        this.ESTADO = ESTADO;
     }
 
     public int getID_PASANTIAS() {
@@ -84,22 +87,30 @@ public class Pasantias implements Serializable{
         this.TOTAL_HORAS = TOTAL_HORAS;
     }
 
-    public Date getFECHA_INICIO() {
+    public String getFECHA_INICIO() {
         return FECHA_INICIO;
     }
 
-    public void setFECHA_INICIO(Date FECHA_INICIO) {
+    public void setFECHA_INICIO(String FECHA_INICIO) {
         this.FECHA_INICIO = FECHA_INICIO;
     }
 
-    public Date getFECHA_CULMINACION() {
+    public String getFECHA_CULMINACION() {
         return FECHA_CULMINACION;
     }
 
-    public void setFECHA_CULMINACION(Date FECHA_CULMINACION) {
+    public void setFECHA_CULMINACION(String FECHA_CULMINACION) {
         this.FECHA_CULMINACION = FECHA_CULMINACION;
     }
 
+    public String getESTADO() {
+        return ESTADO;
+    }
+
+    public void setESTADO(String ESTADO) {
+        this.ESTADO = ESTADO;
+    }
+    
     public List<InformePasantias> getInformePasantias() {
         return informePasantias;
     }

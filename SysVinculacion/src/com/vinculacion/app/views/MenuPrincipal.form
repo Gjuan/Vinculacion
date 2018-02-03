@@ -27,6 +27,14 @@
             <Property name="text" type="java.lang.String" value="Archivo"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemNomUser">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="user"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemListadoDocentes">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Generar listado de docentes"/>
