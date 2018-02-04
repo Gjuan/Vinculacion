@@ -192,6 +192,6 @@ public class JFrameTipoDedicacion extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tableTipoDedicacion;
-    private javax.swing.JTextField txtCodigo;
+    public javax.swing.JTextField txtCodigo;
     // End of variables declaration//GEN-END:variables
 }

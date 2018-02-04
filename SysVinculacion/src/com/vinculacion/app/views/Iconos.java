@@ -19,4 +19,11 @@ public class Iconos {
         Image icono = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("com/vinculacion/app/img/logo.png"));
         frame.setIconImage(icono);
     }
+    
+    public static void setSameDefault(JDialog frame, String titulo){
+        frame.setTitle(titulo);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        setLogo(frame);
+    }
 }
