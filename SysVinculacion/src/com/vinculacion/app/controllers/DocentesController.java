@@ -49,7 +49,7 @@ public class DocentesController implements ActionListener{
             
         }
         if (e.getSource() == this.jfrdocente.btnEditar) {
-            
+           
         }
         if (e.getSource() == this.jfrdocente.btnEliminar) {
             
