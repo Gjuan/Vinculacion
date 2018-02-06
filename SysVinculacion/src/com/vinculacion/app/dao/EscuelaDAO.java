@@ -31,7 +31,7 @@ public class EscuelaDAO extends FactorFactory implements EscuelaDaoInterface{
     @Override
     public List<Escuela> AllEscuelas() {
         EntityManager manager = emf.createEntityManager();        
-        List<Escuela> lescuela = (List<Escuela>) manager.createQuery("FROM Escuela Where ESTADO = 'ACTIVO' order by ID_ESCUELA asc").getResultList();
+        List<Escuela> lescuela = (List<Escuela>) manager.createQuery("FROM Escuela Where ESTADO = 'ACTIVO' order by ID_ESCUELA desc").getResultList();
         manager.close();
         return lescuela;
     }

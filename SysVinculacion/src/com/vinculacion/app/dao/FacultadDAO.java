@@ -28,7 +28,7 @@ public class FacultadDAO extends FactorFactory implements FacultadDaoInterface{
     @Override
     public List<Facultad> AllFacultad() {
         EntityManager manager = emf.createEntityManager();        
-        List<Facultad> lfacultad = manager.createQuery("FROM Facultad WHERE ESTADO = 'ACTIVO' order by ID_FACULTAD asc").getResultList();
+        List<Facultad> lfacultad = manager.createQuery("FROM Facultad WHERE ESTADO = 'ACTIVO' order by ID_FACULTAD desc").getResultList();
         manager.close();
         return lfacultad;
     }

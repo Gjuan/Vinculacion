@@ -37,7 +37,7 @@ public class JFrameUsuarios extends javax.swing.JDialog {
         txtCodigo = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         comboPerfil = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnDarBaja = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -52,7 +52,7 @@ public class JFrameUsuarios extends javax.swing.JDialog {
 
         btnBuscar.setText("Buscar");
 
-        jButton1.setText("Editar");
+        btnEditar.setText("Editar");
 
         btnDarBaja.setText("Dar de baja");
 
@@ -70,7 +70,7 @@ public class JFrameUsuarios extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(comboPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDarBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -80,7 +80,7 @@ public class JFrameUsuarios extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,9 +198,9 @@ public class JFrameUsuarios extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnDarBaja;
+    public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnNuevo;
     public javax.swing.JComboBox<String> comboPerfil;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
