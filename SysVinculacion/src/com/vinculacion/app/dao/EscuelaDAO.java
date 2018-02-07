@@ -83,7 +83,8 @@ public class EscuelaDAO extends FactorFactory implements EscuelaDaoInterface{
                     .setParameter("des", description).getSingleResult(); 
             escuela = (List<Escuela>) manager.createQuery("FROM Escuela where ESTADO = 'ACTIVO' and facultad = :fac")
                 .setParameter("fac", facultad)
-                .getResultList();             
+                .getResultList();  
+            manager.close();
         }catch (NoResultException nre){
         }
         return escuela;
