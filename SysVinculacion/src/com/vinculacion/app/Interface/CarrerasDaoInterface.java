@@ -16,7 +16,7 @@ public interface CarrerasDaoInterface {
     
     void deleteCarreraById(int id);
     
-    void updateCarreraById(Carreras carrera);
+    void updateCarrera(Carreras carrera);
     
     Carreras findCarreraById(int id);
     

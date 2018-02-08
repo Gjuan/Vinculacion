@@ -47,7 +47,7 @@ public class CarrerasDAO extends FactorFactory implements CarrerasDaoInterface{
     }
 
     @Override
-    public void updateCarreraById(Carreras carrera) {
+    public void updateCarrera(Carreras carrera) {
         EntityManager manager = emf.createEntityManager();
         manager.getTransaction().begin();
         manager.merge(carrera);
@@ -71,5 +71,15 @@ public class CarrerasDAO extends FactorFactory implements CarrerasDaoInterface{
         manager.close();
         return carrera;
     }
-    
+   /* public static void main(String[] args) {
+        CarrerasDAO c = new CarrerasDAO();
+        List<Carreras> le = c.AllCarreras();
+        for (Carreras carrera : le) {
+            if (carrera.getEscuela().getESTADO().equals("ACTIVO") && carrera.getEscuela().getFacultad().getESTADO().equals("ACTIVO")) {
+                System.out.println("-------------------------------");
+                System.out.println("ID: " + carrera.getID_CARRERA());
+                System.out.println("Carrera: "+carrera.getDESCRIPCION());
+            }           
+        }
+    }*/
 }

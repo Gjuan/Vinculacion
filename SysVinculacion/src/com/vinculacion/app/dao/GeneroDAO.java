@@ -4,7 +4,6 @@ import com.vinculacion.app.Interface.GeneroDaoInterface;
 import com.vinculacion.app.Persistence.FactorFactory;
 import com.vinculacion.app.model.Genero;
 import java.util.List;
-
 /**
  *
  * @author jorge
