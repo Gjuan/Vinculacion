@@ -18,6 +18,7 @@ public interface DetalleDocenteAsignaturaDaoInterface {
     
     void deleteDetalleDocenteAsignatura(int id);
     
-    List<DetalleDocenteAsignatura> findDetalleDocenteAsignaturaByCedula(Docente docente);
+    List<DetalleDocenteAsignatura> findDetalleDocenteAsignaturaByCedula(String cedulaDocente);
     
+    DetalleDocenteAsignatura findDetalleDocenteAsignaturaById(int id);
 }

@@ -28,7 +28,8 @@ public class CarrerasDAO extends FactorFactory implements CarrerasDaoInterface{
     @Override
     public List<Carreras> AllCarreras() {
         EntityManager manager = emf.createEntityManager();        
-        List<Carreras> lcarreras = (List<Carreras>)manager.createQuery("FROM Carreras WHERE ESTADO = 'ACTIVO' order by ID_CARRERA desc").getResultList();
+        List<Carreras> lcarreras = (List<Carreras>)manager.createQuery("FROM Carreras WHERE ESTADO = 'ACTIVO' order by ID_CARRERA desc")
+                .getResultList();
         manager.close();
         return lcarreras;
     }

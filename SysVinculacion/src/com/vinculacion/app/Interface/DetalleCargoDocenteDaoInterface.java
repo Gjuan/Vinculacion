@@ -20,6 +20,6 @@ public interface DetalleCargoDocenteDaoInterface {
     
     DetalleCargoDocente findDetalleCargoDocenteById(int id);
     
-    List<DetalleCargoDocente> findDetalleCargoDocenteByCedula (Docente docente);
+    List<DetalleCargoDocente> findDetalleCargoDocenteByCedula (String cedulaDocente);
     
 }

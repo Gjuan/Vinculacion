@@ -4,6 +4,7 @@ import com.vinculacion.app.Interface.CargoDepartamentalDaoInterface;
 import com.vinculacion.app.Persistence.FactorFactory;
 import com.vinculacion.app.model.CargoDepartamental;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -17,32 +18,59 @@ public class CargoDepartamentalDAO extends FactorFactory implements CargoDeparta
         
     @Override
     public void saveCargoDepartamental(CargoDepartamental cargo) {
-    
+        EntityManager manager = emf.createEntityManager();
+        manager.getTransaction().begin();
+        manager.persist(cargo);
+        manager.getTransaction().commit();
+        manager.close();
     }
 
     @Override
     public List<CargoDepartamental> AllCargosDepartamental() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager manager = emf.createEntityManager();        
+        List<CargoDepartamental> lcargos = (List<CargoDepartamental>)manager.createQuery("FROM CargoDepartamental WHERE ESTADO = 'ACTIVO' order by ID_CARGO_EMPRESARIAL desc")
+                .getResultList();
+        manager.close();
+        return lcargos;
     }
 
     @Override
     public void updateCargoDepartamental(CargoDepartamental cargo) {
-    
+        EntityManager manager = emf.createEntityManager();
+        manager.getTransaction().begin();
+        manager.merge(cargo);
+        manager.getTransaction().commit();
+        manager.close();
     }
 
     @Override
     public void deleteCargoDepartamental(int id) {
-    
+        CargoDepartamental cargos = findCargoDepartamentalById(id);
+        if (cargos != null) {
+            cargos.setESTADO("INACTIVO");
+            EntityManager manager = emf.createEntityManager();
+            manager.getTransaction().begin();
+            manager.merge(cargos);
+            manager.getTransaction().commit();
+            manager.close();
+        }       
     }
 
     @Override
     public CargoDepartamental findCargoDepartamentalByDescription(String description) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager manager = emf.createEntityManager();
+        CargoDepartamental cargos = (CargoDepartamental)  manager.createQuery("From CargoDepartamental where DESCRIPCION = :des and ESTADO = 'ACTIVO'")
+                .setParameter("des", description)
+                .getSingleResult();
+        manager.close();
+        return cargos;
     }
 
     @Override
     public CargoDepartamental findCargoDepartamentalById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+        EntityManager manager = emf.createEntityManager();
+        CargoDepartamental cargos = manager.find(CargoDepartamental.class, id);
+        manager.close();
+        return cargos;
+    }   
 }

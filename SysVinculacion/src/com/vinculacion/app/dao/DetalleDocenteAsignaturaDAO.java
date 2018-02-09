@@ -5,6 +5,7 @@ import com.vinculacion.app.Persistence.FactorFactory;
 import com.vinculacion.app.model.DetalleDocenteAsignatura;
 import com.vinculacion.app.model.Docente;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -18,27 +19,62 @@ public class DetalleDocenteAsignaturaDAO extends FactorFactory implements Detall
         
     @Override
     public void saveDetalleDocenteAsignatura(DetalleDocenteAsignatura dda) {
-    
+        EntityManager manager = emf.createEntityManager();
+        manager.getTransaction().begin();
+        manager.persist(dda);
+        manager.getTransaction().commit();
+        manager.close();
     }
 
     @Override
     public List<DetalleDocenteAsignatura> AllDetalleDocenteAsignatura() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager manager = emf.createEntityManager();        
+        List<DetalleDocenteAsignatura> ldda = (List<DetalleDocenteAsignatura>)manager.createQuery("FROM DetalleDocenteAsignatura WHERE ESTADO = 'ACTIVO' order by ID_DETALLE_DOCENTE_ASIG desc")
+                .getResultList();
+        manager.close();
+        return ldda;
     }
 
     @Override
     public void updateDetalleDocenteAsignatura(DetalleDocenteAsignatura dda) {
-    
+        EntityManager manager = emf.createEntityManager();
+        manager.getTransaction().begin();
+        manager.merge(dda);
+        manager.getTransaction().commit();
+        manager.close();
     }
 
     @Override
     public void deleteDetalleDocenteAsignatura(int id) {
-    
+        DetalleDocenteAsignatura dda = findDetalleDocenteAsignaturaById(id);
+        if (dda != null) {
+            dda.setESTADO("INACTIVO");
+            EntityManager manager = emf.createEntityManager();
+            manager.getTransaction().begin();
+            manager.merge(dda);
+            manager.getTransaction().commit();
+            manager.close();
+        }      
     }
 
     @Override
-    public List<DetalleDocenteAsignatura> findDetalleDocenteAsignaturaByCedula(Docente docente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<DetalleDocenteAsignatura> findDetalleDocenteAsignaturaByCedula(String cedulaDocente) {
+        DocenteDAO docentedao = new DocenteDAO();
+        Docente docente = docentedao.findDocenteByCedula(cedulaDocente);
+        EntityManager manager = emf.createEntityManager();
+        List<DetalleDocenteAsignatura> ldda = manager.createQuery("FROM DetalleDocenteAsignatura WHERE ESTADO = 'ACTIVO' AND docentes = :d")
+                .setParameter("d", docente)
+                .getResultList();
+        manager.close();
+        return ldda;
+    }
+
+    @Override
+    public DetalleDocenteAsignatura findDetalleDocenteAsignaturaById(int id) {
+        EntityManager manager = emf.createEntityManager();
+        DetalleDocenteAsignatura dda = manager.find(DetalleDocenteAsignatura.class, id);
+        manager.close();
+        return dda;
     }
     
 }

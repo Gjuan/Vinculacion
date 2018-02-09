@@ -19,8 +19,8 @@ public interface DocentesDaoInterface {
     
     Docente findDocenteByCedula(String cedula);
     
-    List<Docente> findDocenteByTipoDedicacion (TipoDedicacion tipoDedicacion);
+    List<Docente> findDocenteByTipoDedicacion (String descripcionTipoDedicacion);
     
-    List<Docente> findDocenteByCarrera (Carreras carrera);    
+    List<Docente> findDocenteByCarrera (String descripcionCarrera);    
     
 }
