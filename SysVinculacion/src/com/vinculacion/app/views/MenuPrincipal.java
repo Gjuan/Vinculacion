@@ -29,6 +29,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         menuItemNomUser = new javax.swing.JMenuItem();
@@ -46,6 +47,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuItemEmpleados = new javax.swing.JMenuItem();
         menuItemHorarioPasantias = new javax.swing.JMenuItem();
         menuItemPasante = new javax.swing.JMenuItem();
+        menuItemPasantia = new javax.swing.JMenuItem();
+        menuItemInforme = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         menuItemAyudaRegPasantes = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
@@ -75,6 +78,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar2.add(jMenu4);
 
         jMenuItem4.setText("jMenuItem4");
+
+        jMenuItem5.setText("jMenuItem5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,6 +131,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         menuItemPasante.setText("Pasante");
         jMenu5.add(menuItemPasante);
+
+        menuItemPasantia.setText("Pasantía");
+        jMenu5.add(menuItemPasantia);
+
+        menuItemInforme.setText("Informe de pasantías");
+        jMenu5.add(menuItemInforme);
 
         jMenuBar1.add(jMenu5);
 
@@ -296,6 +307,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenu menuArchivo;
     public javax.swing.JMenuItem menuItemAsignaturas;
     private javax.swing.JMenuItem menuItemAyudaRegPasantes;
@@ -311,6 +323,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public javax.swing.JMenuItem menuItemFacultad;
     public javax.swing.JMenuItem menuItemGenero;
     public javax.swing.JMenuItem menuItemHorarioPasantias;
+    public javax.swing.JMenuItem menuItemInforme;
     public javax.swing.JMenuItem menuItemInformePasantias;
     public javax.swing.JMenuItem menuItemListadoDocentes;
     public javax.swing.JMenuItem menuItemListadoEmpresas;
@@ -318,6 +331,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public javax.swing.JMenuItem menuItemNivel;
     public javax.swing.JMenuItem menuItemNomUser;
     public javax.swing.JMenuItem menuItemPasante;
+    public javax.swing.JMenuItem menuItemPasantia;
     public javax.swing.JMenuItem menuItemPerfil;
     public javax.swing.JMenuItem menuItemPeriodosAcademicos;
     public javax.swing.JMenuItem menuItemSalir;

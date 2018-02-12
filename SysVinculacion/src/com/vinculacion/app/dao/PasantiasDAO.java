@@ -27,32 +27,61 @@ public class PasantiasDAO extends FactorFactory implements PasantiasDaoInterface
 
     @Override
     public List<Pasantias> AllPasantias() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager manager = emf.createEntityManager();        
+        List<Pasantias> lpasantia = (List<Pasantias>)manager.createQuery("FROM Pasantias order by ID_PASANTIAS desc")
+                .getResultList();
+        manager.close();
+        return lpasantia;
     }
 
     @Override
     public Pasantias findPasantiaById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager manager = emf.createEntityManager();        
+        Pasantias pasantia = manager.find(Pasantias.class, id);
+        manager.close();
+        return pasantia;
     }
 
     @Override
     public List<Pasantias> findPasantiaByFechaInicio(String fecha_inicio) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager manager = emf.createEntityManager();        
+        List<Pasantias> lpasantia = (List<Pasantias>)manager.createQuery("FROM Pasantias WHERE FECHA_INICIO = :fecha_init order by ID_PASANTIAS desc")
+                .setParameter("fecha_init", fecha_inicio)
+                .getResultList();
+        manager.close();
+        return lpasantia;
     }
 
     @Override
     public List<Pasantias> findPasantiaByFechaFin(String fecha_fin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager manager = emf.createEntityManager();        
+        List<Pasantias> lpasantia = (List<Pasantias>)manager.createQuery("FROM Pasantias WHERE FECHA_CULMINACION = :fecha_fin order by ID_PASANTIAS desc")
+                .setParameter("fecha_fin", fecha_fin)
+                .getResultList();
+        manager.close();
+        return lpasantia;
     }
 
     @Override
     public void updatePasantia(Pasantias pasantia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager manager = emf.createEntityManager();
+        manager.getTransaction().begin();
+        manager.merge(pasantia);
+        manager.getTransaction().commit();
+        manager.close();
     }
 
     @Override
     public void deletePasantia(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pasantias pasantia = findPasantiaById(id);
+        if (pasantia != null) {
+            pasantia.setESTADO("INACTIVO");
+            EntityManager manager = emf.createEntityManager();
+            manager.getTransaction().begin();
+            manager.merge(pasantia);
+            manager.getTransaction().commit();
+            manager.close();
+        }
     }
     
 }

@@ -99,5 +99,16 @@ public class EmpleadosDAO extends FactorFactory implements EmpleadosDaoInterface
         manager.close();
         return lemp;
     }
+
+    @Override
+    public Empleados findEmpleadosByLastNameAndName(String name, String lastName) {
+        EntityManager manager = emf.createEntityManager();        
+        Empleados empl = (Empleados) manager.createQuery("FROM Empleados WHERE ESTADO = 'ACTIVO' and APELLIDOS = :lastname and NOMBRES = :name")
+                .setParameter("name", name)
+                .setParameter("lastname", lastName)
+                .getSingleResult();
+        manager.close();
+        return empl;   
+    }
     
 }

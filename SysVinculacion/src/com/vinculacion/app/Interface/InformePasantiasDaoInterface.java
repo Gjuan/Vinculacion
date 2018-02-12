@@ -13,6 +13,8 @@ public interface InformePasantiasDaoInterface {
     
     List<InformePasantias> AllInformes();
     
+    InformePasantias findInformePasantiaById(int id);
+    
     void updateInformPasantia (InformePasantias informe);
     
     void deleteInformePasantia (int id);

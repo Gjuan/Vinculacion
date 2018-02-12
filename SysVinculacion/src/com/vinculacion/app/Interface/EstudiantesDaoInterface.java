@@ -13,10 +13,12 @@ public interface EstudiantesDaoInterface {
     
     List<Estudiantes> AllEstudiantes ();
     
+    Estudiantes findEstudianteById(String id);
+    
     void updateEstudiante (Estudiantes estudiante);
     
-    void deleteEstudiante (int id);
+    void deleteEstudiante (String id);
     
     Estudiantes findEstudianteByCedula (String cedula);   
-    
+        
 }

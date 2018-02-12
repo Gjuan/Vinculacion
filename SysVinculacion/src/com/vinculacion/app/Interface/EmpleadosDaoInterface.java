@@ -25,4 +25,5 @@ public interface EmpleadosDaoInterface {
     
     List<Empleados> findEmpleadosByCargos(String descripcionCargo);
     
+    Empleados findEmpleadosByLastNameAndName (String name, String lastName);
 }
