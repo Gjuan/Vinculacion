@@ -61,7 +61,7 @@ public class EmpleadosDAO extends FactorFactory implements EmpleadosDaoInterface
     @Override
     public Empleados findEmpleadoByCedula(String cedula) {
         EntityManager manager = emf.createEntityManager();
-        Empleados emp = (Empleados)  manager.createQuery("From Empleados where CEDULA = :ced and ESTADO = 'ACTIVO'")
+        Empleados emp = (Empleados)  manager.createQuery("From Empleados where CEDULA = :ced")
                 .setParameter("ced", cedula)
                 .getSingleResult();
         manager.close();

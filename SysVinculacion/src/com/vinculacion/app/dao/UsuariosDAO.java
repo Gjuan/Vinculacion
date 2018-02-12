@@ -4,6 +4,7 @@ import com.vinculacion.app.Persistence.FactorFactory;
 import com.vinculacion.app.model.Usuarios;
 import java.util.List;
 import com.vinculacion.app.Interface.UsuariosDaoInterface;
+import com.vinculacion.app.model.Perfil;
 import javax.persistence.EntityManager;
 
 public class UsuariosDAO extends FactorFactory implements UsuariosDaoInterface{
@@ -67,5 +68,17 @@ public class UsuariosDAO extends FactorFactory implements UsuariosDaoInterface{
                .setParameter("pass", pass).getSingleResult();    
        manager.close();
        return usuario;
+    }
+
+    @Override
+    public List<Usuarios> findUserByPerfil(String descriptionPerfil) {
+        PerfilDAO pdao = new PerfilDAO();
+        Perfil perfil = pdao.findPerfilByDescription(descriptionPerfil);
+        EntityManager manager = emf.createEntityManager();
+        List<Usuarios> luser = (List<Usuarios>) manager.createQuery("FROM Usuarios where estado = 'ACTIVO' and perfil = :perf")
+                .setParameter("perf", perfil)
+                .getResultList();       
+        manager.close();
+        return luser;
     }
 }

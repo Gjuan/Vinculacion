@@ -32,7 +32,7 @@ public class JFramePeriodoAcademico extends javax.swing.JDialog {
         btnBuscarByFechaInicio = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablePeriodosAcademicos = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -100,7 +100,7 @@ public class JFramePeriodoAcademico extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablePeriodosAcademicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -108,7 +108,7 @@ public class JFramePeriodoAcademico extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablePeriodosAcademicos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -212,7 +212,7 @@ public class JFramePeriodoAcademico extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JTable tablePeriodosAcademicos;
     public javax.swing.JTextField txtCodigo;
     // End of variables declaration//GEN-END:variables
 }

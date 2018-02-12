@@ -13,7 +13,7 @@ public class JFrameEditPerfil extends javax.swing.JDialog {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         Iconos.setLogo(this);
-        this.tstCodigo.setEditable(false);
+        this.txtCodigo.setEditable(false);
     }
 
     /**
@@ -33,7 +33,7 @@ public class JFrameEditPerfil extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         comboEstado = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        tstCodigo = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -68,7 +68,7 @@ public class JFrameEditPerfil extends javax.swing.JDialog {
                             .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(tstCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -77,7 +77,7 @@ public class JFrameEditPerfil extends javax.swing.JDialog {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel3)
                 .addGap(7, 7, 7)
-                .addComponent(tstCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -158,12 +158,12 @@ public class JFrameEditPerfil extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnGuardar;
     public javax.swing.JButton btnRegresar;
-    private javax.swing.JComboBox<String> comboEstado;
+    public javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    public javax.swing.JTextField tstCodigo;
+    public javax.swing.JTextField txtCodigo;
     public javax.swing.JTextField txtDescripcion;
     // End of variables declaration//GEN-END:variables
 }

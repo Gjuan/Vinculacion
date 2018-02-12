@@ -68,7 +68,7 @@
                               <Component id="btnRegresar" min="-2" pref="108" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="tstCodigo" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                      <Component id="txtCodigo" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="26" max="32767" attributes="0"/>
               </Group>
@@ -80,7 +80,7 @@
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                  <Component id="tstCodigo" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtCodigo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -142,6 +142,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
@@ -149,7 +150,7 @@
             <Property name="text" type="java.lang.String" value="C&#xd3;DIGO:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="tstCodigo">
+        <Component class="javax.swing.JTextField" name="txtCodigo">
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>

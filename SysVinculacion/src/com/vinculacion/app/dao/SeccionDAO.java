@@ -28,7 +28,7 @@ public class SeccionDAO extends FactorFactory implements SeccionDaoInterface{
     @Override
     public List<Seccion> AllSecciones() {
         EntityManager manager = emf.createEntityManager();        
-        List<Seccion> lseccion = (List<Seccion>)manager.createQuery("FROM Seccion WHERE order by ID_SECCION desc")
+        List<Seccion> lseccion = (List<Seccion>)manager.createQuery("FROM Seccion order by ID_SECCION desc")
                 .getResultList();
         manager.close();
         return lseccion;

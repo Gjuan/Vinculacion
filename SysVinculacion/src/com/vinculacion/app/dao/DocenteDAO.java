@@ -95,4 +95,15 @@ public class DocenteDAO extends FactorFactory implements DocentesDaoInterface{
         manager.close();
         return ldocente;
     }  
+
+    @Override
+    public Docente findDocenteByLastNameAndName(String name, String lastName) {
+        EntityManager manager = emf.createEntityManager();        
+        Docente docente = (Docente) manager.createQuery("FROM Docente WHERE ESTADO = 'ACTIVO' and APELLIDOS = :lastname and NOMBRES = :name")
+                .setParameter("name", name)
+                .setParameter("lastname", lastName)
+                .getSingleResult();
+        manager.close();
+        return docente;   
+    }
 }

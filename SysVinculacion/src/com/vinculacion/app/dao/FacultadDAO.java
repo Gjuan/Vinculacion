@@ -62,4 +62,14 @@ public class FacultadDAO extends FactorFactory implements FacultadDaoInterface{
         manager.close();
         return facultad;
     }
+
+    @Override
+    public Facultad findFacultadByDescription(String description) {
+         EntityManager manager = emf.createEntityManager();    
+         Facultad facultad = (Facultad) manager.createQuery("FROM Facultad WHERE ESTADO = 'ACTIVO' and DESCRIPCION = :des")
+                 .setParameter("des", description)
+                 .getSingleResult();
+         manager.close();
+         return facultad;
+    }
 }

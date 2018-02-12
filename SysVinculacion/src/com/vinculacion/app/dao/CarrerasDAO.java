@@ -3,6 +3,7 @@ package com.vinculacion.app.dao;
 import com.vinculacion.app.Interface.CarrerasDaoInterface;
 import com.vinculacion.app.Persistence.FactorFactory;
 import com.vinculacion.app.model.Carreras;
+import com.vinculacion.app.model.Escuela;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -83,4 +84,16 @@ public class CarrerasDAO extends FactorFactory implements CarrerasDaoInterface{
             }           
         }
     }*/
+
+    @Override
+    public List<Carreras> findCarrerasByEscuela(String nombreEscuela) {
+        EscuelaDAO edao = new EscuelaDAO();
+        Escuela escuela = edao.findEscuelaByName(nombreEscuela);
+        EntityManager manager = emf.createEntityManager();
+        List<Carreras> lcarreras = manager.createQuery("FROM Carreras WHERE ESTADO = 'ACTIVO' AND escuela = :esc order by ID_CARRERA desc")
+                .setParameter("esc", escuela)
+                .getResultList();
+        manager.close();
+        return lcarreras;
+    }
 }

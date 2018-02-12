@@ -28,7 +28,7 @@ public class TipoDocumentoPracticasDAO extends FactorFactory implements TipoDocu
     @Override
     public List<TipoDocumentoPracticas> AllTiposDocumentosPracticas() {
         EntityManager manager = emf.createEntityManager();        
-        List<TipoDocumentoPracticas> ltdp = (List<TipoDocumentoPracticas>)manager.createQuery("FROM TipoDocumentoPracticas WHERE order by id_tipo_documento_practicas desc")
+        List<TipoDocumentoPracticas> ltdp = (List<TipoDocumentoPracticas>)manager.createQuery("FROM TipoDocumentoPracticas order by id_tipo_documento_practicas desc")
                 .getResultList();
         manager.close();
         return ltdp;

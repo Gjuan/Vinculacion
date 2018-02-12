@@ -18,4 +18,7 @@ public interface PerfilDaoInterface {
     void updatePerfil(Perfil perfil);
     
     Perfil findPerfilById (int id);
+    
+    Perfil findPerfilByDescription (String description);
+    
 }

@@ -28,6 +28,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         menuItemNomUser = new javax.swing.JMenuItem();
@@ -38,6 +39,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuItemCerrar = new javax.swing.JMenuItem();
         menuItemSalir = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        menuItemTipoDocPracticas = new javax.swing.JMenuItem();
+        menuItemEmpresa = new javax.swing.JMenuItem();
+        menuItemDepartamento = new javax.swing.JMenuItem();
+        menuItemCargoDepartamental = new javax.swing.JMenuItem();
+        menuItemEmpleados = new javax.swing.JMenuItem();
+        menuItemHorarioPasantias = new javax.swing.JMenuItem();
+        menuItemPasante = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         menuItemAyudaRegPasantes = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
@@ -58,12 +66,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuItemGenero = new javax.swing.JMenuItem();
         menuItemSeccion = new javax.swing.JMenuItem();
         menuItemUsuarios = new javax.swing.JMenuItem();
+        menuItemPerfil = new javax.swing.JMenuItem();
 
         jMenu3.setText("File");
         jMenuBar2.add(jMenu3);
 
         jMenu4.setText("Edit");
         jMenuBar2.add(jMenu4);
+
+        jMenuItem4.setText("jMenuItem4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,6 +105,28 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(menuArchivo);
 
         jMenu5.setText("Pasantías");
+
+        menuItemTipoDocPracticas.setText("Tipo de documento de prácticas");
+        jMenu5.add(menuItemTipoDocPracticas);
+
+        menuItemEmpresa.setText("Empresa");
+        jMenu5.add(menuItemEmpresa);
+
+        menuItemDepartamento.setText("Departamentos");
+        jMenu5.add(menuItemDepartamento);
+
+        menuItemCargoDepartamental.setText("Cargos departamentales");
+        jMenu5.add(menuItemCargoDepartamental);
+
+        menuItemEmpleados.setText("Empleados");
+        jMenu5.add(menuItemEmpleados);
+
+        menuItemHorarioPasantias.setText("Horario de pasantías");
+        jMenu5.add(menuItemHorarioPasantias);
+
+        menuItemPasante.setText("Pasante");
+        jMenu5.add(menuItemPasante);
+
         jMenuBar1.add(jMenu5);
 
         jMenu6.setText("Ayuda");
@@ -178,6 +211,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuItemUsuarios.setText("Usuarios");
         jMenu2.add(menuItemUsuarios);
 
+        menuItemPerfil.setText("Perfil");
+        jMenu2.add(menuItemPerfil);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -259,26 +295,35 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenu menuArchivo;
     public javax.swing.JMenuItem menuItemAsignaturas;
     private javax.swing.JMenuItem menuItemAyudaRegPasantes;
+    public javax.swing.JMenuItem menuItemCargoDepartamental;
     public javax.swing.JMenuItem menuItemCargosDocentes;
     public javax.swing.JMenuItem menuItemCarreras;
     public javax.swing.JMenuItem menuItemCerrar;
+    public javax.swing.JMenuItem menuItemDepartamento;
     public javax.swing.JMenuItem menuItemDocentes;
+    public javax.swing.JMenuItem menuItemEmpleados;
+    public javax.swing.JMenuItem menuItemEmpresa;
     public javax.swing.JMenuItem menuItemEscuelas;
     public javax.swing.JMenuItem menuItemFacultad;
     public javax.swing.JMenuItem menuItemGenero;
+    public javax.swing.JMenuItem menuItemHorarioPasantias;
     public javax.swing.JMenuItem menuItemInformePasantias;
     public javax.swing.JMenuItem menuItemListadoDocentes;
     public javax.swing.JMenuItem menuItemListadoEmpresas;
     public javax.swing.JMenuItem menuItemListadoPasantes;
     public javax.swing.JMenuItem menuItemNivel;
     public javax.swing.JMenuItem menuItemNomUser;
+    public javax.swing.JMenuItem menuItemPasante;
+    public javax.swing.JMenuItem menuItemPerfil;
     public javax.swing.JMenuItem menuItemPeriodosAcademicos;
     public javax.swing.JMenuItem menuItemSalir;
     public javax.swing.JMenuItem menuItemSeccion;
-    private javax.swing.JMenuItem menuItemTipoDedicacionDocente;
+    public javax.swing.JMenuItem menuItemTipoDedicacionDocente;
+    public javax.swing.JMenuItem menuItemTipoDocPracticas;
     public javax.swing.JMenuItem menuItemUsuarios;
     public javax.swing.JMenu menuUtb;
     // End of variables declaration//GEN-END:variables

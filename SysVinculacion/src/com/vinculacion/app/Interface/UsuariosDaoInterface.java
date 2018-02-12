@@ -17,4 +17,6 @@ public interface UsuariosDaoInterface {
     
     Usuarios findUsuarioByUserAndPass (String nom_user, String pass);
     
+    List<Usuarios> findUserByPerfil(String descriptionPerfil);
+    
 }

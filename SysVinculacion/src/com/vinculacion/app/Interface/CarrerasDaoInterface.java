@@ -22,4 +22,6 @@ public interface CarrerasDaoInterface {
     
     Carreras findCarreraByDescription(String descripcion);
     
+    List<Carreras> findCarrerasByEscuela(String nombreEscuela);
+    
 }

@@ -18,10 +18,7 @@ public class JFrameEditSeccion extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.txtCodigo.setEditable(false);
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        Iconos.setLogo(this);
-        this.setTitle("Editar Sección");
+        Iconos.setSameDefault(this, "Editar Sección");
     }
 
     /**
@@ -38,8 +35,6 @@ public class JFrameEditSeccion extends javax.swing.JDialog {
         txtDescripcion = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        comboEstado = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
 
@@ -53,10 +48,6 @@ public class JFrameEditSeccion extends javax.swing.JDialog {
 
         btnRegresar.setText("Regresar");
 
-        jLabel2.setText("ESTADO:");
-
-        comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVO", "INACTIVO" }));
-
         jLabel3.setText("CÓDIGO:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -67,14 +58,11 @@ public class JFrameEditSeccion extends javax.swing.JDialog {
                 .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(comboEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(36, Short.MAX_VALUE))
@@ -90,11 +78,7 @@ public class JFrameEditSeccion extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -166,9 +150,7 @@ public class JFrameEditSeccion extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnGuardar;
     public javax.swing.JButton btnRegresar;
-    public javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JTextField txtCodigo;

@@ -24,7 +24,7 @@ public class PerfilDAO extends FactorFactory implements PerfilDaoInterface{
     @Override
     public List<Perfil> AllPerfil() {
         EntityManager manager = emf.createEntityManager();       
-        List<Perfil> lperfil = (List<Perfil>)manager.createQuery("FROM Perfil WHERE ESTADO = 'ACTIVO' order by id_perfil asc").getResultList();
+        List<Perfil> lperfil = (List<Perfil>)manager.createQuery("FROM Perfil WHERE ESTADO = 'ACTIVO' order by id_perfil desc").getResultList();
         manager.close();
         return lperfil;
     }
@@ -58,4 +58,14 @@ public class PerfilDAO extends FactorFactory implements PerfilDaoInterface{
        manager.close();
        return perfil;
     }      
+
+    @Override
+    public Perfil findPerfilByDescription(String description) {
+        EntityManager manager = emf.createEntityManager();
+        Perfil perfil = (Perfil) manager.createQuery("FROM Perfil WHERE ESTADO = 'ACTIVO' and descripcion = :des")
+                .setParameter("des", description)
+                .getSingleResult();
+        manager.close();
+        return perfil;
+    }
 }

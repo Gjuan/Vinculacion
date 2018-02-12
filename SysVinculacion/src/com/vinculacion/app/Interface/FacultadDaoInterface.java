@@ -18,4 +18,6 @@ public interface FacultadDaoInterface {
     void updateFacultad(Facultad facultad);
     
     Facultad findFacultadById (int id);
+    
+    Facultad findFacultadByDescription(String description);
 }

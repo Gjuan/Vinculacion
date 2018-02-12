@@ -105,7 +105,7 @@ public class FacultadController implements ActionListener{
                     getAllFacultades();
                 }               
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this.facultad, "Debe seleccionar una registro y luego dar click en eliminar");
+                JOptionPane.showMessageDialog(this.facultad, "Debe seleccionar una registro y luego darle de baja");
                 System.out.println(ex.getMessage());
             }
         }
@@ -120,8 +120,8 @@ public class FacultadController implements ActionListener{
                     JOptionPane.showMessageDialog(this.newfacultad, "Las Siglas de la facultad es requerida");
                 }else{
                     Facultad f = new Facultad();
-                    f.setDESCRIPCION(this.newfacultad.txtDescripcion.getText().toString());
-                    f.setSIGLAS(this.newfacultad.txtSiglas.getText().toString());
+                    f.setDESCRIPCION((this.newfacultad.txtDescripcion.getText().toString()).toUpperCase());
+                    f.setSIGLAS((this.newfacultad.txtSiglas.getText().toString()).toUpperCase());
                     f.setESTADO("ACTIVO");
                     faculdao.saveFacultad(f);
                     JOptionPane.showMessageDialog(this.newfacultad, "Facultad ingresada correctamente!!");
@@ -158,9 +158,9 @@ public class FacultadController implements ActionListener{
             try {
                 Facultad facultad = new Facultad();
                 facultad.setID_FACULTAD(Integer.parseInt(this.editfacultad.txtCodigo.getText().toString()));
-                facultad.setDESCRIPCION(this.editfacultad.txtDescripcion.getText().toString());
-                facultad.setSIGLAS(this.editfacultad.txtSiglas.getText().toString());
-                facultad.setESTADO("ACTIVO");
+                facultad.setDESCRIPCION((this.editfacultad.txtDescripcion.getText().toString()).toUpperCase());
+                facultad.setSIGLAS((this.editfacultad.txtSiglas.getText().toString()).toUpperCase());
+                facultad.setESTADO(this.editfacultad.comboEstado.getSelectedItem().toString());
                 faculdao.updateFacultad(facultad);
                 JOptionPane.showMessageDialog(this.editfacultad, "Facultad actualizada");
                 getAllFacultades();

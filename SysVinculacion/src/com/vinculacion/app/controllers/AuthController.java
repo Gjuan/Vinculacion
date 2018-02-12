@@ -17,6 +17,7 @@ public class AuthController implements ActionListener{
     private MenuPrincipal mp = new MenuPrincipal();
     private UsuariosDAO userdao;
     private PerfilDAO perfildao;
+    public static int id;
     
     public AuthController(Auth au, MenuPrincipal menuP) {
         this.auth = au;
@@ -49,7 +50,9 @@ public class AuthController implements ActionListener{
                     mp.menuItemGenero.setVisible(true);
                     mp.menuUtb.setVisible(true);
                     mp.menuItemNivel.setVisible(true); 
+                    mp.menuItemPerfil.setVisible(true);
                 }else{
+                    mp.menuItemPerfil.setVisible(false);
                     mp.menuItemUsuarios.setVisible(false);
                     mp.menuItemSeccion.setVisible(false);
                     mp.menuItemGenero.setVisible(false);
@@ -58,6 +61,7 @@ public class AuthController implements ActionListener{
                 }
                 JOptionPane.showMessageDialog(auth, "Bienvenido usuario " + usuario.getNombres() + " " + usuario.getApellidos());
                 this.mp.setVisible(true);
+                id = usuario.getId_usuario();
                 this.mp.menuItemNomUser.setText(usuario.getNombres() +" " + usuario.getApellidos());
                 this.auth.hide();                                        
             }

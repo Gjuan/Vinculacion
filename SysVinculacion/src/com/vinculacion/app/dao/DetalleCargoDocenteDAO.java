@@ -48,10 +48,11 @@ public class DetalleCargoDocenteDAO extends FactorFactory implements DetalleCarg
     public void deleteDetalleCargoDocente(int id) {
         DetalleCargoDocente dcd = findDetalleCargoDocenteById(id);
         if (dcd != null) {
-            dcd.setESTADO("INACTIVO");
             EntityManager manager = emf.createEntityManager();
             manager.getTransaction().begin();
-            manager.merge(dcd);
+            manager.createQuery("DELETE FROM DetalleCargoDocente WHERE ID_DETALLE_CARGO_DOCENTE = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
             manager.getTransaction().commit();
             manager.close();
         }      

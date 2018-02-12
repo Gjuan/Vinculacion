@@ -23,4 +23,6 @@ public interface DocentesDaoInterface {
     
     List<Docente> findDocenteByCarrera (String descripcionCarrera);    
     
+    Docente findDocenteByLastNameAndName (String name, String lastName);
+    
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.vinculacion.app.views;
 
 /**
@@ -17,6 +12,7 @@ public class JFramePerfil extends javax.swing.JDialog {
     public JFramePerfil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Iconos.setSameDefault(this, "Perfiles");
     }
 
     /**

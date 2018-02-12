@@ -48,10 +48,11 @@ public class DetalleDocenteAsignaturaDAO extends FactorFactory implements Detall
     public void deleteDetalleDocenteAsignatura(int id) {
         DetalleDocenteAsignatura dda = findDetalleDocenteAsignaturaById(id);
         if (dda != null) {
-            dda.setESTADO("INACTIVO");
             EntityManager manager = emf.createEntityManager();
             manager.getTransaction().begin();
-            manager.merge(dda);
+            manager.createQuery("DELETE FROM DetalleDocenteAsignatura where ID_DETALLE_DOCENTE_ASIG = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
             manager.getTransaction().commit();
             manager.close();
         }      

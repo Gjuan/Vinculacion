@@ -28,7 +28,7 @@ public class HorariosPasantiasDAO extends FactorFactory implements HorarioPasant
     @Override
     public List<HorarioPasantias> AllHorariosPasantias() {
         EntityManager manager = emf.createEntityManager();        
-        List<HorarioPasantias> lhorarios = (List<HorarioPasantias>)manager.createQuery("FROM HorarioPasantias WHERE order by ID_HORARIO_PASANTIAS desc").getResultList();
+        List<HorarioPasantias> lhorarios = (List<HorarioPasantias>)manager.createQuery("FROM HorarioPasantias order by ID_HORARIO_PASANTIAS desc").getResultList();
         manager.close();
         return lhorarios;
     }

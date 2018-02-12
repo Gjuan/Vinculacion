@@ -10,10 +10,7 @@ public class JFrameSeccion extends javax.swing.JDialog {
     public JFrameSeccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        Iconos.setLogo(this);
-        this.setTitle("Tipos de dedicación");
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
+        Iconos.setSameDefault(this, "Tipos de dedicación");
     }
 
     /**
@@ -31,7 +28,7 @@ public class JFrameSeccion extends javax.swing.JDialog {
         txtCodigo = new javax.swing.JTextField();
         btnEditar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tableSeccion = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
 
@@ -82,7 +79,7 @@ public class JFrameSeccion extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane1.setViewportView(tableSeccion);
+        jScrollPane2.setViewportView(tableSeccion);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -90,15 +87,15 @@ public class JFrameSeccion extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnNuevo.setText("Agregar nueva sección");
@@ -125,7 +122,7 @@ public class JFrameSeccion extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -182,7 +179,7 @@ public class JFrameSeccion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable tableSeccion;
     public javax.swing.JTextField txtCodigo;
     // End of variables declaration//GEN-END:variables
