@@ -16,6 +16,7 @@ import com.vinculacion.app.views.JFrameEditDocente;
 import com.vinculacion.app.views.JFrameEditEmpleado;
 import com.vinculacion.app.views.JFrameEditEmpresa;
 import com.vinculacion.app.views.JFrameEditEscuela;
+import com.vinculacion.app.views.JFrameEditEstudiantes;
 import com.vinculacion.app.views.JFrameEditFacultad;
 import com.vinculacion.app.views.JFrameEditGenero;
 import com.vinculacion.app.views.JFrameEditHorarioPasantias;
@@ -29,6 +30,7 @@ import com.vinculacion.app.views.JFrameEditUsuario;
 import com.vinculacion.app.views.JFrameEmpleados;
 import com.vinculacion.app.views.JFrameEmpresa;
 import com.vinculacion.app.views.JFrameEscuela;
+import com.vinculacion.app.views.JFrameEstudiantes;
 import com.vinculacion.app.views.JFrameFacultad;
 import com.vinculacion.app.views.JFrameGenero;
 import com.vinculacion.app.views.JFrameHorarioPasantias;
@@ -44,6 +46,7 @@ import com.vinculacion.app.views.JFrameNuevoCargoDepartamental;
 import com.vinculacion.app.views.JFrameNuevoDepartamento;
 import com.vinculacion.app.views.JFrameNuevoDocente;
 import com.vinculacion.app.views.JFrameNuevoEmpleado;
+import com.vinculacion.app.views.JFrameNuevoEstudiante;
 import com.vinculacion.app.views.JFrameNuevoGenero;
 import com.vinculacion.app.views.JFrameNuevoHorarioPasantias;
 import com.vinculacion.app.views.JFrameNuevoNivel;
@@ -123,6 +126,9 @@ public class MenuController implements ActionListener{
     JFrameEditEmpleado jfreditempleado;
     JFrameNuevoEmpleado jfrnuevoempleado;
     JFrameEmpleados jfrempleados;
+    JFrameEstudiantes jfrestudiante;
+    JFrameNuevoEstudiante jfrnuevoest;
+    JFrameEditEstudiantes jfreditest;     
     
     public MenuController(MenuPrincipal menu, Auth a) {
         this.mp = menu;
@@ -148,6 +154,7 @@ public class MenuController implements ActionListener{
         this.mp.menuItemDepartamento.addActionListener(this);
         this.mp.menuItemCargoDepartamental.addActionListener(this);
         this.mp.menuItemEmpleados.addActionListener(this);
+        this.mp.menuItemPasante.addActionListener(this);
     }
 
     @Override
@@ -291,6 +298,13 @@ public class MenuController implements ActionListener{
             this.jfreditempleado = new JFrameEditEmpleado(mp, false);
             this.jfrempleados.setVisible(true);
             EmpleadosController emcontrol = new EmpleadosController(mp, jfreditempleado, jfrnuevoempleado, jfrempleados);
+        }
+        if (e.getSource() == this.mp.menuItemPasante) {
+            this.jfrestudiante = new JFrameEstudiantes(mp, false);
+            this.jfrnuevoest = new JFrameNuevoEstudiante(mp, false);
+            this.jfreditest = new JFrameEditEstudiantes(mp, false);
+            this.jfrestudiante.setVisible(true);
+            EstudiantesController estcontrol = new EstudiantesController(mp, jfrestudiante, jfrnuevoest, jfreditest);
         }
     } 
     

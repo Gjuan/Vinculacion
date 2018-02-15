@@ -94,7 +94,7 @@ public class Estudiantes implements Serializable{
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "estudiantes", cascade = CascadeType.ALL)
     private List<InformePasantias> informePasantias = new ArrayList<>();
     
-    public Estudiantes(String CODIGO, Carreras carrera, Nivel nivel, Genero genero, PeriodoAcademico periodoAcademico, Seccion seccion, Docente docente, Empleados empleado, Usuarios usuario, TipoDocumentoPracticas tipoDocumentoPracticas, HorarioPasantias horarioPasantias, String COD_MATRICULA, String NOMBRES, String APELLIDOS, String CEDULA, String DIRECCION, String TELEFONO, String CORREO, String FOTO, String Estado) {
+    public Estudiantes(String CODIGO, Carreras carrera, Nivel nivel, Genero genero, PeriodoAcademico periodoAcademico, Seccion seccion, Docente docente, Empleados empleado, Usuarios usuario, TipoDocumentoPracticas tipoDocumentoPracticas, HorarioPasantias horarioPasantias, String COD_MATRICULA, String NOMBRES, String APELLIDOS, String CEDULA, String DIRECCION, String TELEFONO, String CORREO,String FOTO, String Estado) {
         this.CODIGO = CODIGO;
         this.carrera = carrera;
         this.nivel = nivel;
