@@ -163,7 +163,7 @@ public class PeriodoAcademicoController implements ActionListener{
                     this.editperiodo.setVisible(true);
                     this.editperiodo.txtCodigo.setText(this.jfrperiodo.tablePeriodosAcademicos.getValueAt(this.jfrperiodo.tablePeriodosAcademicos.getSelectedRow(), 0).toString());
                     this.editperiodo.spinnerAnio.setValue(Integer.parseInt(this.jfrperiodo.tablePeriodosAcademicos.getValueAt(this.jfrperiodo.tablePeriodosAcademicos.getSelectedRow(), 1).toString()));
-                    this.editperiodo.txtNombrePeriodo.setText(this.jfrperiodo.tablePeriodosAcademicos.getValueAt(this.jfrperiodo.tablePeriodosAcademicos.getSelectedRow(), 2).toString());                    
+                    this.editperiodo.comboNombrePeriodo.setSelectedItem(this.jfrperiodo.tablePeriodosAcademicos.getValueAt(this.jfrperiodo.tablePeriodosAcademicos.getSelectedRow(), 2).toString());                    
                     Date dateinit = new SimpleDateFormat("yyyy-MM-dd").parse((String) this.jfrperiodo.tablePeriodosAcademicos.getValueAt(this.jfrperiodo.tablePeriodosAcademicos.getSelectedRow(), 3));
                     this.editperiodo.dateFechaInicio.setDate(dateinit);
                     Date datefin = new SimpleDateFormat("yyyy-MM-dd").parse((String) this.jfrperiodo.tablePeriodosAcademicos.getValueAt(this.jfrperiodo.tablePeriodosAcademicos.getSelectedRow(), 4));
@@ -183,12 +183,9 @@ public class PeriodoAcademicoController implements ActionListener{
         /***NUEVO PERIODO***/
         if (e.getSource() == this.jfrnuevoperiodo.btnGuardar) {
             try {
-                if (this.jfrnuevoperiodo.txtNombrePeriodo.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(this.jfrnuevoperiodo, "El nombre del periodo es requerido");
-                }else{
                     PeriodoAcademico pa = new PeriodoAcademico();
                     pa.setANIO_ACADEMICO((int)this.jfrnuevoperiodo.spinnerAnio.getValue());
-                    pa.setNOMBRE_PERIODO((this.jfrnuevoperiodo.txtNombrePeriodo.getText().toString()).toUpperCase());
+                    pa.setNOMBRE_PERIODO(this.jfrnuevoperiodo.comboNombrePeriodo.getSelectedItem().toString());
                     Date dateinit = this.jfrnuevoperiodo.dateFechaInicio.getDate();
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                     pa.setFECHA_INICIO_PERIODO(format.format(dateinit));
@@ -200,9 +197,7 @@ public class PeriodoAcademicoController implements ActionListener{
                     pa.setESTADO("ACTIVO");
                     padao.savePeriodosAcademicos(pa);
                     JOptionPane.showMessageDialog(this.jfrperiodo, "Periodo académico registrado!!");
-                    this.jfrnuevoperiodo.txtNombrePeriodo.setText("");
-                    this.jfrnuevoperiodo.txtNombrePeriodo.requestFocus();
-                }
+                
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this.jfrperiodo, "Error: " + ex.getMessage());       
             }
@@ -218,7 +213,7 @@ public class PeriodoAcademicoController implements ActionListener{
                 PeriodoAcademico pa = new PeriodoAcademico();
                 pa.setID_PERIODO_ACADEMICO(Integer.parseInt(this.editperiodo.txtCodigo.getText().toString()));
                 pa.setANIO_ACADEMICO((int) this.editperiodo.spinnerAnio.getValue());
-                pa.setNOMBRE_PERIODO((this.editperiodo.txtNombrePeriodo.getText().toString()).toUpperCase());
+                pa.setNOMBRE_PERIODO(this.editperiodo.comboNombrePeriodo.getSelectedItem().toString());
                 
                 Date dateinit = this.editperiodo.dateFechaInicio.getDate();
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

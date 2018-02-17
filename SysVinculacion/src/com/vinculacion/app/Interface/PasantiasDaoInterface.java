@@ -23,4 +23,6 @@ public interface PasantiasDaoInterface {
     
     void deletePasantia (int id);
     
+    Pasantias findPasantiaByTitulo (String titulo);
+    
 }

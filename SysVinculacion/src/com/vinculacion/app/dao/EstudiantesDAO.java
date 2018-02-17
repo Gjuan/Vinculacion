@@ -18,11 +18,14 @@ public class EstudiantesDAO extends FactorFactory implements EstudiantesDaoInter
 
     @Override
     public void saveEstudiante(Estudiantes estudiante) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.persist(estudiante);
-        manager.getTransaction().commit();
-        manager.close();
+        try {
+            EntityManager manager = emf.createEntityManager();
+            manager.getTransaction().begin();
+            manager.persist(estudiante);
+            manager.getTransaction().commit();
+            manager.close();
+        } catch (Exception e) {
+        }           
     }
 
     @Override
@@ -36,11 +39,14 @@ public class EstudiantesDAO extends FactorFactory implements EstudiantesDaoInter
 
     @Override
     public void updateEstudiante(Estudiantes estudiante) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.merge(estudiante);
-        manager.getTransaction().commit();
-        manager.close();
+        try {
+            EntityManager manager = emf.createEntityManager();
+            manager.getTransaction().begin();
+            manager.merge(estudiante);
+            manager.getTransaction().commit();
+            manager.close();
+        } catch (Exception e) {
+        }       
     }
 
     @Override
@@ -73,34 +79,15 @@ public class EstudiantesDAO extends FactorFactory implements EstudiantesDaoInter
         manager.close();
         return estudiante;
     }
-    
-   /* public static void main(String[] args) {
-        EstudiantesDAO edao = new EstudiantesDAO();
-        CarrerasDAO cdao = new CarrerasDAO();
-        DocenteDAO ddao = new DocenteDAO();
-        EmpleadosDAO empldao = new EmpleadosDAO();
-        
-        Estudiantes e = new Estudiantes();
-        e.setAPELLIDOS("VELEZ");
-        e.setNOMBRES("JOEL");
-        e.setCEDULA("1208912788");
-        e.setCOD_MATRICULA("MAT-00043");
-        e.setCORREO("jvlz@outlook.es");
-        
-        Carreras carrera = cdao.findCarreraByDescription("INGENIERÍA EN SISTEMAS");
-        e.setCarrera(carrera);
-        
-        e.setDIRECCION("Babahoyo");
-        
-        Docente docente = ddao.findDocenteByLastNameAndName("NARCISA", "CRESPO TORRES");
-        e.setDocente(docente);
-        
-        e.setESTADO("ACTIVO");
-        
-        Empleados empleado = empldao.findEmpleadosByLastNameAndName("HARRY", "SALTOS");
-        e.setEmpleado(empleado);
-        
-        e.setFOTO("joelvlz.jpg");
-
-    }*/
+   
+    @Override
+    public Estudiantes findEstudianteByNameAndLastName(String name, String lastName) {
+        EntityManager manager = emf.createEntityManager();        
+        Estudiantes est = (Estudiantes) manager.createQuery("FROM Estudiantes WHERE NOMBRES = :name and APELLIDOS = :lastName")
+                .setParameter("name", name)
+                .setParameter("lastName", lastName)
+                .getSingleResult();
+        manager.close();
+        return est;
+    }
 }

@@ -29,7 +29,6 @@ public class JFrameEditPeriodoAcademico extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         spinnerAnio = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
-        txtNombrePeriodo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         dateFechaInicio = new com.toedter.calendar.JDateChooser();
@@ -40,6 +39,7 @@ public class JFrameEditPeriodoAcademico extends javax.swing.JDialog {
         txtCodigo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         comboEstado = new javax.swing.JComboBox<>();
+        comboNombrePeriodo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -63,6 +63,8 @@ public class JFrameEditPeriodoAcademico extends javax.swing.JDialog {
 
         comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVO", "INACTIVO" }));
 
+        comboNombrePeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PRIMER SEMESTRE", "SEGUNDO SEMESTRE" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -77,7 +79,6 @@ public class JFrameEditPeriodoAcademico extends javax.swing.JDialog {
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel2)
-                        .addComponent(txtNombrePeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -95,7 +96,8 @@ public class JFrameEditPeriodoAcademico extends javax.swing.JDialog {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel4)
-                                .addComponent(dateFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(dateFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)))
+                        .addComponent(comboNombrePeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(comboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
@@ -113,8 +115,8 @@ public class JFrameEditPeriodoAcademico extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombrePeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboNombrePeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
@@ -199,6 +201,7 @@ public class JFrameEditPeriodoAcademico extends javax.swing.JDialog {
     public javax.swing.JButton btnGuardar;
     public javax.swing.JButton btnRegresar;
     public javax.swing.JComboBox<String> comboEstado;
+    public javax.swing.JComboBox<String> comboNombrePeriodo;
     public com.toedter.calendar.JDateChooser dateFechaFin;
     public com.toedter.calendar.JDateChooser dateFechaInicio;
     private javax.swing.JLabel jLabel1;
@@ -210,6 +213,5 @@ public class JFrameEditPeriodoAcademico extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     public javax.swing.JSpinner spinnerAnio;
     public javax.swing.JTextField txtCodigo;
-    public javax.swing.JTextField txtNombrePeriodo;
     // End of variables declaration//GEN-END:variables
 }

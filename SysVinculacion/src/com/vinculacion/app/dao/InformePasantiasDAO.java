@@ -29,7 +29,7 @@ public class InformePasantiasDAO extends FactorFactory implements InformePasanti
     @Override
     public List<InformePasantias> AllInformes() {
         EntityManager manager = emf.createEntityManager();        
-        List<InformePasantias> linforme = (List<InformePasantias>) manager.createQuery("FROM InformePasantias where ESTADO = 'ACTIVO' order by ID_PASANTIAS_ESTUDIANTES desc")
+        List<InformePasantias> linforme = manager.createQuery("FROM InformePasantias where ESTADO = 'ACTIVO' order by ID_PASANTIAS_ESTUDIANTES desc")
                 .getResultList();
         manager.close();
         return linforme;
@@ -63,7 +63,7 @@ public class InformePasantiasDAO extends FactorFactory implements InformePasanti
         Estudiantes est = estdao.findEstudianteByCedula(cedulaEstudiante);
         
         EntityManager manager = emf.createEntityManager();        
-        List<InformePasantias> linforme = (List<InformePasantias>) manager.createQuery("FROM InformePasantias WHERE estudiantes = :est AND ESTADO = 'ACTIVO' order by ID_PASANTIAS_ESTUDIANTES desc")
+        List<InformePasantias> linforme = (List<InformePasantias>) manager.createQuery("FROM InformePasantias WHERE estudiantes = :est order by ID_PASANTIAS_ESTUDIANTES desc")
                 .setParameter("est", est)
                 .getResultList();
         manager.close();
@@ -73,7 +73,7 @@ public class InformePasantiasDAO extends FactorFactory implements InformePasanti
     @Override
     public List<InformePasantias> findInformesByFechaEntrega(String fecha_entrega) {
         EntityManager manager = emf.createEntityManager();        
-        List<InformePasantias> linforme = (List<InformePasantias>) manager.createQuery("FROM InformePasantias WHERE FECHA_ENTREGA_INFORME = :fentr AND ESTADO = 'ACTIVO' order by ID_PASANTIAS_ESTUDIANTES desc")
+        List<InformePasantias> linforme = (List<InformePasantias>) manager.createQuery("FROM InformePasantias WHERE FECHA_ENTREGA_INFORME = :fentr AND order by ID_PASANTIAS_ESTUDIANTES desc")
                 .setParameter("fentr", fecha_entrega)
                 .getResultList();
         manager.close();

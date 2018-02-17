@@ -75,16 +75,17 @@ public class PasantiasController implements ActionListener{
                 if (!this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 0).toString().isEmpty()) {
                     this.jfreditpasantia.setVisible(true);
                     this.jfreditpasantia.txtCodigo.setText(this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 0).toString());
-                    this.jfreditpasantia.txtTiempoCompleto.setValue(Integer.parseInt(this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 1).toString()));
-                    this.jfreditpasantia.txtMedioTiempo.setValue(Integer.parseInt(this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 2).toString()));
+                    this.jfreditpasantia.txtTitulo.setText(this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 1).toString());
+                    this.jfreditpasantia.txtTiempoCompleto.setValue(Integer.parseInt(this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 2).toString()));
+                    this.jfreditpasantia.txtMedioTiempo.setValue(Integer.parseInt(this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 3).toString()));
                     
-                    Date dateinit = new SimpleDateFormat("yyyy-MM-dd").parse((String) this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 4));
+                    Date dateinit = new SimpleDateFormat("yyyy-MM-dd").parse((String) this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 5));
                     this.jfreditpasantia.dateFechaInicio.setDate(dateinit);
                     
-                    Date datefin = new SimpleDateFormat("yyyy-MM-dd").parse((String) this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 5));
+                    Date datefin = new SimpleDateFormat("yyyy-MM-dd").parse((String) this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 6));
                     this.jfreditpasantia.dateFechaCulminacion.setDate(datefin);
                     
-                    this.jfreditpasantia.comboEstado.setSelectedItem(this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 6));                   
+                    this.jfreditpasantia.comboEstado.setSelectedItem(this.jfrpasantia.tablePasantias.getValueAt(this.jfrpasantia.tablePasantias.getSelectedRow(), 7));                   
                 }else{
                     JOptionPane.showMessageDialog(this.jfrpasantia,"Seleccione un registro y luego de click en editar");
                 }                              
@@ -103,8 +104,11 @@ public class PasantiasController implements ActionListener{
                     JOptionPane.showMessageDialog(this.jfrnuevapasantia, "El valor de medio tiempo es requerido");
                 }else if(this.jfrnuevapasantia.txtTiempoCompleto.getValue().toString().isEmpty()){
                     JOptionPane.showMessageDialog(this.jfrnuevapasantia, "El valor de tiempo completo es requerido");
+                }else if(this.jfrnuevapasantia.txtTitulo.getText().toString().isEmpty()){
+                    JOptionPane.showMessageDialog(this.jfrnuevapasantia, "El título del proyecto es requerido es requerido");                
                 }else{
                     Pasantias pa = new Pasantias();
+                    pa.setTITULO_PROYECTO(this.jfrnuevapasantia.txtTitulo.getText().toString().toUpperCase());
                     int medioTiempo = (int)this.jfrnuevapasantia.txtMedioTiempo.getValue();
                     int tiempoCompleto = (int) this.jfrnuevapasantia.txtTiempoCompleto.getValue();
                     pa.setMEDIO_TIEMPO(medioTiempo);
@@ -123,10 +127,12 @@ public class PasantiasController implements ActionListener{
                     pasantiadao.savePasantias(pa);
                     
                     JOptionPane.showMessageDialog(this.jfrpasantia, "Pasantía registrada!!");
-                    this.jfrnuevapasantia.txtMedioTiempo.setValue(0);
+                    this.jfrnuevapasantia.txtMedioTiempo.setValue(0);                    
                     this.jfrnuevapasantia.txtTiempoCompleto.setValue(0);
                     this.jfrnuevapasantia.dateFechaCulminacion.setDate(null);
                     this.jfrnuevapasantia.dateFechaInicio.setDate(null);
+                    this.jfrnuevapasantia.txtTitulo.setText("");
+                    this.jfrnuevapasantia.txtTitulo.requestFocus();
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this.jfrnuevapasantia, "Error: " + ex.getMessage());       
@@ -142,6 +148,7 @@ public class PasantiasController implements ActionListener{
               try {
                 Pasantias pa = new Pasantias();
                 pa.setID_PASANTIAS(Integer.parseInt(this.jfreditpasantia.txtCodigo.getText().toString()));
+                pa.setTITULO_PROYECTO(this.jfreditpasantia.txtTitulo.getText().toString().toUpperCase());
                 int tiempoCompleto = (int) this.jfreditpasantia.txtTiempoCompleto.getValue();
                 int medioTiempo = (int) this.jfreditpasantia.txtMedioTiempo.getValue();
                 pa.setTIEMPO_COMPLETO(tiempoCompleto);
@@ -172,6 +179,7 @@ public class PasantiasController implements ActionListener{
     public void setDefaultTable(DefaultTableModel dtm){
         this.jfrpasantia.tablePasantias.setModel(dtm);
         dtm.addColumn("Código");
+        dtm.addColumn("Título del proyecto");
         dtm.addColumn("Tiempo completo");
         dtm.addColumn("Medio tiempo");
         dtm.addColumn("Total de horas");
@@ -196,19 +204,20 @@ public class PasantiasController implements ActionListener{
                 }           
             };
             setDefaultTable(model);
-            Object [] data = new Object[7];                    
+            Object [] data = new Object[8];                    
 
             if (this.jfrpasantia.txtCodigo.getText().isEmpty()) {
                 this.jfrpasantia.tablePasantias.removeAll();
                 List<Pasantias> lpasantias = pasantiadao.AllPasantias();
                 for (Pasantias pa : lpasantias) {
                     data[0] = pa.getID_PASANTIAS();
-                    data[1] = pa.getTIEMPO_COMPLETO();
-                    data[2] = pa.getMEDIO_TIEMPO();
-                    data[3] = pa.getTOTAL_HORAS();
-                    data[4] = pa.getFECHA_INICIO();
-                    data[5] = pa.getFECHA_CULMINACION();
-                    data[6] = pa.getESTADO();                    
+                    data[1] = pa.getTITULO_PROYECTO();
+                    data[2] = pa.getTIEMPO_COMPLETO();
+                    data[3] = pa.getMEDIO_TIEMPO();
+                    data[4] = pa.getTOTAL_HORAS();
+                    data[5] = pa.getFECHA_INICIO();
+                    data[6] = pa.getFECHA_CULMINACION();
+                    data[7] = pa.getESTADO();                  
                     model.addRow(data);
                 }
             }else{
@@ -216,12 +225,13 @@ public class PasantiasController implements ActionListener{
                 Pasantias pa = pasantiadao.findPasantiaById(Integer.parseInt(this.jfrpasantia.txtCodigo.getText().toString()));
                 if (pa != null) {
                     data[0] = pa.getID_PASANTIAS();
-                    data[1] = pa.getTIEMPO_COMPLETO();
-                    data[2] = pa.getMEDIO_TIEMPO();
-                    data[3] = pa.getTOTAL_HORAS();
-                    data[4] = pa.getFECHA_INICIO();
-                    data[5] = pa.getFECHA_CULMINACION();
-                    data[6] = pa.getESTADO();   
+                    data[1] = pa.getTITULO_PROYECTO();
+                    data[2] = pa.getTIEMPO_COMPLETO();
+                    data[3] = pa.getMEDIO_TIEMPO();
+                    data[4] = pa.getTOTAL_HORAS();
+                    data[5] = pa.getFECHA_INICIO();
+                    data[6] = pa.getFECHA_CULMINACION();
+                    data[7] = pa.getESTADO();   
                     model.addRow(data);
                 }else{
                     JOptionPane.showMessageDialog(this.jfrpasantia, "El registro con codigo " + this.jfrpasantia.txtCodigo.getText().toString() + " no existe");
@@ -240,18 +250,19 @@ public class PasantiasController implements ActionListener{
                 }           
             };
             setDefaultTable(model);
-            Object [] data = new Object[7];  
+            Object [] data = new Object[8];  
             Date fecha_inicio = this.jfrpasantia.dateFechaInicio.getDate();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             List<Pasantias> lpasantias = pasantiadao.findPasantiaByFechaInicio(format.format(fecha_inicio));
             for (Pasantias pa : lpasantias) {
                 data[0] = pa.getID_PASANTIAS();
-                data[1] = pa.getTIEMPO_COMPLETO();
-                data[2] = pa.getMEDIO_TIEMPO();
-                data[3] = pa.getTOTAL_HORAS();
-                data[4] = pa.getFECHA_INICIO();
-                data[5] = pa.getFECHA_CULMINACION();
-                data[6] = pa.getESTADO();                    
+                data[1] = pa.getTITULO_PROYECTO();
+                data[2] = pa.getTIEMPO_COMPLETO();
+                data[3] = pa.getMEDIO_TIEMPO();
+                data[4] = pa.getTOTAL_HORAS();
+                data[5] = pa.getFECHA_INICIO();
+                data[6] = pa.getFECHA_CULMINACION();
+                data[7] = pa.getESTADO();                         
                 model.addRow(data);
             }                       
         } catch (Exception ex) {

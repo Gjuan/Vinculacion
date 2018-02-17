@@ -83,5 +83,15 @@ public class PasantiasDAO extends FactorFactory implements PasantiasDaoInterface
             manager.close();
         }
     }
+
+    @Override
+    public Pasantias findPasantiaByTitulo(String titulo) {
+        EntityManager manager = emf.createEntityManager();        
+        Pasantias lpasantia = (Pasantias)manager.createQuery("FROM Pasantias WHERE TITULO_PROYECTO = :titulo")
+                .setParameter("titulo", titulo)
+                .getSingleResult();
+        manager.close();
+        return lpasantia;
+    }
     
 }

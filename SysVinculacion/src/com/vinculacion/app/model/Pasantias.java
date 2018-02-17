@@ -21,6 +21,9 @@ public class Pasantias implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_PASANTIAS;
     
+    @Column(name="TITULO_PROYECTO")
+    private String TITULO_PROYECTO;
+    
     @Column(name="TIEMPO_COMPLETO")
     private int TIEMPO_COMPLETO;
     
@@ -45,8 +48,9 @@ public class Pasantias implements Serializable{
     public Pasantias() {
     }
 
-    public Pasantias(int ID_PASANTIAS, int TIEMPO_COMPLETO, int MEDIO_TIEMPO, int TOTAL_HORAS, String FECHA_INICIO, String FECHA_CULMINACION, String ESTADO) {
+    public Pasantias(int ID_PASANTIAS, String TITULO_PROYECTO, int TIEMPO_COMPLETO, int MEDIO_TIEMPO, int TOTAL_HORAS, String FECHA_INICIO, String FECHA_CULMINACION, String ESTADO) {
         this.ID_PASANTIAS = ID_PASANTIAS;
+        this.TITULO_PROYECTO = TITULO_PROYECTO;
         this.TIEMPO_COMPLETO = TIEMPO_COMPLETO;
         this.MEDIO_TIEMPO = MEDIO_TIEMPO;
         this.TOTAL_HORAS = TOTAL_HORAS;
@@ -118,6 +122,12 @@ public class Pasantias implements Serializable{
     public void setInformePasantias(List<InformePasantias> informePasantias) {
         this.informePasantias = informePasantias;
     }
-    
-    
+
+    public String getTITULO_PROYECTO() {
+        return TITULO_PROYECTO;
+    }
+
+    public void setTITULO_PROYECTO(String TITULO_PROYECTO) {
+        this.TITULO_PROYECTO = TITULO_PROYECTO;
+    }
 }

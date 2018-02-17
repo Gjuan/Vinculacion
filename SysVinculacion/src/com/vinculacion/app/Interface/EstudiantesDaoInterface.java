@@ -20,5 +20,7 @@ public interface EstudiantesDaoInterface {
     void deleteEstudiante (String id);
     
     Estudiantes findEstudianteByCedula (String cedula);   
+    
+    Estudiantes findEstudianteByNameAndLastName (String name, String lastName);   
         
 }

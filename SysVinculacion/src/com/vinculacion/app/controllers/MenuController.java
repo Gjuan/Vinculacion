@@ -20,6 +20,7 @@ import com.vinculacion.app.views.JFrameEditEstudiantes;
 import com.vinculacion.app.views.JFrameEditFacultad;
 import com.vinculacion.app.views.JFrameEditGenero;
 import com.vinculacion.app.views.JFrameEditHorarioPasantias;
+import com.vinculacion.app.views.JFrameEditInformePasantias;
 import com.vinculacion.app.views.JFrameEditNivel;
 import com.vinculacion.app.views.JFrameEditPasantia;
 import com.vinculacion.app.views.JFrameEditPerfil;
@@ -35,6 +36,7 @@ import com.vinculacion.app.views.JFrameEstudiantes;
 import com.vinculacion.app.views.JFrameFacultad;
 import com.vinculacion.app.views.JFrameGenero;
 import com.vinculacion.app.views.JFrameHorarioPasantias;
+import com.vinculacion.app.views.JFrameInformePasantias;
 import com.vinculacion.app.views.JFrameNivel;
 import com.vinculacion.app.views.JFrameNuevaAsignatura;
 import com.vinculacion.app.views.JFrameNuevaCarrera;
@@ -51,6 +53,7 @@ import com.vinculacion.app.views.JFrameNuevoEmpleado;
 import com.vinculacion.app.views.JFrameNuevoEstudiante;
 import com.vinculacion.app.views.JFrameNuevoGenero;
 import com.vinculacion.app.views.JFrameNuevoHorarioPasantias;
+import com.vinculacion.app.views.JFrameNuevoInformePasantias;
 import com.vinculacion.app.views.JFrameNuevoNivel;
 import com.vinculacion.app.views.JFrameNuevoPerfil;
 import com.vinculacion.app.views.JFrameNuevoPeriodoAcademico;
@@ -135,6 +138,9 @@ public class MenuController implements ActionListener{
     JFramePasantias jfrpasantia;
     JFrameEditPasantia jfreditpasantia;
     JFrameNuevaPasantia jfrnuevapasantia;
+    JFrameInformePasantias jfrinforme;
+    JFrameEditInformePasantias jfreditinforme;
+    JFrameNuevoInformePasantias jfrnuevoinforme;
     
     public MenuController(MenuPrincipal menu, Auth a) {
         this.mp = menu;
@@ -320,6 +326,13 @@ public class MenuController implements ActionListener{
             this.jfrpasantia = new JFramePasantias(mp, false);
             this.jfrpasantia.setVisible(true);
             PasantiasController pasantiacontrol = new PasantiasController(mp, jfrpasantia, jfrnuevapasantia, jfreditpasantia);
+        }
+        if (e.getSource() == this.mp.menuItemInforme) {
+            this.jfrnuevoinforme = new JFrameNuevoInformePasantias(mp, false);
+            this.jfrinforme = new JFrameInformePasantias(mp, false);
+            this.jfreditinforme = new JFrameEditInformePasantias(mp, false);
+            this.jfrinforme.setVisible(true);
+            InformePasantiasController informecontrol = new InformePasantiasController(mp, jfrinforme, jfreditinforme, jfrnuevoinforme);
         }
     } 
     

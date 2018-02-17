@@ -21,16 +21,13 @@ public class InformePasantias implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_PASANTIAS_ESTUDIANTES;
 	
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_PASANTIAS")
     private Pasantias pasantias;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="CODIGO_ESTUDIANTE")
     private Estudiantes estudiantes;
-    
-    @Column(name="TITULO_PROYECTO")
-    private String TITULO_PROYECTO;
     
     @Column(name="FECHA_ENTREGA_INFORME")
     private String FECHA_ENTREGA_INFORME;
@@ -41,11 +38,10 @@ public class InformePasantias implements Serializable{
     public InformePasantias() {
     }
 
-    public InformePasantias(int ID_PASANTIAS_ESTUDIANTES, Pasantias pasantias, Estudiantes estudiantes, String TITULO_PROYECTO, String FECHA_ENTREGA_INFORME, String ESTADO) {
+    public InformePasantias(int ID_PASANTIAS_ESTUDIANTES, Pasantias pasantias, Estudiantes estudiantes, String FECHA_ENTREGA_INFORME, String ESTADO) {
         this.ID_PASANTIAS_ESTUDIANTES = ID_PASANTIAS_ESTUDIANTES;
         this.pasantias = pasantias;
         this.estudiantes = estudiantes;
-        this.TITULO_PROYECTO = TITULO_PROYECTO;
         this.FECHA_ENTREGA_INFORME = FECHA_ENTREGA_INFORME;
         this.ESTADO = ESTADO;
     }
@@ -73,15 +69,7 @@ public class InformePasantias implements Serializable{
     public void setEstudiantes(Estudiantes estudiantes) {
         this.estudiantes = estudiantes;
     }
-
-    public String getTITULO_PROYECTO() {
-        return TITULO_PROYECTO;
-    }
-
-    public void setTITULO_PROYECTO(String TITULO_PROYECTO) {
-        this.TITULO_PROYECTO = TITULO_PROYECTO;
-    }
-
+    
     public String getFECHA_ENTREGA_INFORME() {
         return FECHA_ENTREGA_INFORME;
     }
