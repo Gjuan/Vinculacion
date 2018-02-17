@@ -21,6 +21,7 @@ import com.vinculacion.app.views.JFrameEditFacultad;
 import com.vinculacion.app.views.JFrameEditGenero;
 import com.vinculacion.app.views.JFrameEditHorarioPasantias;
 import com.vinculacion.app.views.JFrameEditNivel;
+import com.vinculacion.app.views.JFrameEditPasantia;
 import com.vinculacion.app.views.JFrameEditPerfil;
 import com.vinculacion.app.views.JFrameEditPeriodoAcademico;
 import com.vinculacion.app.views.JFrameEditSeccion;
@@ -40,6 +41,7 @@ import com.vinculacion.app.views.JFrameNuevaCarrera;
 import com.vinculacion.app.views.JFrameNuevaEmpresa;
 import com.vinculacion.app.views.JFrameNuevaEscuela;
 import com.vinculacion.app.views.JFrameNuevaFacultad;
+import com.vinculacion.app.views.JFrameNuevaPasantia;
 import com.vinculacion.app.views.JFrameNuevaSeccion;
 import com.vinculacion.app.views.JFrameNuevoCargo;
 import com.vinculacion.app.views.JFrameNuevoCargoDepartamental;
@@ -55,6 +57,7 @@ import com.vinculacion.app.views.JFrameNuevoPeriodoAcademico;
 import com.vinculacion.app.views.JFrameNuevoTipoDedicacion;
 import com.vinculacion.app.views.JFrameNuevoTipoDocumentoPracticas;
 import com.vinculacion.app.views.JFrameNuevoUsuario;
+import com.vinculacion.app.views.JFramePasantias;
 import com.vinculacion.app.views.JFramePerfil;
 import com.vinculacion.app.views.JFramePeriodoAcademico;
 import com.vinculacion.app.views.JFrameSeccion;
@@ -129,6 +132,9 @@ public class MenuController implements ActionListener{
     JFrameEstudiantes jfrestudiante;
     JFrameNuevoEstudiante jfrnuevoest;
     JFrameEditEstudiantes jfreditest;     
+    JFramePasantias jfrpasantia;
+    JFrameEditPasantia jfreditpasantia;
+    JFrameNuevaPasantia jfrnuevapasantia;
     
     public MenuController(MenuPrincipal menu, Auth a) {
         this.mp = menu;
@@ -155,6 +161,8 @@ public class MenuController implements ActionListener{
         this.mp.menuItemCargoDepartamental.addActionListener(this);
         this.mp.menuItemEmpleados.addActionListener(this);
         this.mp.menuItemPasante.addActionListener(this);
+        this.mp.menuItemPasantia.addActionListener(this);
+        this.mp.menuItemInforme.addActionListener(this);
     }
 
     @Override
@@ -305,6 +313,13 @@ public class MenuController implements ActionListener{
             this.jfreditest = new JFrameEditEstudiantes(mp, false);
             this.jfrestudiante.setVisible(true);
             EstudiantesController estcontrol = new EstudiantesController(mp, jfrestudiante, jfrnuevoest, jfreditest);
+        }
+        if (e.getSource() == this.mp.menuItemPasantia) {
+            this.jfrnuevapasantia = new JFrameNuevaPasantia(mp, false);
+            this.jfreditpasantia = new JFrameEditPasantia(mp, false);
+            this.jfrpasantia = new JFramePasantias(mp, false);
+            this.jfrpasantia.setVisible(true);
+            PasantiasController pasantiacontrol = new PasantiasController(mp, jfrpasantia, jfrnuevapasantia, jfreditpasantia);
         }
     } 
     

@@ -28,7 +28,7 @@ public class PasantiasDAO extends FactorFactory implements PasantiasDaoInterface
     @Override
     public List<Pasantias> AllPasantias() {
         EntityManager manager = emf.createEntityManager();        
-        List<Pasantias> lpasantia = (List<Pasantias>)manager.createQuery("FROM Pasantias order by ID_PASANTIAS desc")
+        List<Pasantias> lpasantia = (List<Pasantias>)manager.createQuery("FROM Pasantias WHERE ESTADO = 'ACTIVO' order by ID_PASANTIAS desc")
                 .getResultList();
         manager.close();
         return lpasantia;

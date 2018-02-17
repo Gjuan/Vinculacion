@@ -9,13 +9,11 @@ import com.vinculacion.app.views.MenuPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import org.postgresql.jdbc2.optional.SimpleDataSource;
 
 public class PeriodoAcademicoController implements ActionListener{
     
@@ -160,7 +158,7 @@ public class PeriodoAcademicoController implements ActionListener{
             }
         }
         if (e.getSource() == this.jfrperiodo.btnEditar) {
-             try {
+            try {
                 if (!this.jfrperiodo.tablePeriodosAcademicos.getValueAt(this.jfrperiodo.tablePeriodosAcademicos.getSelectedRow(), 0).toString().isEmpty()) {
                     this.editperiodo.setVisible(true);
                     this.editperiodo.txtCodigo.setText(this.jfrperiodo.tablePeriodosAcademicos.getValueAt(this.jfrperiodo.tablePeriodosAcademicos.getSelectedRow(), 0).toString());
