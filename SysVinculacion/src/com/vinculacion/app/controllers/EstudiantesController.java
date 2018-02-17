@@ -31,6 +31,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -120,7 +121,92 @@ public class EstudiantesController implements ActionListener{
             }
         }
         if (e.getSource() == this.jfrestudiante.btnEditar) {
-        
+            try {
+                if (!this.jfrestudiante.tableEstudiantes.getValueAt(this.jfrestudiante.tableEstudiantes.getSelectedRow(), 0).toString().isEmpty()) {
+                    this.jfredit.setVisible(true);
+                    this.jfredit.comboCarrera.removeAllItems();
+                    List<Carreras> lcarrera = cdao.AllCarreras();
+                    for (Carreras carreras : lcarrera) {
+                        this.jfredit.comboCarrera.addItem(carreras.getDESCRIPCION());
+                    }
+
+                    this.jfredit.comboGenero.removeAllItems();
+                    List<Genero> lgen = gdao.AllGeneros();
+                    for (Genero genero : lgen) {
+                        this.jfredit.comboGenero.addItem(genero.getDESCRIPCION());
+                    }
+
+                    this.jfredit.comboHorario.removeAllItems();
+                    List<HorarioPasantias> lh = hpdao.AllHorariosPasantias();
+                    for (HorarioPasantias horarioPasantias : lh) {
+                        this.jfredit.comboHorario.addItem(horarioPasantias.getDESCRIPCION_HORARIO());
+                    }
+
+                    this.jfredit.comboNivel.removeAllItems();
+                    List<Nivel> lnivel = ndao.AllNiveles();
+                    for (Nivel nivel : lnivel) {
+                        this.jfredit.comboNivel.addItem(nivel.getSEMESTRE());
+                    }
+
+                    this.jfredit.comboPeriodoAcademico.removeAllItems();
+                    List<PeriodoAcademico> lpea = padao.AllPeriodosAcademicos();
+                    for (PeriodoAcademico periodoAcademico : lpea) {
+                        this.jfredit.comboPeriodoAcademico.addItem(periodoAcademico.getFECHA_INICIO_PERIODO());
+                    }
+
+                    this.jfredit.comboSeccion.removeAllItems();
+                    List<Seccion> lseccion = sdao.AllSecciones();
+                    for (Seccion seccion : lseccion) {
+                        this.jfredit.comboSeccion.addItem(seccion.getDESCRIPCION());
+                    }
+                    this.jfredit.comboTipoDocumento.removeAllItems();
+                    List<TipoDocumentoPracticas> ltdp = tdpdao.AllTiposDocumentosPracticas();
+                    for (TipoDocumentoPracticas tipoDocumentoPracticas : ltdp) {
+                        this.jfredit.comboTipoDocumento.addItem(tipoDocumentoPracticas.getDescripcion());
+                    }
+
+                    this.jfredit.comboTutorDocente.removeAllItems();
+                    List<Docente> ldocente = ddao.AllDocente();
+                    for (Docente docente : ldocente) {
+                        this.jfredit.comboTutorDocente.addItem(docente.getNOMBRES() + "-"+ docente.getAPELLIDOS());
+                    }
+
+                    this.jfredit.comboTutorEmpresarial.removeAllItems();
+                    List<Empleados> lemp = emdao.AllEmpleados();
+                    for (Empleados empleados : lemp) {
+                        this.jfredit.comboTutorEmpresarial.addItem(empleados.getNOMBRES() + "-" + empleados.getAPELLIDOS());
+                    }
+                    
+                    this.jfredit.txtCodigo.setText(this.jfrestudiante.tableEstudiantes.getValueAt(this.jfrestudiante.tableEstudiantes.getSelectedRow(), 0).toString());
+                    this.jfredit.txtCedula.setText(this.jfrestudiante.tableEstudiantes.getValueAt(this.jfrestudiante.tableEstudiantes.getSelectedRow(), 1).toString());                    
+                    Estudiantes est = estdao.findEstudianteByCedula(this.jfrestudiante.tableEstudiantes.getValueAt(this.jfrestudiante.tableEstudiantes.getSelectedRow(), 1).toString());
+                    this.jfredit.txtApellidos.setText(est.getAPELLIDOS());
+                    this.jfredit.txtNombre.setText(est.getNOMBRES());
+                    this.jfredit.txtCodigoMatricula.setText(est.getCOD_MATRICULA());
+                    this.jfredit.txtCorreo.setText(est.getCORREO());
+                    this.jfredit.txtDireccion.setText(est.getDIRECCION());
+                    this.jfredit.txtTelefono.setText(est.getTELEFONO());
+                    this.jfredit.comboCarrera.setSelectedItem(est.getCarrera().getDESCRIPCION());
+                    this.jfredit.comboGenero.setSelectedItem(est.getGenero().getDESCRIPCION());
+                    this.jfredit.comboHorario.setSelectedItem(est.getHorarioPasantias().getDESCRIPCION_HORARIO());
+                    this.jfredit.comboNivel.setSelectedItem(est.getNivel().getSEMESTRE());
+                    this.jfredit.comboPeriodoAcademico.setSelectedItem(est.getPeriodoAcademico().getFECHA_INICIO_PERIODO());
+                    this.jfredit.comboSeccion.setSelectedItem(est.getSeccion().getDESCRIPCION());
+                    this.jfredit.comboTipoDocumento.setSelectedItem(est.getTipoDocumentoPracticas().getDescripcion());                    
+                    this.jfredit.comboTutorDocente.setSelectedItem(est.getDocente().getNOMBRES() + "-" + est.getDocente().getAPELLIDOS());
+                    this.jfredit.comboTutorEmpresarial.setSelectedItem(est.getEmpleado().getNOMBRES() + "-" + est.getEmpleado().getAPELLIDOS());
+                    this.jfredit.comboEstado.setSelectedItem(est.getESTADO());
+                    
+                    ImageIcon img = new ImageIcon(est.getFOTO());
+                    Icon icono = new ImageIcon(img.getImage().getScaledInstance(this.jfredit.lbFotoPasante.getWidth(), this.jfredit.lbFotoPasante.getHeight(), Image.SCALE_DEFAULT));
+                    this.jfredit.lbFotoPasante.setIcon(icono);
+                    this.jfredit.repaint();
+                }else{
+                    JOptionPane.showMessageDialog(mp,"Seleccione un registro y luego de click en editar");
+                }                              
+            } catch (Exception ex) {
+                 JOptionPane.showMessageDialog(mp,"Seleccione un registro y luego de click en editar");
+            }
         }        
         if (e.getSource() == this.jfrestudiante.btnNuevo) {
             this.nuevo.setVisible(true);
@@ -155,7 +241,28 @@ public class EstudiantesController implements ActionListener{
                 this.nuevo.comboPeriodoAcademico.addItem(periodoAcademico.getFECHA_INICIO_PERIODO());
             }
             
-            /*FALTA AGREGAR LOS DATOS A LOS DEMÁS COMBO*/
+            this.nuevo.comboSeccion.removeAllItems();
+            List<Seccion> lseccion = sdao.AllSecciones();
+            for (Seccion seccion : lseccion) {
+                this.nuevo.comboSeccion.addItem(seccion.getDESCRIPCION());
+            }
+            this.nuevo.comboTipoDocumento.removeAllItems();
+            List<TipoDocumentoPracticas> ltdp = tdpdao.AllTiposDocumentosPracticas();
+            for (TipoDocumentoPracticas tipoDocumentoPracticas : ltdp) {
+                this.nuevo.comboTipoDocumento.addItem(tipoDocumentoPracticas.getDescripcion());
+            }
+            
+            this.nuevo.comboTutorDocente.removeAllItems();
+            List<Docente> ldocente = ddao.AllDocente();
+            for (Docente docente : ldocente) {
+                this.nuevo.comboTutorDocente.addItem(docente.getNOMBRES() + "-"+ docente.getAPELLIDOS());
+            }
+            
+            this.nuevo.comboTutorEmpresarial.removeAllItems();
+            List<Empleados> lemp = emdao.AllEmpleados();
+            for (Empleados empleados : lemp) {
+                this.nuevo.comboTutorEmpresarial.addItem(empleados.getNOMBRES() + "-" + empleados.getAPELLIDOS());
+            }
             
             this.jfrestudiante.dispose();
         }
@@ -203,7 +310,7 @@ public class EstudiantesController implements ActionListener{
                     PeriodoAcademico periodo = padao.findPeriodoAcademicoByStartDate(this.nuevo.comboPeriodoAcademico.getSelectedItem().toString());                    
                     est.setPeriodoAcademico(periodo);
                     
-                    est.setFOTO(this.file.getSelectedFile().getName());
+                    est.setFOTO(bImg);
                    
                     TipoDocumentoPracticas tdp = tdpdao.findTipoDocumentoPracticasByDescription(this.nuevo.comboTipoDocumento.getSelectedItem().toString());
                     est.setTipoDocumentoPracticas(tdp);
@@ -220,12 +327,25 @@ public class EstudiantesController implements ActionListener{
                     est.setESTADO("ACTIVO");
                     estdao.saveEstudiante(est);
                     JOptionPane.showMessageDialog(this.nuevo, "Pasante ingresado correctamente!!");
+                    
                     this.nuevo.txtApellidos.setText("");
                     this.nuevo.txtNombre.setText("");
                     this.nuevo.txtCodigoMatricula.setText("");
                     this.nuevo.txtCorreo.setText("");
                     this.nuevo.txtDireccion.setText("");
+                    this.nuevo.txtCedula.setText("");
                     this.nuevo.txtTelefono.setText("");
+                    this.nuevo.comboCarrera.setSelectedIndex(0);
+                    this.nuevo.comboGenero.setSelectedIndex(0);
+                    this.nuevo.comboHorario.setSelectedIndex(0);
+                    this.nuevo.comboNivel.setSelectedIndex(0);
+                    this.nuevo.comboPeriodoAcademico.setSelectedIndex(0);
+                    this.nuevo.comboSeccion.setSelectedIndex(0);
+                    this.nuevo.comboTipoDocumento.setSelectedIndex(0);
+                    this.nuevo.comboTutorDocente.setSelectedIndex(0);
+                    this.nuevo.comboTutorEmpresarial.setSelectedIndex(0);
+                    this.nuevo.lbFotoPasante.setIcon(null);
+                    this.nuevo.repaint();
                     this.nuevo.txtCedula.requestFocus();
                 } 
             } catch (Exception ex) {
@@ -244,7 +364,7 @@ public class EstudiantesController implements ActionListener{
                 file.setFileFilter(filter);
                 returnVal = file.showOpenDialog(this.nuevo);                
                 if(returnVal == JFileChooser.APPROVE_OPTION) {                  
-                    archivo = file.getSelectedFile();
+                    archivo = new File(file.getSelectedFile().getAbsolutePath());
                     bImg = Visor(archivo);
                     ImageIcon img = new ImageIcon(bImg);
                     Icon icono = new ImageIcon(img.getImage().getScaledInstance(this.nuevo.lbFotoPasante.getWidth(), this.nuevo.lbFotoPasante.getHeight(), Image.SCALE_DEFAULT));
@@ -252,30 +372,77 @@ public class EstudiantesController implements ActionListener{
                     this.nuevo.repaint();            
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(jfrestudiante,"Error: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this.nuevo,"Error: " + ex.getMessage());
             }             
         }
         /*Editar estudiante*/
         if (e.getSource() == this.jfredit.btnGuardar) {
-            if(returnVal2 == JFileChooser.APPROVE_OPTION) {                  
+            try {
+                Estudiantes est = new Estudiantes();
+                est.setCODIGO(this.jfredit.txtCodigo.getText().toString());
+                est.setCEDULA(this.jfredit.txtCedula.getText().toString());
+                est.setNOMBRES(this.jfredit.txtNombre.getText().toString().toUpperCase());
+                est.setAPELLIDOS(this.jfredit.txtApellidos.getText().toString().toUpperCase());
+                est.setCOD_MATRICULA(this.jfredit.txtCodigoMatricula.getText().toString());
+                est.setDIRECCION(this.jfredit.txtDireccion.getText().toString().toUpperCase());
+                est.setTELEFONO(this.jfredit.txtTelefono.getText().toString());
+                est.setCORREO(this.jfredit.txtCorreo.getText().toString().toLowerCase());
+                Carreras carrera = cdao.findCarreraByDescription(this.jfredit.comboCarrera.getSelectedItem().toString());
+                est.setCarrera(carrera);                
+                Nivel niv = ndao.findNivelBySemestre(this.jfredit.comboNivel.getSelectedItem().toString());
+                est.setNivel(niv);
+                Genero genero = gdao.findGeneroByDescription(this.jfredit.comboGenero.getSelectedItem().toString());
+                est.setGenero(genero);
+                Seccion seccion = sdao.findSeccionByDescription(this.jfredit.comboSeccion.getSelectedItem().toString());
+                est.setSeccion(seccion);
+                PeriodoAcademico periodo = padao.findPeriodoAcademicoByStartDate(this.jfredit.comboPeriodoAcademico.getSelectedItem().toString());
+                est.setPeriodoAcademico(periodo);
+                String profesor[] = this.jfredit.comboTutorDocente.getSelectedItem().toString().split("-");
+                Docente docente = ddao.findDocenteByLastNameAndName(profesor[0], profesor[1]);
+                est.setDocente(docente);
+                String emplead [] = this.jfredit.comboTutorEmpresarial.getSelectedItem().toString().split("-");
+                Empleados empleado = emdao.findEmpleadosByLastNameAndName(emplead[0], emplead[1]);
+                est.setEmpleado(empleado);
+                TipoDocumentoPracticas tdp = tdpdao.findTipoDocumentoPracticasByDescription(this.jfredit.comboTipoDocumento.getSelectedItem().toString());
+                est.setTipoDocumentoPracticas(tdp);
+                HorarioPasantias horario =  hpdao.findHorarioPasantiaByDescription(this.jfredit.comboHorario.getSelectedItem().toString());
+                est.setHorarioPasantias(horario);
+                Usuarios usuario = udao.findUsuarioById(AuthController.id);
+                est.setUsuario(usuario);        
+                est.setESTADO(this.jfredit.comboEstado.getSelectedItem().toString());               
                 
+                if (returnVal2 == JFileChooser.APPROVE_OPTION) {
+                    est.setFOTO(bImg2);               
+                }else{
+                    Estudiantes estudiante = estdao.findEstudianteById(this.jfredit.txtCodigo.getText().toString());                                   
+                    est.setFOTO(estudiante.getFOTO());
+                }            
+                estdao.updateEstudiante(est);
+                JOptionPane.showMessageDialog(this.jfredit, "Estudiante actualizado");
+                getAllEstudiantes();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this.jfredit, "Error: " + ex.getMessage());
             }
         }
         if (e.getSource() == this.jfredit.btnRegresar) {
             this.jfredit.dispose();
         }
         if (e.getSource() == this.jfredit.btnSeleccionarFoto) {
-            file2 = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
-            file2.setFileFilter(filter);
-            returnVal2 = file2.showOpenDialog(this.jfredit);                
-            if(returnVal2 == JFileChooser.APPROVE_OPTION) {                  
-                archivo2 = file2.getSelectedFile();
-                bImg2 = Visor(archivo2);
-                ImageIcon img = new ImageIcon(bImg2);
-                Icon icono = new ImageIcon(img.getImage().getScaledInstance(this.jfredit.lbFotoPasante.getWidth(), this.jfredit.lbFotoPasante.getHeight(), Image.SCALE_DEFAULT));
-                this.jfredit.lbFotoPasante.setIcon(icono);
-                this.jfredit.repaint();                
+            try {
+                file2 = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
+                file2.setFileFilter(filter);
+                returnVal2 = file2.showOpenDialog(this.jfredit);                
+                if(returnVal2 == JFileChooser.APPROVE_OPTION) {                  
+                    archivo2 = new File(file2.getSelectedFile().getAbsolutePath());
+                    bImg2 = Visor(archivo2);
+                    ImageIcon img = new ImageIcon(bImg2);
+                    Icon icono = new ImageIcon(img.getImage().getScaledInstance(this.jfredit.lbFotoPasante.getWidth(), this.jfredit.lbFotoPasante.getHeight(), Image.SCALE_DEFAULT));
+                    this.jfredit.lbFotoPasante.setIcon(icono);
+                    this.jfredit.repaint();            
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this.jfredit,"Error: " + ex.getMessage());
             }
         }
     }    
@@ -297,7 +464,6 @@ public class EstudiantesController implements ActionListener{
             model.addColumn("Dirección");
             model.addColumn("Teléfono");
             model.addColumn("Correo");
-            model.addColumn("Foto");
             model.addColumn("Carrera");
             model.addColumn("Nivel");
             model.addColumn("Género");
@@ -323,17 +489,16 @@ public class EstudiantesController implements ActionListener{
                     data[5] = est.getDIRECCION();
                     data[6] = est.getTELEFONO();
                     data[7] = est.getCORREO();
-                    data[8] = est.getFOTO();
-                    data[9] = est.getCarrera().getDESCRIPCION();
-                    data[10] = est.getNivel().getSEMESTRE();
-                    data[11] = est.getGenero().getDESCRIPCION();
-                    data[12] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
-                    data[13] = est.getSeccion().getDESCRIPCION();
-                    data[14] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
-                    data[15] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
-                    data[16] = est.getTipoDocumentoPracticas().getDescripcion();
-                    data[17] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
-                    data[18] = est.getESTADO();
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
                     model.addRow(data);
                 }
             }else{
@@ -347,18 +512,17 @@ public class EstudiantesController implements ActionListener{
                     data[4] = est.getAPELLIDOS();
                     data[5] = est.getDIRECCION();
                     data[6] = est.getTELEFONO();
-                    data[7] = est.getCORREO();
-                    data[8] = est.getFOTO();
-                    data[9] = est.getCarrera().getDESCRIPCION();
-                    data[10] = est.getNivel().getSEMESTRE();
-                    data[11] = est.getGenero();
-                    data[12] = est.getPeriodoAcademico();
-                    data[13] = est.getSeccion();
-                    data[14] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
-                    data[15] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
-                    data[16] = est.getTipoDocumentoPracticas().getDescripcion();
-                    data[17] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
-                    data[18] = est.getESTADO();
+                    data[7] = est.getCORREO();                    
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero();
+                    data[11] = est.getPeriodoAcademico();
+                    data[12] = est.getSeccion();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
                     model.addRow(data);
                 }else{
                     JOptionPane.showMessageDialog(this.jfrestudiante, "El estudiante con cédula " + this.jfrestudiante.txtCedula.getText().toString() + " no existe");
@@ -370,7 +534,7 @@ public class EstudiantesController implements ActionListener{
     }   
     
     public byte[] Visor(File f) {
-        byte[] bImg = new byte[1024*100];
+        byte[] bImg = new byte[(int) f.length()];
         try {
             entrada = new FileInputStream(f);
             entrada.read(bImg);

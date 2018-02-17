@@ -2,9 +2,6 @@ package com.vinculacion.app.dao;
 
 import com.vinculacion.app.Interface.EstudiantesDaoInterface;
 import com.vinculacion.app.Persistence.FactorFactory;
-import com.vinculacion.app.model.Carreras;
-import com.vinculacion.app.model.Docente;
-import com.vinculacion.app.model.Empleados;
 import com.vinculacion.app.model.Estudiantes;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -31,7 +28,7 @@ public class EstudiantesDAO extends FactorFactory implements EstudiantesDaoInter
     @Override
     public List<Estudiantes> AllEstudiantes() {
         EntityManager manager = emf.createEntityManager();        
-        List<Estudiantes> lest = (List<Estudiantes>)manager.createQuery("FROM Estudiantes order by CODIGO desc")
+        List<Estudiantes> lest = (List<Estudiantes>)manager.createQuery("FROM Estudiantes WHERE ESTADO = 'ACTIVO' order by CODIGO desc")
                 .getResultList();
         manager.close();
         return lest;
