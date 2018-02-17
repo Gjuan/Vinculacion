@@ -57,7 +57,6 @@ public class DocentesController implements ActionListener{
         
         this.jfrdocente.btnNuevo.addActionListener(this);
         this.jfrdocente.btnBuscar.addActionListener(this);
-        this.jfrdocente.btnImprimir.addActionListener(this);
         this.jfrdocente.btnEditar.addActionListener(this);
         this.jfrdocente.btnEliminar.addActionListener(this);
         this.jfrdocente.comboMostrarDocentes.addActionListener(this);
@@ -143,9 +142,6 @@ public class DocentesController implements ActionListener{
             }else{
                 JOptionPane.showMessageDialog(this.jfrdocente, "Seleccione docentes por cargos o por asignaturas para buscar");
             }
-        }
-        if (e.getSource() == this.jfrdocente.btnImprimir) {
-            
         }
         if (e.getSource() == this.jfrdocente.btnEditar) {
            try {
@@ -245,6 +241,8 @@ public class DocentesController implements ActionListener{
             try {
                 if (this.nuevodocent.txtCedula.getText().toString().isEmpty()) {
                     JOptionPane.showMessageDialog(nuevodocent, "La cédula es requerida");
+                }else if(this.nuevodocent.txtCedula.getText().toString().length() != 10){
+                    JOptionPane.showMessageDialog(nuevodocent, "La cédula debe tener 10 dígitos");
                 }else if (this.nuevodocent.txtNombres.getText().toString().isEmpty()) {
                     JOptionPane.showMessageDialog(nuevodocent, "El nombre es requerido");
                 }else if(this.nuevodocent.txtApellidos.getText().toString().isEmpty()){

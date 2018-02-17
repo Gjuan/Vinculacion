@@ -35,7 +35,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuItemNomUser = new javax.swing.JMenuItem();
         menuItemListadoDocentes = new javax.swing.JMenuItem();
         menuItemListadoPasantes = new javax.swing.JMenuItem();
-        menuItemInformePasantias = new javax.swing.JMenuItem();
         menuItemListadoEmpresas = new javax.swing.JMenuItem();
         menuItemCerrar = new javax.swing.JMenuItem();
         menuItemSalir = new javax.swing.JMenuItem();
@@ -49,12 +48,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuItemPasante = new javax.swing.JMenuItem();
         menuItemPasantia = new javax.swing.JMenuItem();
         menuItemInforme = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        menuItemAyudaRegPasantes = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuUtb = new javax.swing.JMenu();
         menuItemFacultad = new javax.swing.JMenuItem();
@@ -93,9 +86,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         menuItemListadoPasantes.setText("Generar listado de pasantes");
         menuArchivo.add(menuItemListadoPasantes);
-
-        menuItemInformePasantias.setText("Generar listado de informes de pasantias entregados");
-        menuArchivo.add(menuItemInformePasantias);
 
         menuItemListadoEmpresas.setText("Generar listado de empresas donde los alumnos hayan realizados sus prácticas");
         menuArchivo.add(menuItemListadoEmpresas);
@@ -139,26 +129,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu5.add(menuItemInforme);
 
         jMenuBar1.add(jMenu5);
-
-        jMenu6.setText("Ayuda");
-
-        menuItemAyudaRegPasantes.setText("Sobre registro de pasantes");
-        jMenu6.add(menuItemAyudaRegPasantes);
-
-        jMenu7.setText("Sobre Mantenimientos");
-
-        jMenuItem2.setText("Docentes");
-        jMenu7.add(jMenuItem2);
-
-        jMenuItem1.setText("Asignaturas");
-        jMenu7.add(jMenuItem1);
-
-        jMenuItem3.setText("Cargos de docentes");
-        jMenu7.add(jMenuItem3);
-
-        jMenu6.add(jMenu7);
-
-        jMenuBar1.add(jMenu6);
 
         jMenu2.setText("Mantenimiento");
 
@@ -299,18 +269,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenu menuArchivo;
     public javax.swing.JMenuItem menuItemAsignaturas;
-    private javax.swing.JMenuItem menuItemAyudaRegPasantes;
     public javax.swing.JMenuItem menuItemCargoDepartamental;
     public javax.swing.JMenuItem menuItemCargosDocentes;
     public javax.swing.JMenuItem menuItemCarreras;
@@ -324,7 +288,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public javax.swing.JMenuItem menuItemGenero;
     public javax.swing.JMenuItem menuItemHorarioPasantias;
     public javax.swing.JMenuItem menuItemInforme;
-    public javax.swing.JMenuItem menuItemInformePasantias;
     public javax.swing.JMenuItem menuItemListadoDocentes;
     public javax.swing.JMenuItem menuItemListadoEmpresas;
     public javax.swing.JMenuItem menuItemListadoPasantes;

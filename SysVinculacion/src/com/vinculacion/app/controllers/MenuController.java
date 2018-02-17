@@ -1,5 +1,7 @@
 package com.vinculacion.app.controllers;
 
+import com.vinculacion.app.informes.InformesFinales;
+import com.vinculacion.app.model.InformePasantias;
 import com.vinculacion.app.views.Auth;
 import com.vinculacion.app.views.JFrameAsignaturas;
 import com.vinculacion.app.views.JFrameCargo;
@@ -70,6 +72,7 @@ import com.vinculacion.app.views.JFrameUsuarios;
 import com.vinculacion.app.views.MenuPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 public class MenuController implements ActionListener{
     
@@ -169,6 +172,9 @@ public class MenuController implements ActionListener{
         this.mp.menuItemPasante.addActionListener(this);
         this.mp.menuItemPasantia.addActionListener(this);
         this.mp.menuItemInforme.addActionListener(this);
+        this.mp.menuItemListadoDocentes.addActionListener(this);
+        this.mp.menuItemListadoPasantes.addActionListener(this);
+        this.mp.menuItemListadoEmpresas.addActionListener(this);
     }
 
     @Override
@@ -333,6 +339,33 @@ public class MenuController implements ActionListener{
             this.jfreditinforme = new JFrameEditInformePasantias(mp, false);
             this.jfrinforme.setVisible(true);
             InformePasantiasController informecontrol = new InformePasantiasController(mp, jfrinforme, jfreditinforme, jfrnuevoinforme);
+        }
+        if (e.getSource() == this.mp.menuItemListadoDocentes) {
+            try {
+                InformesFinales informe = new InformesFinales();
+                informe.InformeDocenteCargos();
+                informe.cerrar();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this.mp, "Informe vacío");
+            }            
+        }
+        if (e.getSource() == this.mp.menuItemListadoPasantes) {
+            try {
+                InformesFinales informe = new InformesFinales();
+                informe.InformePasantes();
+                informe.cerrar();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this.mp, "Informe vacío");
+            }
+        }
+        if (e.getSource() == this.mp.menuItemListadoEmpresas) {
+            try {
+                InformesFinales informe = new InformesFinales();
+                informe.InformeEmpresas();
+                informe.cerrar();        
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this.mp, "Informe vacío");
+            }
         }
     } 
     

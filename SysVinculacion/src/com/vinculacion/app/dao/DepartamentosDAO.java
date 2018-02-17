@@ -58,10 +58,15 @@ public class DepartamentosDAO extends FactorFactory implements DepartamentosDaoI
     }
 
     @Override
-    public Departamentos findDepartamentoByName(String name) {
+    public Departamentos findDepartamentoByName(String name, String nameEmpresa) {
+        EmpresaDAO edao = new EmpresaDAO();
+        Empresa empresa = edao.findEmpresaByName(nameEmpresa);
+        
         EntityManager manager = emf.createEntityManager();
-        Departamentos departamento = (Departamentos)  manager.createQuery("FROM Departamentos where NOMBRE_DEPARTAMENTO = :name and ESTADO = 'ACTIVO'")
-                .setParameter("name", name).getSingleResult();
+        Departamentos departamento = (Departamentos)  manager.createQuery("FROM Departamentos where NOMBRE_DEPARTAMENTO = :name and empresa = :empresa and ESTADO = 'ACTIVO'")
+                .setParameter("name", name)
+                .setParameter("empresa", empresa)
+                .getSingleResult();
         manager.close();
         return departamento;
     }

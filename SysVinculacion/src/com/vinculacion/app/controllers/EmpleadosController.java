@@ -86,7 +86,7 @@ public class EmpleadosController implements ActionListener{
                     this.jfredit.comboDepartamento.removeAllItems();
                     List<Departamentos> ld = ddao.AllDepartamentos();
                     for (Departamentos departamentos : ld) {
-                        this.jfredit.comboDepartamento.addItem(departamentos.getNOMBRE_DEPARTAMENTO());
+                        this.jfredit.comboDepartamento.addItem(departamentos.getEmpresa().getNOMBRE_EMPRESA()+"-"+departamentos.getNOMBRE_DEPARTAMENTO());
                     }
                     this.jfredit.txtCodigo.setText(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 0).toString());
                     this.jfredit.txtCedula.setText(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 1).toString());
@@ -94,9 +94,9 @@ public class EmpleadosController implements ActionListener{
                     this.jfredit.txtApellidos.setText(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 3).toString());
                     this.jfredit.txtCorreo.setText(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 4).toString());
                     this.jfredit.comboCargo.setSelectedItem(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 5).toString());
-                    this.jfredit.comboDepartamento.setSelectedItem(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 6).toString());                  
-                    this.jfredit.txtTelefono.setText(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 7).toString());
-                    this.jfredit.comboEstado.setSelectedItem(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 8).toString());                                      
+                    this.jfredit.comboDepartamento.setSelectedItem(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 6).toString()+"-"+this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 7).toString());                  
+                    this.jfredit.txtTelefono.setText(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(), 8).toString());
+                    this.jfredit.comboEstado.setSelectedItem(this.jfrempleados.tableEmpleados.getValueAt(this.jfrempleados.tableEmpleados.getSelectedRow(),9).toString());                                      
                 }else{
                     JOptionPane.showMessageDialog(mp,"Seleccione un registro y luego de click en editar");
                 }                              
@@ -114,7 +114,7 @@ public class EmpleadosController implements ActionListener{
             this.jfrnuevo.comboDepartamento.removeAllItems();
             List<Departamentos> ld = ddao.AllDepartamentos();
             for (Departamentos departamentos : ld) {
-                this.jfrnuevo.comboDepartamento.addItem(departamentos.getNOMBRE_DEPARTAMENTO());
+                this.jfrnuevo.comboDepartamento.addItem(departamentos.getEmpresa().getNOMBRE_EMPRESA()+"-"+departamentos.getNOMBRE_DEPARTAMENTO());
             }
             this.jfrempleados.dispose();
         }
@@ -123,6 +123,8 @@ public class EmpleadosController implements ActionListener{
              try {
                 if (this.jfrnuevo.txtCedula.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(this.jfrnuevo, "La cédula es requerida");
+                }else if (this.jfrnuevo.txtCedula.getText().length() != 10){
+                    JOptionPane.showMessageDialog(this.jfrnuevo, "La cédula debe tener 10 dígitos");               
                 }else if (this.jfrnuevo.txtApellidos.getText().isEmpty()){
                     JOptionPane.showMessageDialog(this.jfrnuevo, "El apellido es requerido");
                 }else if(this.jfrnuevo.txtNombres.getText().isEmpty()){
@@ -130,25 +132,31 @@ public class EmpleadosController implements ActionListener{
                 }else if(this.jfrnuevo.txtCorreo.getText().isEmpty()){
                     JOptionPane.showMessageDialog(this.jfrnuevo, "El correo es requerido");                
                 }else{
-                    Empleados empl = new Empleados();
-                    empl.setCEDULA(this.jfrnuevo.txtCedula.getText().toString());
-                    empl.setNOMBRES(this.jfrnuevo.txtNombres.getText().toString().toUpperCase());
-                    empl.setAPELLIDOS(this.jfrnuevo.txtApellidos.getText().toString().toUpperCase());
-                    empl.setCORREO(this.jfrnuevo.txtCorreo.getText().toString().toLowerCase());
-                    empl.setTELEFONO(this.jfrnuevo.txtTelefono.getText().toString());
-                    CargoDepartamental cd = cddao.findCargoDepartamentalByDescription(this.jfrnuevo.comboCargo.getSelectedItem().toString());
-                    Departamentos d = ddao.findDepartamentoByName(this.jfrnuevo.comboDepartamento.getSelectedItem().toString());
-                    empl.setCargoDepartamental(cd);
-                    empl.setDepartamentos(d);
-                    empl.setESTADO("ACTIVO");
-                    edao.saveEmpleados(empl);
-                    JOptionPane.showMessageDialog(this.jfrnuevo, "El empleado ha sido ingresado correctamente!!");
-                    this.jfrnuevo.txtCedula.setText("");
-                    this.jfrnuevo.txtCedula.requestFocus();
-                    this.jfrnuevo.txtApellidos.setText("");
-                    this.jfrnuevo.txtNombres.setText("");
-                    this.jfrnuevo.txtCorreo.setText("");
-                    this.jfrnuevo.txtTelefono.setText("");
+                    try {
+                        Empleados emplead = edao.findEmpleadoByCedula(this.jfrnuevo.txtCedula.getText().toString());
+                        JOptionPane.showMessageDialog(this.jfrnuevo, "El empleado con cédula "+emplead.getCEDULA()+" ya existe");
+                    } catch (Exception err) {
+                        Empleados empl = new Empleados();
+                        empl.setCEDULA(this.jfrnuevo.txtCedula.getText().toString());
+                        empl.setNOMBRES(this.jfrnuevo.txtNombres.getText().toString().toUpperCase());
+                        empl.setAPELLIDOS(this.jfrnuevo.txtApellidos.getText().toString().toUpperCase());
+                        empl.setCORREO(this.jfrnuevo.txtCorreo.getText().toString().toLowerCase());
+                        empl.setTELEFONO(this.jfrnuevo.txtTelefono.getText().toString());
+                        CargoDepartamental cd = cddao.findCargoDepartamentalByDescription(this.jfrnuevo.comboCargo.getSelectedItem().toString());
+                        String depart[] = this.jfrnuevo.comboDepartamento.getSelectedItem().toString().split("-");
+                        Departamentos d = ddao.findDepartamentoByName(depart[1], depart[0]);
+                        empl.setCargoDepartamental(cd);
+                        empl.setDepartamentos(d);
+                        empl.setESTADO("ACTIVO");
+                        edao.saveEmpleados(empl);
+                        JOptionPane.showMessageDialog(this.jfrnuevo, "El empleado ha sido ingresado correctamente!!");
+                        this.jfrnuevo.txtCedula.setText("");
+                        this.jfrnuevo.txtCedula.requestFocus();
+                        this.jfrnuevo.txtApellidos.setText("");
+                        this.jfrnuevo.txtNombres.setText("");
+                        this.jfrnuevo.txtCorreo.setText("");
+                        this.jfrnuevo.txtTelefono.setText("");
+                    }
                 } 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this.jfrnuevo, "Error: " + ex.getMessage());
@@ -170,7 +178,8 @@ public class EmpleadosController implements ActionListener{
                 empl.setCORREO(this.jfredit.txtCorreo.getText().toString().toLowerCase());
                 empl.setTELEFONO(this.jfredit.txtTelefono.getText().toString());
                 CargoDepartamental cd = cddao.findCargoDepartamentalByDescription(this.jfredit.comboCargo.getSelectedItem().toString());
-                Departamentos d = ddao.findDepartamentoByName(this.jfredit.comboDepartamento.getSelectedItem().toString());
+                String depart[] = this.jfredit.comboDepartamento.getSelectedItem().toString().split("-");
+                Departamentos d = ddao.findDepartamentoByName(depart[1] , depart[0]);
                 empl.setCargoDepartamental(cd);
                 empl.setDepartamentos(d);                    
                 empl.setESTADO(this.jfredit.comboEstado.getSelectedItem().toString());
@@ -201,6 +210,7 @@ public class EmpleadosController implements ActionListener{
             model.addColumn("Apellidos");
             model.addColumn("Correo");
             model.addColumn("Cargo");
+            model.addColumn("Empresa");
             model.addColumn("Departamento");
             model.addColumn("Teléfono");
             model.addColumn("Estado");
@@ -208,7 +218,7 @@ public class EmpleadosController implements ActionListener{
             tcm.getColumn(0).setPreferredWidth(80);
             tcm.getColumn(1).setPreferredWidth(90);
             tcm.getColumn(2).setPreferredWidth(90);
-            Object [] data = new Object[9];                    
+            Object [] data = new Object[10];                    
 
             if (this.jfrempleados.txtCedula.getText().isEmpty()) {
                 this.jfrempleados.tableEmpleados.removeAll();
@@ -220,9 +230,10 @@ public class EmpleadosController implements ActionListener{
                     data[3] = empleado.getAPELLIDOS();
                     data[4] = empleado.getCORREO();
                     data[5] = empleado.getCargoDepartamental().getDESCRIPCION();
-                    data[6] = empleado.getDepartamentos().getNOMBRE_DEPARTAMENTO();
-                    data[7] = empleado.getTELEFONO();
-                    data[8] = empleado.getESTADO();
+                    data[6] = empleado.getDepartamentos().getEmpresa().getNOMBRE_EMPRESA();
+                    data[7] = empleado.getDepartamentos().getNOMBRE_DEPARTAMENTO();
+                    data[8] = empleado.getTELEFONO();
+                    data[9] = empleado.getESTADO();
                     model.addRow(data);
                 }
             }else{
@@ -234,9 +245,10 @@ public class EmpleadosController implements ActionListener{
                     data[3] = empleado.getAPELLIDOS();
                     data[4] = empleado.getCORREO();
                     data[5] = empleado.getCargoDepartamental().getDESCRIPCION();
-                    data[6] = empleado.getDepartamentos().getNOMBRE_DEPARTAMENTO();
-                    data[7] = empleado.getTELEFONO();
-                    data[8] = empleado.getESTADO();
+                    data[6] = empleado.getDepartamentos().getEmpresa().getNOMBRE_EMPRESA();
+                    data[7] = empleado.getDepartamentos().getNOMBRE_DEPARTAMENTO();
+                    data[8] = empleado.getTELEFONO();
+                    data[9] = empleado.getESTADO();
                     model.addRow(data);                   
             }                            
         }catch(Exception ex){

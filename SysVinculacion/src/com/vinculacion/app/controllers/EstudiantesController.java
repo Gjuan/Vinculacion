@@ -31,9 +31,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -271,6 +268,8 @@ public class EstudiantesController implements ActionListener{
             try {
                 if (this.nuevo.txtCedula.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(this.nuevo, "La cédula es requerida");
+                }else if(this.nuevo.txtCedula.getText().length() != 10){
+                    JOptionPane.showMessageDialog(this.nuevo, "La cédula debe tener 10 dígitos");
                 }else if(this.nuevo.txtCodigoMatricula.getText().isEmpty()){
                     JOptionPane.showMessageDialog(this.nuevo, "El código de matricula es requerido");
                 }else if(this.nuevo.txtNombre.getText().toString().isEmpty()){
@@ -278,76 +277,81 @@ public class EstudiantesController implements ActionListener{
                 }else if(this.nuevo.txtApellidos.getText().toString().isEmpty()){
                     JOptionPane.showMessageDialog(this.nuevo, "El apellido es requerido");                                
                 }else{
-                    Estudiantes est = new Estudiantes();
-                    est.setAPELLIDOS(this.nuevo.txtApellidos.getText().toString().toUpperCase());
-                    est.setNOMBRES(this.nuevo.txtNombre.getText().toString().toUpperCase());
-                    est.setCEDULA(this.nuevo.txtCedula.getText().toString());
-                    est.setCOD_MATRICULA(this.nuevo.txtCodigoMatricula.getText().toString());
-                    est.setCORREO(this.nuevo.txtCorreo.getText().toString().toLowerCase());
+                    try {
+                        Estudiantes estu = estdao.findEstudianteByCedula(this.nuevo.txtCedula.getText().toString());
+                        JOptionPane.showMessageDialog(this.nuevo, "Este estudiante con cédula " + estu.getCEDULA()+ " ya existe en el sistema");
+                    } catch (Exception err) {
+                        Estudiantes est = new Estudiantes();
+                        est.setAPELLIDOS(this.nuevo.txtApellidos.getText().toString().toUpperCase());
+                        est.setNOMBRES(this.nuevo.txtNombre.getText().toString().toUpperCase());
+                        est.setCEDULA(this.nuevo.txtCedula.getText().toString());
+                        est.setCOD_MATRICULA(this.nuevo.txtCodigoMatricula.getText().toString());
+                        est.setCORREO(this.nuevo.txtCorreo.getText().toString().toLowerCase());
 
-                    Carreras carrera = cdao.findCarreraByDescription(this.nuevo.comboCarrera.getSelectedItem().toString());
-                    est.setCarrera(carrera);
-                    
-                    Nivel nivel = ndao.findNivelBySemestre(this.nuevo.comboNivel.getSelectedItem().toString());
-                    est.setNivel(nivel);
-                    
-                    Genero genero = gdao.findGeneroByDescription(this.nuevo.comboGenero.getSelectedItem().toString());
-                    est.setGenero(genero);
-                    
-                    Seccion seccion = sdao.findSeccionByDescription(this.nuevo.comboSeccion.getSelectedItem().toString());
-                    est.setSeccion(seccion);
-                            
-                    est.setDIRECCION(this.nuevo.txtDireccion.getText().toString());
-                    
-                    String [] profesor = this.nuevo.comboTutorDocente.getSelectedItem().toString().split("-");
-                    Docente docente = ddao.findDocenteByLastNameAndName(profesor[0], profesor[1]);
-                    est.setDocente(docente);
-                    
-                    String [] tutorEmpresarial = this.nuevo.comboTutorEmpresarial.getSelectedItem().toString().split("-");                    
-                    Empleados empleado = emdao.findEmpleadosByLastNameAndName(tutorEmpresarial[0], tutorEmpresarial[1]);
-                    est.setEmpleado(empleado);
-                    
-                    PeriodoAcademico periodo = padao.findPeriodoAcademicoByStartDate(this.nuevo.comboPeriodoAcademico.getSelectedItem().toString());                    
-                    est.setPeriodoAcademico(periodo);
-                    
-                    est.setFOTO(bImg);
-                   
-                    TipoDocumentoPracticas tdp = tdpdao.findTipoDocumentoPracticasByDescription(this.nuevo.comboTipoDocumento.getSelectedItem().toString());
-                    est.setTipoDocumentoPracticas(tdp);
-                    
-                    HorarioPasantias hp = hpdao.findHorarioPasantiaByDescription(this.nuevo.comboHorario.getSelectedItem().toString());
-                    est.setHorarioPasantias(hp);
-                    
-                    est.setTELEFONO(this.nuevo.txtTelefono.getText().toString());
-                    
-                    int iduser = AuthController.id;
-                    Usuarios usuario = udao.findUsuarioById(iduser);
-                    est.setUsuario(usuario);
-                    
-                    est.setESTADO("ACTIVO");
-                    estdao.saveEstudiante(est);
-                    JOptionPane.showMessageDialog(this.nuevo, "Pasante ingresado correctamente!!");
-                    
-                    this.nuevo.txtApellidos.setText("");
-                    this.nuevo.txtNombre.setText("");
-                    this.nuevo.txtCodigoMatricula.setText("");
-                    this.nuevo.txtCorreo.setText("");
-                    this.nuevo.txtDireccion.setText("");
-                    this.nuevo.txtCedula.setText("");
-                    this.nuevo.txtTelefono.setText("");
-                    this.nuevo.comboCarrera.setSelectedIndex(0);
-                    this.nuevo.comboGenero.setSelectedIndex(0);
-                    this.nuevo.comboHorario.setSelectedIndex(0);
-                    this.nuevo.comboNivel.setSelectedIndex(0);
-                    this.nuevo.comboPeriodoAcademico.setSelectedIndex(0);
-                    this.nuevo.comboSeccion.setSelectedIndex(0);
-                    this.nuevo.comboTipoDocumento.setSelectedIndex(0);
-                    this.nuevo.comboTutorDocente.setSelectedIndex(0);
-                    this.nuevo.comboTutorEmpresarial.setSelectedIndex(0);
-                    this.nuevo.lbFotoPasante.setIcon(null);
-                    this.nuevo.repaint();
-                    this.nuevo.txtCedula.requestFocus();
-                } 
+                        Carreras carrera = cdao.findCarreraByDescription(this.nuevo.comboCarrera.getSelectedItem().toString());
+                        est.setCarrera(carrera);
+
+                        Nivel nivel = ndao.findNivelBySemestre(this.nuevo.comboNivel.getSelectedItem().toString());
+                        est.setNivel(nivel);
+
+                        Genero genero = gdao.findGeneroByDescription(this.nuevo.comboGenero.getSelectedItem().toString());
+                        est.setGenero(genero);
+
+                        Seccion seccion = sdao.findSeccionByDescription(this.nuevo.comboSeccion.getSelectedItem().toString());
+                        est.setSeccion(seccion);
+
+                        est.setDIRECCION(this.nuevo.txtDireccion.getText().toString());
+
+                        String [] profesor = this.nuevo.comboTutorDocente.getSelectedItem().toString().split("-");
+                        Docente docente = ddao.findDocenteByLastNameAndName(profesor[0], profesor[1]);
+                        est.setDocente(docente);
+
+                        String [] tutorEmpresarial = this.nuevo.comboTutorEmpresarial.getSelectedItem().toString().split("-");                    
+                        Empleados empleado = emdao.findEmpleadosByLastNameAndName(tutorEmpresarial[0], tutorEmpresarial[1]);
+                        est.setEmpleado(empleado);
+
+                        PeriodoAcademico periodo = padao.findPeriodoAcademicoByStartDate(this.nuevo.comboPeriodoAcademico.getSelectedItem().toString());                    
+                        est.setPeriodoAcademico(periodo);
+
+                        est.setFOTO(bImg);
+
+                        TipoDocumentoPracticas tdp = tdpdao.findTipoDocumentoPracticasByDescription(this.nuevo.comboTipoDocumento.getSelectedItem().toString());
+                        est.setTipoDocumentoPracticas(tdp);
+
+                        HorarioPasantias hp = hpdao.findHorarioPasantiaByDescription(this.nuevo.comboHorario.getSelectedItem().toString());
+                        est.setHorarioPasantias(hp);
+
+                        est.setTELEFONO(this.nuevo.txtTelefono.getText().toString());
+
+                        int iduser = AuthController.id;
+                        Usuarios usuario = udao.findUsuarioById(iduser);
+                        est.setUsuario(usuario);
+
+                        est.setESTADO("ACTIVO");
+                        estdao.saveEstudiante(est);
+                        JOptionPane.showMessageDialog(this.nuevo, "Pasante ingresado correctamente!!");
+
+                        this.nuevo.txtApellidos.setText("");
+                        this.nuevo.txtNombre.setText("");
+                        this.nuevo.txtCodigoMatricula.setText("");
+                        this.nuevo.txtCorreo.setText("");
+                        this.nuevo.txtDireccion.setText("");
+                        this.nuevo.txtCedula.setText("");
+                        this.nuevo.txtTelefono.setText("");
+                        this.nuevo.comboCarrera.setSelectedIndex(0);
+                        this.nuevo.comboGenero.setSelectedIndex(0);
+                        this.nuevo.comboHorario.setSelectedIndex(0);
+                        this.nuevo.comboNivel.setSelectedIndex(0);
+                        this.nuevo.comboPeriodoAcademico.setSelectedIndex(0);
+                        this.nuevo.comboSeccion.setSelectedIndex(0);
+                        this.nuevo.comboTipoDocumento.setSelectedIndex(0);
+                        this.nuevo.comboTutorDocente.setSelectedIndex(0);
+                        this.nuevo.comboTutorEmpresarial.setSelectedIndex(0);
+                        this.nuevo.lbFotoPasante.setIcon(null);
+                        this.nuevo.repaint();
+                        this.nuevo.txtCedula.requestFocus();
+                    }   
+                }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this.nuevo, "Error: " + ex.getMessage());
             }            

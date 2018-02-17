@@ -17,7 +17,7 @@ public interface DepartamentosDaoInterface {
     
     void deleteDepartamentos(int id);
     
-    Departamentos findDepartamentoByName(String name);
+    Departamentos findDepartamentoByName(String name, String empresa);
     
     Departamentos findDepartamentoById(int id);
     

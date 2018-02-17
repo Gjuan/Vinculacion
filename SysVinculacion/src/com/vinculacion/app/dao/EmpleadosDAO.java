@@ -77,18 +77,6 @@ public class EmpleadosDAO extends FactorFactory implements EmpleadosDaoInterface
     }
 
     @Override
-    public List<Empleados> findEmpleadosByDepartamentos(String nombreDepartamento) {
-        DepartamentosDAO ddao = new DepartamentosDAO();
-        Departamentos departamento = ddao.findDepartamentoByName(nombreDepartamento);
-        EntityManager manager = emf.createEntityManager();
-        List<Empleados> lemp = manager.createQuery("FROM Empleados WHERE ESTADO = 'ACTIVO' AND departamentos = :dep order by ID_EMPLEADO desc")
-                .setParameter("dep", departamento)
-                .getResultList();
-        manager.close();
-        return lemp;
-    }
-
-    @Override
     public List<Empleados> findEmpleadosByCargos(String descripcionCargo) {
         CargoDepartamentalDAO cdao = new CargoDepartamentalDAO();
         CargoDepartamental cargos = cdao.findCargoDepartamentalByDescription(descripcionCargo);

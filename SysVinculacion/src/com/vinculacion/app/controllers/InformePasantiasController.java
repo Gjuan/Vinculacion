@@ -90,12 +90,12 @@ public class InformePasantiasController implements ActionListener{
                     this.jfredit.comboPasante.removeAllItems();
                     List<Estudiantes> lest = estdao.AllEstudiantes();
                     for (Estudiantes estudiantes : lest) {
-                        this.jfredit.comboPasante.addItem(estudiantes.getNOMBRES() + "-" + estudiantes.getAPELLIDOS());
+                        this.jfredit.comboPasante.addItem(estudiantes.getCEDULA()+"-"+estudiantes.getNOMBRES() + "-" + estudiantes.getAPELLIDOS());
                     }    
                     
                     this.jfredit.txtCodigo.setText(this.jfrinforme.tableInformes.getValueAt(this.jfrinforme.tableInformes.getSelectedRow(), 0).toString());
                     InformePasantias informe = infdao.findInformePasantiaById(Integer.parseInt(this.jfrinforme.tableInformes.getValueAt(this.jfrinforme.tableInformes.getSelectedRow(), 0).toString()));
-                    this.jfredit.comboPasante.setSelectedItem(informe.getEstudiantes().getNOMBRES()+"-"+informe.getEstudiantes().getAPELLIDOS());
+                    this.jfredit.comboPasante.setSelectedItem(informe.getEstudiantes().getCEDULA()+"-"+informe.getEstudiantes().getNOMBRES()+"-"+informe.getEstudiantes().getAPELLIDOS());
                     this.jfredit.comboPasantia.setSelectedItem(informe.getPasantias().getTITULO_PROYECTO());
                     
                     Date fecha_entrega = new SimpleDateFormat("yyyy-MM-dd").parse((String) informe.getFECHA_ENTREGA_INFORME());
@@ -110,20 +110,24 @@ public class InformePasantiasController implements ActionListener{
             }
         }
         if (e.getSource() == this.jfrinforme.btnNuevo) {
-            this.jfrnuevo.setVisible(true);
-            
-            this.jfrnuevo.comboPasantia.removeAllItems();
-            List<Pasantias> lpasantia = pdao.AllPasantias();
-            for (Pasantias pasantias : lpasantia) {
-                this.jfrnuevo.comboPasantia.addItem(pasantias.getTITULO_PROYECTO());
-            }
-            
-            this.jfrnuevo.comboPasante.removeAllItems();
-            List<Estudiantes> lest = estdao.AllEstudiantes();
-            for (Estudiantes estudiantes : lest) {
-                this.jfrnuevo.comboPasante.addItem(estudiantes.getNOMBRES() + "-" + estudiantes.getAPELLIDOS());
-            }
-            this.jfrinforme.dispose();
+            try {
+                this.jfrnuevo.setVisible(true);
+
+                this.jfrnuevo.comboPasantia.removeAllItems();
+                List<Pasantias> lpasantia = pdao.AllPasantias();
+                for (Pasantias pasantias : lpasantia) {
+                    this.jfrnuevo.comboPasantia.addItem(pasantias.getTITULO_PROYECTO());
+                }
+
+                this.jfrnuevo.comboPasante.removeAllItems();
+                List<Estudiantes> lest = estdao.AllEstudiantes();
+                for (Estudiantes estudiantes : lest) {
+                    this.jfrnuevo.comboPasante.addItem(estudiantes.getCEDULA()+"-"+estudiantes.getNOMBRES() + "-" + estudiantes.getAPELLIDOS());
+                }
+                this.jfrinforme.dispose();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(jfrinforme, "Error: " + ex.getMessage());
+            }                
         }
         /*Nuevo Informe de pasantías*/
         if (e.getSource() == this.jfrnuevo.btnGuardar) {
@@ -134,7 +138,7 @@ public class InformePasantiasController implements ActionListener{
                 info.setPasantias(pasantia);                
                 
                 String pasante [] = this.jfrnuevo.comboPasante.getSelectedItem().toString().split("-");
-                Estudiantes estudiante = estdao.findEstudianteByNameAndLastName(pasante[0], pasante[1]);
+                Estudiantes estudiante = estdao.findEstudianteByCedula(pasante[0]);
                 info.setEstudiantes(estudiante);
                 
                 Date fecha_entrega = this.jfrnuevo.dateFechaEntrega.getDate();
@@ -162,7 +166,7 @@ public class InformePasantiasController implements ActionListener{
                 Pasantias pasantia = pdao.findPasantiaByTitulo(this.jfredit.comboPasantia.getSelectedItem().toString());
                 info.setPasantias(pasantia);
                 String pasante[] = this.jfredit.comboPasante.getSelectedItem().toString().split("-");
-                Estudiantes estudiante = estdao.findEstudianteByNameAndLastName(pasante[0], pasante[1]);
+                Estudiantes estudiante = estdao.findEstudianteByCedula(pasante[0]);
                 info.setEstudiantes(estudiante);
                 
                 Date fecha_entrega = this.jfredit.dateFechaEntrega.getDate();
@@ -198,11 +202,6 @@ public class InformePasantiasController implements ActionListener{
             model.addColumn("Pasante");
             model.addColumn("Fecha de entrega");
             model.addColumn("Estado");
-            TableColumnModel tcm =  this.jfrinforme.tableInformes.getColumnModel();
-            tcm.getColumn(0).setPreferredWidth(55);
-            tcm.getColumn(1).setPreferredWidth(250);
-            tcm.getColumn(2).setPreferredWidth(80);
-            tcm.getColumn(3).setPreferredWidth(250);
             
             Object [] data = new Object[6]; 
             if (this.jfrinforme.txtCedula.getText().isEmpty()) {               

@@ -20,9 +20,7 @@ public interface EmpleadosDaoInterface {
     Empleados findEmpleadoByCedula (String cedula);
     
     Empleados findEmpleadoById(int id);
-    
-    List<Empleados> findEmpleadosByDepartamentos(String nombreDepartamento);
-    
+      
     List<Empleados> findEmpleadosByCargos(String descripcionCargo);
     
     Empleados findEmpleadosByLastNameAndName (String name, String lastName);
