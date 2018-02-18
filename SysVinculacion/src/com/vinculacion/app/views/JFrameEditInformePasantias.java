@@ -1,5 +1,10 @@
 package com.vinculacion.app.views;
 
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+
 
 public class JFrameEditInformePasantias extends javax.swing.JDialog {
 
@@ -8,6 +13,26 @@ public class JFrameEditInformePasantias extends javax.swing.JDialog {
         initComponents();
         Iconos.setSameDefault(this, "Editar Pasantías");
         this.txtCodigo.setEditable(false);
+        
+        Color colorfondo = new Color(Iconos.hex("fbfae6"));
+        
+        this.jPanel1.setBackground(Color.WHITE);
+        this.txtCodigo.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        
+        this.getContentPane().setBackground(colorfondo);
+        Color color1 = new Color(Iconos.hex("d0fade"));
+        Color color2 = new Color(Iconos.hex("c2e7e5"));
+        
+        this.btnGuardar.setBackground(color1);
+        this.btnRegresar.setBackground(color2);
+        
+        ImageIcon btnEn = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/9b41f8b3a056.png"));
+        btnEn = new ImageIcon(btnEn.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnGuardar.setIcon(btnEn);
+        
+        ImageIcon btnRegresa = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/Logout_37127.png"));
+        btnRegresa = new ImageIcon(btnRegresa.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnRegresar.setIcon(btnRegresa);
     }
 
     /**
@@ -63,16 +88,15 @@ public class JFrameEditInformePasantias extends javax.swing.JDialog {
                     .addComponent(jLabel5)
                     .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(comboEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateFechaEntrega, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
+                    .addComponent(comboEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateFechaEntrega, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                     .addComponent(comboPasante, 0, 383, Short.MAX_VALUE)
                     .addComponent(comboPasantia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(33, Short.MAX_VALUE))

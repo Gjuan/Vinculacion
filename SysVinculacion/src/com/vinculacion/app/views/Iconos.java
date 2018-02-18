@@ -1,7 +1,9 @@
 package com.vinculacion.app.views;
 
+import java.awt.Button;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
@@ -25,5 +27,8 @@ public class Iconos {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         setLogo(frame);
+    }
+    public static int hex( String color_hex ){
+        return Integer.parseInt(color_hex,  16 );
     }
 }

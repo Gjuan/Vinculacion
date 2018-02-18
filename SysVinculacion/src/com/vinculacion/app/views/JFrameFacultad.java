@@ -1,13 +1,16 @@
 package com.vinculacion.app.views;
+
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author jorge
  */
 public class JFrameFacultad extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JFrameFacultad
-     */
     public JFrameFacultad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -15,6 +18,24 @@ public class JFrameFacultad extends javax.swing.JDialog {
         this.setTitle("Facultades");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        
+        this.jPanel1.setBackground(Color.WHITE);
+        this.txtCodigo.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        Color colorfondo = new Color(Iconos.hex("d0e9fa"));
+        this.getContentPane().setBackground(colorfondo);
+        Color color1 = new Color(Iconos.hex("d0fade"));
+        Color color2 = new Color(Iconos.hex("c2e7e5"));
+        Color color3 = new Color(Iconos.hex("eeecc3"));
+        Color color4 = new Color(Iconos.hex("f3dbce"));
+        
+        this.btnNuevaFacultad.setBackground(color1);
+        this.btnBuscar.setBackground(color2);
+        this.btnEditar.setBackground(color3);
+        this.btnBorrar.setBackground(color4);
+        
+        ImageIcon btnEn = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/1486564394-edit_81508.png"));
+        btnEn = new ImageIcon(btnEn.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnNuevaFacultad.setIcon(btnEn);
     }
 
     /**
@@ -64,14 +85,14 @@ public class JFrameFacultad extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnNuevaFacultad, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnNuevaFacultad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

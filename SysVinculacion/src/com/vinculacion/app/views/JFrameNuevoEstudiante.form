@@ -60,7 +60,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btnGuardar" min="-2" pref="164" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnRegresar" min="-2" pref="149" max="-2" attributes="0"/>
+                          <Component id="btnRegresar" min="-2" pref="176" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>

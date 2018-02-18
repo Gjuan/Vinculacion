@@ -1,16 +1,36 @@
-
 package com.vinculacion.app.views;
+
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author jorge
  */
 public class JFrameSeccion extends javax.swing.JDialog {
-
-   
     public JFrameSeccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         Iconos.setSameDefault(this, "Tipos de dedicación");
+        
+        this.jPanel1.setBackground(Color.WHITE);
+        this.jPanel2.setBackground(Color.WHITE);
+        this.txtCodigo.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        Color colorfondo = new Color(Iconos.hex("d0e9fa"));
+        this.getContentPane().setBackground(colorfondo);
+        Color color1 = new Color(Iconos.hex("d0fade"));
+        Color color2 = new Color(Iconos.hex("c2e7e5"));
+        Color color3 = new Color(Iconos.hex("eeecc3"));
+        
+        this.btnNuevo.setBackground(color1);
+        this.btnBuscar.setBackground(color2);
+        this.btnEditar.setBackground(color3);
+        
+        ImageIcon btnEn = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/1486564394-edit_81508.png"));
+        btnEn = new ImageIcon(btnEn.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnNuevo.setIcon(btnEn);
     }
 
     /**

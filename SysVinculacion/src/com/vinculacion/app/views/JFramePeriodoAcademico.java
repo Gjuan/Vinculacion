@@ -1,5 +1,10 @@
 package com.vinculacion.app.views;
 
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+
 public class JFramePeriodoAcademico extends javax.swing.JDialog {
 
    
@@ -10,6 +15,27 @@ public class JFramePeriodoAcademico extends javax.swing.JDialog {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         Iconos.setLogo(this);
+        
+        this.jPanel1.setBackground(Color.WHITE);
+        this.jPanel2.setBackground(Color.WHITE);
+        this.txtCodigo.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        Color colorfondo = new Color(Iconos.hex("d0e9fa"));
+        this.getContentPane().setBackground(colorfondo);
+        Color color1 = new Color(Iconos.hex("d0fade"));
+        Color color2 = new Color(Iconos.hex("c2e7e5"));
+        Color color3 = new Color(Iconos.hex("eeecc3"));
+        Color color4 = new Color(Iconos.hex("f3dbce"));
+        Color color5 = new Color(Iconos.hex("ced4f3"));
+        
+        this.btnNuevo.setBackground(color1);
+        this.btnBuscar.setBackground(color2);
+        this.btnEditar.setBackground(color3);
+        this.btnDarBaja.setBackground(color4);
+        this.btnBuscarByFechaInicio.setBackground(color5);
+        
+        ImageIcon btnEn = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/1486564394-edit_81508.png"));
+        btnEn = new ImageIcon(btnEn.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnNuevo.setIcon(btnEn);
     }
 
     /**

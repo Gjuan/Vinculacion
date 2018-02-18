@@ -1,5 +1,10 @@
 package com.vinculacion.app.views;
 
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author jorge
@@ -10,6 +15,38 @@ public class JFrameNuevoEstudiante extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         Iconos.setSameDefault(this, "Nuevo estudiante");
+        
+        Color colorfondo = new Color(Iconos.hex("d6eeec"));
+        
+        this.jPanel1.setBackground(Color.WHITE);
+        this.jPanel3.setBackground(Color.WHITE);
+        this.txtCedula.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));       
+        this.txtCodigoMatricula.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        this.txtNombre.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        this.txtApellidos.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        this.txtDireccion.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        this.txtTelefono.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        this.txtCorreo.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));       
+        
+        this.getContentPane().setBackground(colorfondo);
+        Color color1 = new Color(Iconos.hex("d0fade"));
+        Color color2 = new Color(Iconos.hex("c2e7e5"));
+        Color color3 = new Color(Iconos.hex("cefcf8"));        
+       
+        this.btnGuardar.setBackground(color1);
+        this.btnRegresar.setBackground(color2);
+        this.btnSeleccionarFoto.setBackground(color3);
+        ImageIcon btnEn = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/9b41f8b3a056.png"));
+        btnEn = new ImageIcon(btnEn.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnGuardar.setIcon(btnEn);
+        
+        ImageIcon btnRegresa = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/Logout_37127.png"));
+        btnRegresa = new ImageIcon(btnRegresa.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnRegresar.setIcon(btnRegresa);
+        
+        ImageIcon btnFoto = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/1313310842.png"));
+        btnFoto = new ImageIcon(btnFoto.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnSeleccionarFoto.setIcon(btnFoto);
     }
 
     /**
@@ -292,7 +329,7 @@ public class JFrameNuevoEstudiante extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(14, 14, 14))

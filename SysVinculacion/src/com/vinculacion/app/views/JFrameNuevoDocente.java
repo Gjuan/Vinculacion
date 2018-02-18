@@ -1,5 +1,10 @@
 package com.vinculacion.app.views;
 
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+
 public class JFrameNuevoDocente extends javax.swing.JDialog {
 
     /**
@@ -9,6 +14,45 @@ public class JFrameNuevoDocente extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         Iconos.setSameDefault(this, "Nuevo Docente");
+        
+        Color colorfondo = new Color(Iconos.hex("d6eeec"));
+        
+        this.jPanel1.setBackground(Color.WHITE);
+        this.jPanel2.setBackground(Color.WHITE);
+        this.jPanel3.setBackground(Color.WHITE);
+        this.jPanel4.setBackground(Color.WHITE);
+        this.jPanel5.setBackground(Color.WHITE);      
+        
+        this.txtCedula.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        this.txtApellidos.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        this.txtNombres.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        this.txtCorreo.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        this.txtTelefono.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        
+        this.getContentPane().setBackground(colorfondo);
+        Color color1 = new Color(Iconos.hex("d0fade"));
+        Color color2 = new Color(Iconos.hex("c2e7e5"));
+        Color color3 = new Color(Iconos.hex("d2d5e5"));
+        Color color4 = new Color(Iconos.hex("d9c8cd"));
+        Color color5 = new Color(Iconos.hex("bfbad8"));
+        
+        this.btnGuardar.setBackground(color1);
+        this.btnRegresar.setBackground(color2);
+        this.btnLimpiar.setBackground(color3);
+        this.btnAsignarAsignatura.setBackground(color4);
+        this.btnAsignarCargo.setBackground(color5);
+        
+        ImageIcon btnEn = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/9b41f8b3a056.png"));
+        btnEn = new ImageIcon(btnEn.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnGuardar.setIcon(btnEn);
+        
+        ImageIcon btnRegresa = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/Logout_37127.png"));
+        btnRegresa = new ImageIcon(btnRegresa.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnRegresar.setIcon(btnRegresa);       
+        
+        ImageIcon btnLimpia = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/400px-borrar_svg.png"));
+        btnLimpia = new ImageIcon(btnLimpia.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnLimpiar.setIcon(btnLimpia);  
     }
 
     /**
@@ -145,9 +189,9 @@ public class JFrameNuevoDocente extends javax.swing.JDialog {
                     .addComponent(txtApellidos)
                     .addComponent(txtNombres)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,7 +233,6 @@ public class JFrameNuevoDocente extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel6))
@@ -210,9 +253,9 @@ public class JFrameNuevoDocente extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
                 .addContainerGap())
         );
 

@@ -58,9 +58,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnGuardar" min="-2" pref="129" max="-2" attributes="0"/>
+                          <Component id="btnGuardar" min="-2" pref="139" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnRegresar" min="-2" pref="128" max="-2" attributes="0"/>
+                          <Component id="btnRegresar" min="-2" pref="141" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="txtDescripcion" alignment="0" min="-2" pref="310" max="-2" attributes="0"/>

@@ -1,11 +1,35 @@
 package com.vinculacion.app.views;
 
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+
 public class JFrameInformePasantias extends javax.swing.JDialog {
 
     public JFrameInformePasantias(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         Iconos.setSameDefault(this, "Informe de pasantías");
+        
+        this.jPanel1.setBackground(Color.WHITE);
+        this.jPanel2.setBackground(Color.WHITE);
+        this.txtCedula.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        Color colorfondo = new Color(Iconos.hex("d0e9fa"));
+        this.getContentPane().setBackground(colorfondo);
+        Color color1 = new Color(Iconos.hex("d0fade"));
+        Color color2 = new Color(Iconos.hex("c2e7e5"));
+        Color color3 = new Color(Iconos.hex("eeecc3"));
+        Color color4 = new Color(Iconos.hex("f3dbce"));
+        
+        this.btnNuevo.setBackground(color1);
+        this.btnBuscar.setBackground(color2);
+        this.btnEditar.setBackground(color3);
+        this.btnDarBaja.setBackground(color4);
+        
+        ImageIcon btnEn = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/1486564394-edit_81508.png"));
+        btnEn = new ImageIcon(btnEn.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnNuevo.setIcon(btnEn);
     }
 
     /**
@@ -119,7 +143,7 @@ public class JFrameInformePasantias extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(24, 24, 24)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

@@ -11,7 +11,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         setExtendedState(Frame.MAXIMIZED_BOTH);     
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Sistema de Gestión de pasantías SGP"); 
-        this.getContentPane().setBackground(Color.lightGray);
+        
+        Color colorfondo = new Color(Iconos.hex("f1f5f1"));
+        this.getContentPane().setBackground(colorfondo);
         Iconos.setLogo(this);
         this.menuItemNomUser.setForeground(Color.RED);
     }

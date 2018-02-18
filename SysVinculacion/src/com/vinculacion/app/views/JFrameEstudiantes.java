@@ -1,9 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.vinculacion.app.views;
+
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -11,13 +11,29 @@ package com.vinculacion.app.views;
  */
 public class JFrameEstudiantes extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JFrameEstudiantes
-     */
     public JFrameEstudiantes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         Iconos.setSameDefault(this, "Pasantes");
+        
+        this.jPanel1.setBackground(Color.WHITE);
+        this.jPanel2.setBackground(Color.WHITE);
+        this.txtCedula.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        Color colorfondo = new Color(Iconos.hex("d0e9fa"));
+        this.getContentPane().setBackground(colorfondo);
+        Color color1 = new Color(Iconos.hex("d0fade"));
+        Color color2 = new Color(Iconos.hex("c2e7e5"));
+        Color color3 = new Color(Iconos.hex("eeecc3"));
+        Color color4 = new Color(Iconos.hex("f3dbce"));
+        
+        this.btnNuevo.setBackground(color1);
+        this.btnBuscar.setBackground(color2);
+        this.btnEditar.setBackground(color3);
+        this.btnDarBaja.setBackground(color4);
+        
+        ImageIcon btnEn = new ImageIcon(getClass().getResource("/com/vinculacion/app/img/1486564394-edit_81508.png"));
+        btnEn = new ImageIcon(btnEn.getImage().getScaledInstance(26, 26, Image.SCALE_DEFAULT));
+        this.btnNuevo.setIcon(btnEn);
     }
 
     /**

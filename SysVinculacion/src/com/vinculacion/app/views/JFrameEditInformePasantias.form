@@ -59,18 +59,16 @@
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnGuardar" min="-2" pref="139" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnRegresar" min="-2" pref="145" max="-2" attributes="0"/>
+                          <Component id="btnGuardar" min="-2" pref="155" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnRegresar" min="-2" pref="152" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCodigo" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="comboEstado" alignment="0" max="32767" attributes="0"/>
-                          <Component id="dateFechaEntrega" alignment="0" pref="246" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="comboEstado" alignment="0" max="32767" attributes="0"/>
+                      <Component id="dateFechaEntrega" alignment="0" pref="246" max="32767" attributes="0"/>
                       <Component id="comboPasante" alignment="0" pref="383" max="32767" attributes="0"/>
                       <Component id="comboPasantia" alignment="0" max="32767" attributes="0"/>
                   </Group>
