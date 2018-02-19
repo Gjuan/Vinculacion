@@ -36,7 +36,7 @@ public class InformesFinales {
     
     public void InformeDocenteByCedula(String cedula){
         try {
-            JasperReport reporte = (JasperReport) JRLoader.loadObject(getClass().getResource("/com/vinculacion/app/informes/DocenteByCedula.jasper"));
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(getClass().getResource(""));
             Map mp = new HashMap();
             mp.put("cedula", cedula);
             JasperPrint print = JasperFillManager.fillReport(reporte, mp, con);
@@ -50,7 +50,7 @@ public class InformesFinales {
     
     public void InformeDocenteCargos(){
         try {
-            JasperReport reporte = (JasperReport) JRLoader.loadObject(getClass().getResource("/com/vinculacion/app/informes/DocenteCargos.jasper"));
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(getClass().getResource("/DocenteCargos.jasper"));            
             JasperPrint print = JasperFillManager.fillReport(reporte,null, con);
             JasperViewer visor = new JasperViewer(print, false);
             visor.setTitle("Docentes por cargos");
@@ -61,8 +61,8 @@ public class InformesFinales {
     }
     
     public void InformePasantes(){
-        try {
-            JasperReport reporte = (JasperReport) JRLoader.loadObject(getClass().getResource("/com/vinculacion/app/informes/Pasante.jasper"));
+        try {       
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(getClass().getResource("/Pasante.jasper"));
             JasperPrint print = JasperFillManager.fillReport(reporte,null, con);
             JasperViewer visor = new JasperViewer(print, false);
             visor.setTitle("Estudiantes Pasantes");
@@ -74,7 +74,7 @@ public class InformesFinales {
     
     public void InformeEmpresas(){
         try {
-            JasperReport reporte = (JasperReport) JRLoader.loadObject(getClass().getResource("/com/vinculacion/app/informes/Empresas.jasper"));
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(getClass().getResource("/Empresas.jasper"));
             JasperPrint print = JasperFillManager.fillReport(reporte,null, con);
             JasperViewer visor = new JasperViewer(print, false);
             visor.setTitle("Empresas");

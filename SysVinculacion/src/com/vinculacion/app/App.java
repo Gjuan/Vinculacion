@@ -1,5 +1,4 @@
 package com.vinculacion.app;
-
 import com.vinculacion.app.controllers.AuthController;
 import com.vinculacion.app.controllers.MenuController;
 import com.vinculacion.app.views.Auth;
