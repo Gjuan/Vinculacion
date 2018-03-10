@@ -29,6 +29,8 @@ import com.vinculacion.app.views.MenuPrincipal;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
@@ -56,6 +58,7 @@ public class EstudiantesController implements ActionListener{
     TipoDocumentoPracticasDAO tdpdao;
     HorariosPasantiasDAO hpdao;
     UsuariosDAO udao;
+    ValidatorController vc;
     
     JFileChooser file, file2;
     int returnVal, returnVal2;
@@ -83,6 +86,23 @@ public class EstudiantesController implements ActionListener{
         this.jfredit.btnRegresar.addActionListener(this);
         this.jfredit.btnSeleccionarFoto.addActionListener(this);
         
+        this.nuevo.txtCedula.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(Character.isLetter(e.getKeyChar())) {          
+                    e.consume();               
+                    JOptionPane.showMessageDialog(nuevo, "La cédula debe ser númerica!!");   
+                    nuevo.txtCedula.setText("");
+                }
+            }
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        
         estdao = new EstudiantesDAO();
         cdao = new CarrerasDAO();
         ddao = new DocenteDAO();
@@ -94,6 +114,7 @@ public class EstudiantesController implements ActionListener{
         tdpdao = new TipoDocumentoPracticasDAO();
         hpdao = new HorariosPasantiasDAO();
         udao = new UsuariosDAO();
+        vc = new ValidatorController();
         
         getAllEstudiantes();
     }
@@ -276,6 +297,9 @@ public class EstudiantesController implements ActionListener{
                     JOptionPane.showMessageDialog(this.nuevo, "El nombre es requerido");                
                 }else if(this.nuevo.txtApellidos.getText().toString().isEmpty()){
                     JOptionPane.showMessageDialog(this.nuevo, "El apellido es requerido");                                
+                }else if(vc.validationCedula(this.nuevo.txtCedula.getText().toString()) != true){
+                    JOptionPane.showMessageDialog(this.nuevo, "La cédula es incorrecta asegúrese de haber llenado correctamente el campo");
+                    this.nuevo.txtCedula.setText("");    
                 }else{
                     try {
                         Estudiantes estu = estdao.findEstudianteByCedula(this.nuevo.txtCedula.getText().toString());

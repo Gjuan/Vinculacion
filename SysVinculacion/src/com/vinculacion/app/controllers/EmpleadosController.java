@@ -12,6 +12,8 @@ import com.vinculacion.app.views.JFrameNuevoEmpleado;
 import com.vinculacion.app.views.MenuPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +32,7 @@ public class EmpleadosController implements ActionListener{
     EmpleadosDAO edao;
     CargoDepartamentalDAO cddao;
     DepartamentosDAO ddao;
+    ValidatorController vc;
     
     public EmpleadosController(MenuPrincipal menu, JFrameEditEmpleado edit, JFrameNuevoEmpleado nuevo, JFrameEmpleados emplea) {
         this.mp = menu;
@@ -48,9 +51,27 @@ public class EmpleadosController implements ActionListener{
         this.jfredit.btnGuardar.addActionListener(this);
         this.jfredit.btnRegresar.addActionListener(this);
         
+        this.jfrnuevo.txtCedula.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(Character.isLetter(e.getKeyChar())) {          
+                    e.consume();               
+                    JOptionPane.showMessageDialog(jfrnuevo, "La cédula debe ser númerica!!");   
+                    jfrnuevo.txtCedula.setText("");
+                }
+            }
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });       
+        
         edao = new EmpleadosDAO();
         cddao = new CargoDepartamentalDAO();
         ddao = new DepartamentosDAO();
+        vc = new ValidatorController();
         
         getAllEmpleados();
     }
@@ -131,6 +152,9 @@ public class EmpleadosController implements ActionListener{
                     JOptionPane.showMessageDialog(this.jfrnuevo, "El nombre es requerido");                
                 }else if(this.jfrnuevo.txtCorreo.getText().isEmpty()){
                     JOptionPane.showMessageDialog(this.jfrnuevo, "El correo es requerido");                
+                }else if(vc.validationCedula(this.jfrnuevo.txtCedula.getText().toString())!= true){
+                    JOptionPane.showMessageDialog(this.jfrnuevo, "La cédula es incorrecta asegúrese de haber llenado correctamente el campo");
+                    this.jfrnuevo.txtCedula.setText("");         
                 }else{
                     try {
                         Empleados emplead = edao.findEmpleadoByCedula(this.jfrnuevo.txtCedula.getText().toString());

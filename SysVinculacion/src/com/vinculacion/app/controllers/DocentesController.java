@@ -26,6 +26,8 @@ import com.vinculacion.app.views.JFrameNuevoDocente;
 import com.vinculacion.app.views.MenuPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -48,7 +50,8 @@ public class DocentesController implements ActionListener{
     EscuelaDAO escueladao;
     FacultadDAO facultaddao;
     TipoDedicacionDAO tddao;
-        
+    ValidatorController vc;
+    
     public DocentesController(MenuPrincipal menup, JFrameDocente docent, JFrameEditDocente edit, JFrameNuevoDocente nuevo) {
         this.jfrdocente = docent;
         this.mp = menup;
@@ -72,7 +75,24 @@ public class DocentesController implements ActionListener{
         
         this.nuevodocent.comboFacultad.addActionListener(this);
         this.nuevodocent.comboEscuelas.addActionListener(this);
-                
+        
+        this.nuevodocent.txtCedula.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(Character.isLetter(e.getKeyChar())) {          
+                    e.consume();               
+                    JOptionPane.showMessageDialog(nuevodocent, "La cédula debe ser númerica!!");   
+                    nuevodocent.txtCedula.setText("");
+                }
+            }
+            @Override
+            public void keyPressed(KeyEvent e) {                
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        
         ddao = new DocenteDAO();
         this.adao = new AsignaturasDAO();
         this.cdao = new CargoDAO();
@@ -83,7 +103,7 @@ public class DocentesController implements ActionListener{
         escueladao = new EscuelaDAO();
         facultaddao = new FacultadDAO();
         tddao = new TipoDedicacionDAO();
-        
+        vc = new ValidatorController();
     }
     
     
@@ -247,6 +267,9 @@ public class DocentesController implements ActionListener{
                     JOptionPane.showMessageDialog(nuevodocent, "El nombre es requerido");
                 }else if(this.nuevodocent.txtApellidos.getText().toString().isEmpty()){
                     JOptionPane.showMessageDialog(nuevodocent, "El apellido es requerido");
+                }else if(vc.validationCedula(this.nuevodocent.txtCedula.getText().toString()) != true){
+                    JOptionPane.showMessageDialog(nuevodocent, "La cédula es incorrecta asegúrese de haber llenado correctamente el campo");
+                    this.nuevodocent.txtCedula.setText("");
                 }else{
                     try {
                         Docente d = ddao.findDocenteByCedula(this.nuevodocent.txtCedula.getText().toString());
