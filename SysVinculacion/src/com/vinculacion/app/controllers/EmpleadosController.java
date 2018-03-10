@@ -32,7 +32,6 @@ public class EmpleadosController implements ActionListener{
     EmpleadosDAO edao;
     CargoDepartamentalDAO cddao;
     DepartamentosDAO ddao;
-    ValidatorController vc;
     
     public EmpleadosController(MenuPrincipal menu, JFrameEditEmpleado edit, JFrameNuevoEmpleado nuevo, JFrameEmpleados emplea) {
         this.mp = menu;
@@ -71,7 +70,6 @@ public class EmpleadosController implements ActionListener{
         edao = new EmpleadosDAO();
         cddao = new CargoDepartamentalDAO();
         ddao = new DepartamentosDAO();
-        vc = new ValidatorController();
         
         getAllEmpleados();
     }
@@ -152,7 +150,7 @@ public class EmpleadosController implements ActionListener{
                     JOptionPane.showMessageDialog(this.jfrnuevo, "El nombre es requerido");                
                 }else if(this.jfrnuevo.txtCorreo.getText().isEmpty()){
                     JOptionPane.showMessageDialog(this.jfrnuevo, "El correo es requerido");                
-                }else if(vc.validationCedula(this.jfrnuevo.txtCedula.getText().toString())!= true){
+                }else if(ValidatorController.validationCedula(this.jfrnuevo.txtCedula.getText().toString())!= true){
                     JOptionPane.showMessageDialog(this.jfrnuevo, "La cédula es incorrecta asegúrese de haber llenado correctamente el campo");
                     this.jfrnuevo.txtCedula.setText("");         
                 }else{

@@ -58,7 +58,6 @@ public class EstudiantesController implements ActionListener{
     TipoDocumentoPracticasDAO tdpdao;
     HorariosPasantiasDAO hpdao;
     UsuariosDAO udao;
-    ValidatorController vc;
     
     JFileChooser file, file2;
     int returnVal, returnVal2;
@@ -114,7 +113,6 @@ public class EstudiantesController implements ActionListener{
         tdpdao = new TipoDocumentoPracticasDAO();
         hpdao = new HorariosPasantiasDAO();
         udao = new UsuariosDAO();
-        vc = new ValidatorController();
         
         getAllEstudiantes();
     }
@@ -297,7 +295,7 @@ public class EstudiantesController implements ActionListener{
                     JOptionPane.showMessageDialog(this.nuevo, "El nombre es requerido");                
                 }else if(this.nuevo.txtApellidos.getText().toString().isEmpty()){
                     JOptionPane.showMessageDialog(this.nuevo, "El apellido es requerido");                                
-                }else if(vc.validationCedula(this.nuevo.txtCedula.getText().toString()) != true){
+                }else if(ValidatorController.validationCedula(this.nuevo.txtCedula.getText().toString()) != true){
                     JOptionPane.showMessageDialog(this.nuevo, "La cédula es incorrecta asegúrese de haber llenado correctamente el campo");
                     this.nuevo.txtCedula.setText("");    
                 }else{

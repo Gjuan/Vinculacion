@@ -50,7 +50,6 @@ public class DocentesController implements ActionListener{
     EscuelaDAO escueladao;
     FacultadDAO facultaddao;
     TipoDedicacionDAO tddao;
-    ValidatorController vc;
     
     public DocentesController(MenuPrincipal menup, JFrameDocente docent, JFrameEditDocente edit, JFrameNuevoDocente nuevo) {
         this.jfrdocente = docent;
@@ -103,7 +102,6 @@ public class DocentesController implements ActionListener{
         escueladao = new EscuelaDAO();
         facultaddao = new FacultadDAO();
         tddao = new TipoDedicacionDAO();
-        vc = new ValidatorController();
     }
     
     
@@ -267,7 +265,7 @@ public class DocentesController implements ActionListener{
                     JOptionPane.showMessageDialog(nuevodocent, "El nombre es requerido");
                 }else if(this.nuevodocent.txtApellidos.getText().toString().isEmpty()){
                     JOptionPane.showMessageDialog(nuevodocent, "El apellido es requerido");
-                }else if(vc.validationCedula(this.nuevodocent.txtCedula.getText().toString()) != true){
+                }else if(ValidatorController.validationCedula(this.nuevodocent.txtCedula.getText().toString()) != true){
                     JOptionPane.showMessageDialog(nuevodocent, "La cédula es incorrecta asegúrese de haber llenado correctamente el campo");
                     this.nuevodocent.txtCedula.setText("");
                 }else{

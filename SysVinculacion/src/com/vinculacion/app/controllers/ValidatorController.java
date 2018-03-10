@@ -5,36 +5,37 @@ package com.vinculacion.app.controllers;
  */
 public class ValidatorController {
     
-    private boolean validate = false;
-    private int sumPares = 0;
-    private int mulImpar = 0;   
-    private int sumImpares = 0;
-    private int sumParImpar = 0;
-    private int decenaSuperior = 0;
+    public static boolean validationCedula(String cedula) {
+        boolean validate = false;
+        int sumPares = 0;
+        int mulImpar = 0;   
+        int sumImpares = 0;
+        int sumParImpar = 0;
+        int decenaSuperior = 0;
     
-    public  boolean validationCedula(String cedula) {
         char [] arrayCedula = cedula.toCharArray();
         for (int i = 1; i < 9; i += 2) {
-            this.sumPares = sumPares + Integer.parseInt(String.valueOf(arrayCedula[i]));
+            sumPares = sumPares + Integer.parseInt(String.valueOf(arrayCedula[i]));
         }
         for (int i = 0; i < 9; i += 2) {
-            this.mulImpar = (Integer.parseInt(String.valueOf(arrayCedula[i]))) * 2;
-            if (this.mulImpar > 9) {
-                this.mulImpar = ((Integer.parseInt(String.valueOf(arrayCedula[i]))) * 2) - 9;            
+            mulImpar = (Integer.parseInt(String.valueOf(arrayCedula[i]))) * 2;
+            if (mulImpar > 9) {
+                mulImpar = ((Integer.parseInt(String.valueOf(arrayCedula[i]))) * 2) - 9;            
             }
-            this.sumImpares = sumImpares + mulImpar;
+            sumImpares = sumImpares + mulImpar;
         }
         
-        this.sumParImpar = this.sumPares + this.sumImpares;
-        this.decenaSuperior = 10 - (this.sumParImpar % 10);
-        if (this.decenaSuperior > 9) {
-            this.decenaSuperior = 0;
+        sumParImpar = sumPares + sumImpares;
+        decenaSuperior = 10 - (sumParImpar % 10);
+        if (decenaSuperior > 9) {
+            decenaSuperior = 0;
         }
-        if (Integer.parseInt(String.valueOf(arrayCedula[9])) == this.decenaSuperior) {
-            this.validate = true;
+        if (Integer.parseInt(String.valueOf(arrayCedula[9])) == decenaSuperior) {
+            validate = true;
         }else{
-            this.validate = false;
-        }        
+            validate = false;
+        }       
+        
         return validate;
     }
 }
