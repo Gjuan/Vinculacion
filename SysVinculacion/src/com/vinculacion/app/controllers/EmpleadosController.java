@@ -150,9 +150,6 @@ public class EmpleadosController implements ActionListener{
                     JOptionPane.showMessageDialog(this.jfrnuevo, "El nombre es requerido");                
                 }else if(this.jfrnuevo.txtCorreo.getText().isEmpty()){
                     JOptionPane.showMessageDialog(this.jfrnuevo, "El correo es requerido");                
-                }else if(ValidatorController.validationCedula(this.jfrnuevo.txtCedula.getText().toString())!= true){
-                    JOptionPane.showMessageDialog(this.jfrnuevo, "La cédula es incorrecta asegúrese de haber llenado correctamente el campo");
-                    this.jfrnuevo.txtCedula.setText("");         
                 }else{
                     try {
                         Empleados emplead = edao.findEmpleadoByCedula(this.jfrnuevo.txtCedula.getText().toString());

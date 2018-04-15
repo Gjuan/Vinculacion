@@ -24,7 +24,8 @@ public class InformesFinales {
    
     public InformesFinales(){
         try {
-            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/vinculo", user, pass);
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection("jdbc:postgresql://192.168.1.7:5432/vinculo", user, pass);
             if (con != null)
                 System.out.println("Conectado!!");
             else

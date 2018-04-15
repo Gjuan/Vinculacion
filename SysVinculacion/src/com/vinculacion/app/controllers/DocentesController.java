@@ -265,9 +265,6 @@ public class DocentesController implements ActionListener{
                     JOptionPane.showMessageDialog(nuevodocent, "El nombre es requerido");
                 }else if(this.nuevodocent.txtApellidos.getText().toString().isEmpty()){
                     JOptionPane.showMessageDialog(nuevodocent, "El apellido es requerido");
-                }else if(ValidatorController.validationCedula(this.nuevodocent.txtCedula.getText().toString()) != true){
-                    JOptionPane.showMessageDialog(nuevodocent, "La cédula es incorrecta asegúrese de haber llenado correctamente el campo");
-                    this.nuevodocent.txtCedula.setText("");
                 }else{
                     try {
                         Docente d = ddao.findDocenteByCedula(this.nuevodocent.txtCedula.getText().toString());

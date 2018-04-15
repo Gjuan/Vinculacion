@@ -295,9 +295,6 @@ public class EstudiantesController implements ActionListener{
                     JOptionPane.showMessageDialog(this.nuevo, "El nombre es requerido");                
                 }else if(this.nuevo.txtApellidos.getText().toString().isEmpty()){
                     JOptionPane.showMessageDialog(this.nuevo, "El apellido es requerido");                                
-                }else if(ValidatorController.validationCedula(this.nuevo.txtCedula.getText().toString()) != true){
-                    JOptionPane.showMessageDialog(this.nuevo, "La cédula es incorrecta asegúrese de haber llenado correctamente el campo");
-                    this.nuevo.txtCedula.setText("");    
                 }else{
                     try {
                         Estudiantes estu = estdao.findEstudianteByCedula(this.nuevo.txtCedula.getText().toString());
@@ -405,7 +402,7 @@ public class EstudiantesController implements ActionListener{
         if (e.getSource() == this.jfredit.btnGuardar) {
             try {
                 Estudiantes est = new Estudiantes();
-                est.setCODIGO(this.jfredit.txtCodigo.getText().toString());
+                est.setCODIGO(Integer.parseInt(this.jfredit.txtCodigo.getText().toString()));
                 est.setCEDULA(this.jfredit.txtCedula.getText().toString());
                 est.setNOMBRES(this.jfredit.txtNombre.getText().toString().toUpperCase());
                 est.setAPELLIDOS(this.jfredit.txtApellidos.getText().toString().toUpperCase());

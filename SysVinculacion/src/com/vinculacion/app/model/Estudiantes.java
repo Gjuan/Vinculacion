@@ -22,7 +22,7 @@ public class Estudiantes implements Serializable{
     @Id
     @Column(name="CODIGO")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private String CODIGO;
+    private int CODIGO;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ID_CARRERA")
@@ -94,7 +94,7 @@ public class Estudiantes implements Serializable{
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "estudiantes", cascade = CascadeType.ALL)
     private List<InformePasantias> informePasantias = new ArrayList<>();
     
-    public Estudiantes(String CODIGO, Carreras carrera, Nivel nivel, Genero genero, PeriodoAcademico periodoAcademico, Seccion seccion, Docente docente, Empleados empleado, Usuarios usuario, TipoDocumentoPracticas tipoDocumentoPracticas, HorarioPasantias horarioPasantias, String COD_MATRICULA, String NOMBRES, String APELLIDOS, String CEDULA, String DIRECCION, String TELEFONO, String CORREO, byte[] FOTO, String Estado) {
+    public Estudiantes(int CODIGO, Carreras carrera, Nivel nivel, Genero genero, PeriodoAcademico periodoAcademico, Seccion seccion, Docente docente, Empleados empleado, Usuarios usuario, TipoDocumentoPracticas tipoDocumentoPracticas, HorarioPasantias horarioPasantias, String COD_MATRICULA, String NOMBRES, String APELLIDOS, String CEDULA, String DIRECCION, String TELEFONO, String CORREO, byte[] FOTO, String Estado) {
         this.CODIGO = CODIGO;
         this.carrera = carrera;
         this.nivel = nivel;
@@ -120,11 +120,11 @@ public class Estudiantes implements Serializable{
     public Estudiantes() {
     }
    
-    public String getCODIGO() {
+    public int getCODIGO() {
         return CODIGO;
     }
 
-    public void setCODIGO(String CODIGO) {
+    public void setCODIGO(int CODIGO) {
         this.CODIGO = CODIGO;
     }
 
