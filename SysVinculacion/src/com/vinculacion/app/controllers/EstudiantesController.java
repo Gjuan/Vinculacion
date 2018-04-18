@@ -11,6 +11,7 @@ import com.vinculacion.app.dao.PeriodosAcademicosDAO;
 import com.vinculacion.app.dao.SeccionDAO;
 import com.vinculacion.app.dao.TipoDocumentoPracticasDAO;
 import com.vinculacion.app.dao.UsuariosDAO;
+import com.vinculacion.app.informes.InformesFinales;
 import com.vinculacion.app.model.Carreras;
 import com.vinculacion.app.model.Docente;
 import com.vinculacion.app.model.Empleados;
@@ -33,6 +34,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -76,6 +79,7 @@ public class EstudiantesController implements ActionListener{
         this.jfrestudiante.btnDarBaja.addActionListener(this);
         this.jfrestudiante.btnEditar.addActionListener(this);
         this.jfrestudiante.btnNuevo.addActionListener(this);
+        this.jfrestudiante.btnImprimir.addActionListener(this);
         
         this.nuevo.btnGuardar.addActionListener(this);
         this.nuevo.btnRegresar.addActionListener(this);
@@ -114,6 +118,41 @@ public class EstudiantesController implements ActionListener{
         hpdao = new HorariosPasantiasDAO();
         udao = new UsuariosDAO();
         
+        this.jfrestudiante.comboDocente.removeAllItems();
+        List<Docente> ldocente = ddao.AllDocente();
+        this.jfrestudiante.comboDocente.addItem("Todos");
+        for (Docente docente : ldocente) {
+            this.jfrestudiante.comboDocente.addItem(docente.getAPELLIDOS() + "-" + docente.getNOMBRES());
+        }
+        
+        this.jfrestudiante.comboTutorEmpresarial.removeAllItems();
+        List<Empleados> lemp = emdao.AllEmpleados();
+        this.jfrestudiante.comboTutorEmpresarial.addItem("Todos");
+        for (Empleados empleado : lemp) {
+            this.jfrestudiante.comboTutorEmpresarial.addItem(empleado.getAPELLIDOS() + "-" + empleado.getNOMBRES() + "-EMPRESA: " + empleado.getDepartamentos().getEmpresa().getNOMBRE_EMPRESA());
+        }
+        
+        this.jfrestudiante.comboCarrera.removeAllItems();
+        List<Carreras> lcarrera = cdao.AllCarreras();
+        this.jfrestudiante.comboCarrera.addItem("Todas");
+        for (Carreras carrera : lcarrera) {
+            this.jfrestudiante.comboCarrera.addItem(carrera.getDESCRIPCION());
+        }
+        
+        this.jfrestudiante.comboTipoDocPracticas.removeAllItems();
+        List<TipoDocumentoPracticas> ltdp = tdpdao.AllTiposDocumentosPracticas();
+        this.jfrestudiante.comboTipoDocPracticas.addItem("Todos");
+        for (TipoDocumentoPracticas tdp : ltdp) {
+            this.jfrestudiante.comboTipoDocPracticas.addItem(tdp.getDescripcion());
+        }
+        
+        this.jfrestudiante.periodoAcademico.removeAllItems();
+        List<PeriodoAcademico> lperiodo = padao.AllPeriodosAcademicos();
+        this.jfrestudiante.periodoAcademico.addItem("Todos");
+        for (PeriodoAcademico periodoAcademico : lperiodo) {
+            this.jfrestudiante.periodoAcademico.addItem(periodoAcademico.getFECHA_INICIO_PERIODO());           
+        }
+        
         getAllEstudiantes();
     }
 
@@ -121,6 +160,108 @@ public class EstudiantesController implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.jfrestudiante.btnBuscar) {
             getAllEstudiantes();
+        }
+        if (e.getSource() == this.jfrestudiante.btnImprimir) {
+            if (this.jfrestudiante.txtCedula.getText().isEmpty() && this.jfrestudiante.comboCarrera.getSelectedIndex() == 0 && this.jfrestudiante.comboDocente.getSelectedIndex() == 0 && this.jfrestudiante.comboTipoDocPracticas.getSelectedIndex() == 0 && this.jfrestudiante.comboTutorEmpresarial.getSelectedIndex() == 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() == 0){
+                try {
+                    InformesFinales informe = new InformesFinales();
+                    informe.InformeEstudiantes();
+                    informe.cerrar();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");
+                }
+            }else if(this.jfrestudiante.comboCarrera.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() == 0){
+                try {
+                    InformesFinales informe = new InformesFinales();
+                    informe.InformePasantesByCarrera(this.jfrestudiante.comboCarrera.getSelectedItem().toString());
+                    informe.cerrar();
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
+                }
+                this.jfrestudiante.comboCarrera.setSelectedIndex(0);
+                
+            }else if(this.jfrestudiante.comboCarrera.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() != 0){
+                try {
+                    InformesFinales informe = new InformesFinales();
+                    informe.InformePasantesByCarreraAndPeriodo(this.jfrestudiante.comboCarrera.getSelectedItem().toString(), this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
+                    informe.cerrar();
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
+                }
+                this.jfrestudiante.comboCarrera.setSelectedIndex(0);
+                this.jfrestudiante.periodoAcademico.setSelectedIndex(0);
+                
+            }else if(this.jfrestudiante.comboDocente.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() == 0){
+                try {
+                    String [] namesDocente = this.jfrestudiante.comboDocente.getSelectedItem().toString().split("-");
+                    InformesFinales informe = new InformesFinales();
+                    informe.InformePasantesByDocentes(namesDocente[1], namesDocente[0]);
+                    informe.cerrar();
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
+                }
+                this.jfrestudiante.comboDocente.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboDocente.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() != 0){
+                try {
+                    String [] namesDocente = this.jfrestudiante.comboDocente.getSelectedItem().toString().split("-");
+                    InformesFinales informe = new InformesFinales();
+                    informe.InformePasantesByDocentesAndPeriodo(namesDocente[1], namesDocente[0], this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
+                    informe.cerrar();
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
+                }
+                this.jfrestudiante.comboDocente.setSelectedIndex(0);
+                this.jfrestudiante.periodoAcademico.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboTipoDocPracticas.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() == 0){
+                try {
+                    InformesFinales informe = new InformesFinales();
+                    informe.InformePasantesByDocumento(this.jfrestudiante.comboTipoDocPracticas.getSelectedItem().toString());
+                    informe.cerrar();
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
+                }
+                this.jfrestudiante.comboTipoDocPracticas.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboTipoDocPracticas.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() != 0){
+                try {
+                    InformesFinales informe = new InformesFinales();
+                    informe.InformePasantesByDocumentoAndPeriodo(this.jfrestudiante.comboTipoDocPracticas.getSelectedItem().toString(), this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
+                    informe.cerrar();
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
+                }
+                this.jfrestudiante.comboTipoDocPracticas.setSelectedIndex(0);
+                this.jfrestudiante.periodoAcademico.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboTutorEmpresarial.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() == 0){
+                try {
+                    String [] namesEmpleado = this.jfrestudiante.comboTutorEmpresarial.getSelectedItem().toString().split("-");
+                    InformesFinales informe = new InformesFinales();
+                    informe.InformePasantesByEmpleado(namesEmpleado[1], namesEmpleado[0]);
+                    informe.cerrar();
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
+                }
+                this.jfrestudiante.comboTutorEmpresarial.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboTutorEmpresarial.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() != 0){
+                try {
+                    String [] namesEmpleado = this.jfrestudiante.comboTutorEmpresarial.getSelectedItem().toString().split("-");                        
+                    InformesFinales informe = new InformesFinales();
+                    informe.InformePasantesByEmpleadoAndPeriodo(namesEmpleado[1], namesEmpleado[0], this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
+                    informe.cerrar();
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
+                }
+                this.jfrestudiante.comboTutorEmpresarial.setSelectedIndex(0);
+                this.jfrestudiante.periodoAcademico.setSelectedIndex(0);
+            }else {
+                try {
+                    InformesFinales informe = new InformesFinales();
+                    informe.InformePasantesByPeriodo(this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
+                    informe.cerrar();
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
+                }
+                this.jfrestudiante.periodoAcademico.setSelectedIndex(0);
+            }        
         }
         if (e.getSource() == this.jfrestudiante.btnDarBaja) {
             try {
@@ -500,7 +641,7 @@ public class EstudiantesController implements ActionListener{
             
             Object [] data = new Object[19];                    
 
-            if (this.jfrestudiante.txtCedula.getText().isEmpty()) {
+            if (this.jfrestudiante.txtCedula.getText().isEmpty() && this.jfrestudiante.comboCarrera.getSelectedIndex() == 0 && this.jfrestudiante.comboDocente.getSelectedIndex() == 0 && this.jfrestudiante.comboTipoDocPracticas.getSelectedIndex() == 0 && this.jfrestudiante.comboTutorEmpresarial.getSelectedIndex() == 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() == 0) {
                 this.jfrestudiante.tableEstudiantes.removeAll();
                 List<Estudiantes> lest = estdao.AllEstudiantes();
                 for (Estudiantes est : lest) {
@@ -524,7 +665,7 @@ public class EstudiantesController implements ActionListener{
                     data[17] = est.getESTADO();
                     model.addRow(data);
                 }
-            }else{
+            }else if(!this.jfrestudiante.txtCedula.getText().isEmpty()){
                 this.jfrestudiante.tableEstudiantes.removeAll();               
                 Estudiantes est = estdao.findEstudianteByCedula(this.jfrestudiante.txtCedula.getText().toString());
                 if (est != null) {
@@ -549,7 +690,243 @@ public class EstudiantesController implements ActionListener{
                     model.addRow(data);
                 }else{
                     JOptionPane.showMessageDialog(this.jfrestudiante, "El estudiante con cédula " + this.jfrestudiante.txtCedula.getText().toString() + " no existe");
-                }            
+                }
+                this.jfrestudiante.txtCedula.setText("");
+            }else if(this.jfrestudiante.comboCarrera.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() == 0){
+                this.jfrestudiante.tableEstudiantes.removeAll();
+                List<Estudiantes> lest = estdao.EstudiantesByCarrera(this.jfrestudiante.comboCarrera.getSelectedItem().toString());
+                for (Estudiantes est : lest) {
+                    data[0] = est.getCODIGO();
+                    data[1] = est.getCEDULA();
+                    data[2] = est.getCOD_MATRICULA();
+                    data[3] = est.getNOMBRES();
+                    data[4] = est.getAPELLIDOS();
+                    data[5] = est.getDIRECCION();
+                    data[6] = est.getTELEFONO();
+                    data[7] = est.getCORREO();
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
+                    model.addRow(data);
+                }
+                this.jfrestudiante.comboCarrera.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboCarrera.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() != 0){
+                this.jfrestudiante.tableEstudiantes.removeAll();
+            
+                List<Estudiantes> lest = estdao.EstudiantesByCarrera(this.jfrestudiante.comboCarrera.getSelectedItem().toString(), this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
+                for (Estudiantes est : lest) {
+                    data[0] = est.getCODIGO();
+                    data[1] = est.getCEDULA();
+                    data[2] = est.getCOD_MATRICULA();
+                    data[3] = est.getNOMBRES();
+                    data[4] = est.getAPELLIDOS();
+                    data[5] = est.getDIRECCION();
+                    data[6] = est.getTELEFONO();
+                    data[7] = est.getCORREO();
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
+                    model.addRow(data);
+                }
+                this.jfrestudiante.comboCarrera.setSelectedIndex(0);
+                this.jfrestudiante.periodoAcademico.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboDocente.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() == 0){
+                this.jfrestudiante.tableEstudiantes.removeAll();
+                String [] namesDocente = this.jfrestudiante.comboDocente.getSelectedItem().toString().split("-");
+                List<Estudiantes> lest = estdao.EstudiantesByTutorDocente(namesDocente[1], namesDocente[0]);
+                for (Estudiantes est : lest) {
+                    data[0] = est.getCODIGO();
+                    data[1] = est.getCEDULA();
+                    data[2] = est.getCOD_MATRICULA();
+                    data[3] = est.getNOMBRES();
+                    data[4] = est.getAPELLIDOS();
+                    data[5] = est.getDIRECCION();
+                    data[6] = est.getTELEFONO();
+                    data[7] = est.getCORREO();
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
+                    model.addRow(data);
+                }
+                this.jfrestudiante.comboDocente.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboDocente.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() != 0){
+            this.jfrestudiante.tableEstudiantes.removeAll();
+                String [] namesDocente = this.jfrestudiante.comboDocente.getSelectedItem().toString().split("-");           
+                List<Estudiantes> lest = estdao.EstudiantesByTutorDocente(namesDocente[1], namesDocente[0], this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
+                for (Estudiantes est : lest) {
+                    data[0] = est.getCODIGO();
+                    data[1] = est.getCEDULA();
+                    data[2] = est.getCOD_MATRICULA();
+                    data[3] = est.getNOMBRES();
+                    data[4] = est.getAPELLIDOS();
+                    data[5] = est.getDIRECCION();
+                    data[6] = est.getTELEFONO();
+                    data[7] = est.getCORREO();
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
+                    model.addRow(data);
+                }
+                this.jfrestudiante.comboDocente.setSelectedIndex(0);
+                this.jfrestudiante.periodoAcademico.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboTipoDocPracticas.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() == 0){
+                this.jfrestudiante.tableEstudiantes.removeAll();
+                List<Estudiantes> lest = estdao.EstudiantesByTipoDocPracticas(this.jfrestudiante.comboTipoDocPracticas.getSelectedItem().toString());
+                for (Estudiantes est : lest) {
+                    data[0] = est.getCODIGO();
+                    data[1] = est.getCEDULA();
+                    data[2] = est.getCOD_MATRICULA();
+                    data[3] = est.getNOMBRES();
+                    data[4] = est.getAPELLIDOS();
+                    data[5] = est.getDIRECCION();
+                    data[6] = est.getTELEFONO();
+                    data[7] = est.getCORREO();
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
+                    model.addRow(data);
+                }
+                this.jfrestudiante.comboTipoDocPracticas.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboTipoDocPracticas.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() != 0){
+                this.jfrestudiante.tableEstudiantes.removeAll();      
+                List<Estudiantes> lest = estdao.EstudiantesByTipoDocPracticas(this.jfrestudiante.comboTipoDocPracticas.getSelectedItem().toString(), this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
+                for (Estudiantes est : lest) {
+                    data[0] = est.getCODIGO();
+                    data[1] = est.getCEDULA();
+                    data[2] = est.getCOD_MATRICULA();
+                    data[3] = est.getNOMBRES();
+                    data[4] = est.getAPELLIDOS();
+                    data[5] = est.getDIRECCION();
+                    data[6] = est.getTELEFONO();
+                    data[7] = est.getCORREO();
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
+                    model.addRow(data);
+                }
+                this.jfrestudiante.comboTipoDocPracticas.setSelectedIndex(0);
+                this.jfrestudiante.periodoAcademico.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboTutorEmpresarial.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() == 0){
+                this.jfrestudiante.tableEstudiantes.removeAll();
+                String [] namesEmpleado = this.jfrestudiante.comboTutorEmpresarial.getSelectedItem().toString().split("-");
+                List<Estudiantes> lest = estdao.EstudiantesByTutorEmpresarial(namesEmpleado[1], namesEmpleado[0]);
+                for (Estudiantes est : lest) {
+                    data[0] = est.getCODIGO();
+                    data[1] = est.getCEDULA();
+                    data[2] = est.getCOD_MATRICULA();
+                    data[3] = est.getNOMBRES();
+                    data[4] = est.getAPELLIDOS();
+                    data[5] = est.getDIRECCION();
+                    data[6] = est.getTELEFONO();
+                    data[7] = est.getCORREO();
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
+                    model.addRow(data);
+                }
+                this.jfrestudiante.comboTutorEmpresarial.setSelectedIndex(0);
+            }else if(this.jfrestudiante.comboTutorEmpresarial.getSelectedIndex() != 0 && this.jfrestudiante.periodoAcademico.getSelectedIndex() != 0){
+                this.jfrestudiante.tableEstudiantes.removeAll();
+                String [] namesEmpleado = this.jfrestudiante.comboTutorEmpresarial.getSelectedItem().toString().split("-");
+                List<Estudiantes> lest = estdao.EstudiantesByTutorEmpresarial(namesEmpleado[1], namesEmpleado[0], this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
+                for (Estudiantes est : lest) {
+                    data[0] = est.getCODIGO();
+                    data[1] = est.getCEDULA();
+                    data[2] = est.getCOD_MATRICULA();
+                    data[3] = est.getNOMBRES();
+                    data[4] = est.getAPELLIDOS();
+                    data[5] = est.getDIRECCION();
+                    data[6] = est.getTELEFONO();
+                    data[7] = est.getCORREO();
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
+                    model.addRow(data);
+                }
+                this.jfrestudiante.comboTutorEmpresarial.setSelectedIndex(0);
+                this.jfrestudiante.periodoAcademico.setSelectedIndex(0);
+            }else{
+                this.jfrestudiante.tableEstudiantes.removeAll();
+                
+                List<Estudiantes> lest = estdao.EstudiantesByPeriodoAcadémico(this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
+                for (Estudiantes est : lest) {
+                    data[0] = est.getCODIGO();
+                    data[1] = est.getCEDULA();
+                    data[2] = est.getCOD_MATRICULA();
+                    data[3] = est.getNOMBRES();
+                    data[4] = est.getAPELLIDOS();
+                    data[5] = est.getDIRECCION();
+                    data[6] = est.getTELEFONO();
+                    data[7] = est.getCORREO();
+                    data[8] = est.getCarrera().getDESCRIPCION();
+                    data[9] = est.getNivel().getSEMESTRE();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
+                    data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
+                    data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
+                    data[15] = est.getTipoDocumentoPracticas().getDescripcion();
+                    data[16] = est.getHorarioPasantias().getDESCRIPCION_HORARIO();
+                    data[17] = est.getESTADO();
+                    model.addRow(data);
+                }
+                this.jfrestudiante.periodoAcademico.setSelectedIndex(0);
             }
         }catch(Exception ex){
             JOptionPane.showMessageDialog(this.jfrestudiante, "Error: " + ex.getMessage());
