@@ -241,12 +241,12 @@ public class JFrameEstudiantes extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDarBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(btnDarBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                .addGap(47, 47, 47))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

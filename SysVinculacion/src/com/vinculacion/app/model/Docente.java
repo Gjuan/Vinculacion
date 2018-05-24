@@ -1,68 +1,27 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="DOCENTE")
-public class Docente implements Serializable{
+public class Docente{
     
-    @Id
-    @Column(name="ID_DOCENTE")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_DOCENTE;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_GENERO")  
     private Genero genero;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_CARRERA")
     private Carreras carrera;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_TIPO_DEDICACION")
     private TipoDedicacion tipoDedicacion;
     
-    @Column(name="CEDULA")
     private String CEDULA;
     
-    @Column(name="NOMBRES")
     private String NOMBRES;
     
-    @Column(name="APELLIDOS")    
     private String APELLIDOS;
     
-    @Column(name="TELEFONO")    
     private String TELEFONO;
     
-    @Column(name="CORREO")    
     private String CORREO;
     
-    @Column(name="ESTADO")
     private String ESTADO;
       
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docentes", cascade = CascadeType.ALL)
-    private List<DetalleDocenteAsignatura> detallesDocenteAsignatura = new ArrayList<>();
-    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docentes", cascade = CascadeType.ALL)
-    private List<DetalleCargoDocente> detalleCargoDocente = new ArrayList<>();
-    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "docente", cascade = CascadeType.ALL)
-    private List<Estudiantes> estudiantes = new ArrayList<>();
-
     public Docente(int ID_DOCENTE, Genero genero, Carreras carrera, TipoDedicacion tipoDedicacion, String CEDULA, String NOMBRES, String APELLIDOS, String TELEFONO, String CORREO, String ESTADO) {
         this.ID_DOCENTE = ID_DOCENTE;
         this.genero = genero;
@@ -158,29 +117,5 @@ public class Docente implements Serializable{
     public void setESTADO(String ESTADO) {
         this.ESTADO = ESTADO;
     }
-    
-    public List<DetalleDocenteAsignatura> getDetallesDocenteAsignatura() {
-        return detallesDocenteAsignatura;
-    }
-
-    public void setDetallesDocenteAsignatura(List<DetalleDocenteAsignatura> detallesDocenteAsignatura) {
-        this.detallesDocenteAsignatura = detallesDocenteAsignatura;
-    }
-
-    public List<DetalleCargoDocente> getDetalleCargoDocente() {
-        return detalleCargoDocente;
-    }
-
-    public void setDetalleCargoDocente(List<DetalleCargoDocente> detalleCargoDocente) {
-        this.detalleCargoDocente = detalleCargoDocente;
-    }
-
-    public List<Estudiantes> getEstudiantes() {
-        return estudiantes;
-    }
-
-    public void setEstudiantes(List<Estudiantes> estudiantes) {
-        this.estudiantes = estudiantes;
-    }
-    
+       
 }

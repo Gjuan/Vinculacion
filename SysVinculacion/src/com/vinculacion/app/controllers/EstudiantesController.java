@@ -34,8 +34,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -166,7 +164,6 @@ public class EstudiantesController implements ActionListener{
                 try {
                     InformesFinales informe = new InformesFinales();
                     informe.InformeEstudiantes();
-                    informe.cerrar();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");
                 }
@@ -174,7 +171,6 @@ public class EstudiantesController implements ActionListener{
                 try {
                     InformesFinales informe = new InformesFinales();
                     informe.InformePasantesByCarrera(this.jfrestudiante.comboCarrera.getSelectedItem().toString());
-                    informe.cerrar();
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
                 }
@@ -184,7 +180,6 @@ public class EstudiantesController implements ActionListener{
                 try {
                     InformesFinales informe = new InformesFinales();
                     informe.InformePasantesByCarreraAndPeriodo(this.jfrestudiante.comboCarrera.getSelectedItem().toString(), this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
-                    informe.cerrar();
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
                 }
@@ -196,7 +191,6 @@ public class EstudiantesController implements ActionListener{
                     String [] namesDocente = this.jfrestudiante.comboDocente.getSelectedItem().toString().split("-");
                     InformesFinales informe = new InformesFinales();
                     informe.InformePasantesByDocentes(namesDocente[1], namesDocente[0]);
-                    informe.cerrar();
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
                 }
@@ -206,7 +200,6 @@ public class EstudiantesController implements ActionListener{
                     String [] namesDocente = this.jfrestudiante.comboDocente.getSelectedItem().toString().split("-");
                     InformesFinales informe = new InformesFinales();
                     informe.InformePasantesByDocentesAndPeriodo(namesDocente[1], namesDocente[0], this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
-                    informe.cerrar();
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
                 }
@@ -216,7 +209,6 @@ public class EstudiantesController implements ActionListener{
                 try {
                     InformesFinales informe = new InformesFinales();
                     informe.InformePasantesByDocumento(this.jfrestudiante.comboTipoDocPracticas.getSelectedItem().toString());
-                    informe.cerrar();
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
                 }
@@ -225,7 +217,6 @@ public class EstudiantesController implements ActionListener{
                 try {
                     InformesFinales informe = new InformesFinales();
                     informe.InformePasantesByDocumentoAndPeriodo(this.jfrestudiante.comboTipoDocPracticas.getSelectedItem().toString(), this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
-                    informe.cerrar();
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
                 }
@@ -236,7 +227,6 @@ public class EstudiantesController implements ActionListener{
                     String [] namesEmpleado = this.jfrestudiante.comboTutorEmpresarial.getSelectedItem().toString().split("-");
                     InformesFinales informe = new InformesFinales();
                     informe.InformePasantesByEmpleado(namesEmpleado[1], namesEmpleado[0]);
-                    informe.cerrar();
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
                 }
@@ -246,7 +236,6 @@ public class EstudiantesController implements ActionListener{
                     String [] namesEmpleado = this.jfrestudiante.comboTutorEmpresarial.getSelectedItem().toString().split("-");                        
                     InformesFinales informe = new InformesFinales();
                     informe.InformePasantesByEmpleadoAndPeriodo(namesEmpleado[1], namesEmpleado[0], this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
-                    informe.cerrar();
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
                 }
@@ -256,7 +245,6 @@ public class EstudiantesController implements ActionListener{
                 try {
                     InformesFinales informe = new InformesFinales();
                     informe.InformePasantesByPeriodo(this.jfrestudiante.periodoAcademico.getSelectedItem().toString());
-                    informe.cerrar();
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(this.jfrestudiante, "Informe vacío");                
                 }
@@ -265,11 +253,11 @@ public class EstudiantesController implements ActionListener{
         }
         if (e.getSource() == this.jfrestudiante.btnDarBaja) {
             try {
-                String id = this.jfrestudiante.tableEstudiantes.getValueAt(this.jfrestudiante.tableEstudiantes.getSelectedRow(), 0).toString();
+                int id = Integer.parseInt(this.jfrestudiante.tableEstudiantes.getValueAt(this.jfrestudiante.tableEstudiantes.getSelectedRow(), 0).toString());
                 int i = JOptionPane.showConfirmDialog(this.jfrestudiante, "¿Desea dejar inactivo el registro con el código "+id+" ?","Confirmar",JOptionPane.YES_NO_OPTION);
                 if(i == 0){
                     estdao.deleteEstudiante(id);
-                    JOptionPane.showMessageDialog(this.jfrestudiante,  "Se ha dado de baja a este estudiante!!");
+                    JOptionPane.showMessageDialog(this.jfrestudiante,  "Se ha borrado este estudiante!!");
                     getAllEstudiantes();
                 }               
             } catch (Exception ex) {
@@ -281,6 +269,7 @@ public class EstudiantesController implements ActionListener{
             try {
                 if (!this.jfrestudiante.tableEstudiantes.getValueAt(this.jfrestudiante.tableEstudiantes.getSelectedRow(), 0).toString().isEmpty()) {
                     this.jfredit.setVisible(true);
+                                        
                     this.jfredit.comboCarrera.removeAllItems();
                     List<Carreras> lcarrera = cdao.AllCarreras();
                     for (Carreras carreras : lcarrera) {
@@ -325,13 +314,13 @@ public class EstudiantesController implements ActionListener{
                     this.jfredit.comboTutorDocente.removeAllItems();
                     List<Docente> ldocente = ddao.AllDocente();
                     for (Docente docente : ldocente) {
-                        this.jfredit.comboTutorDocente.addItem(docente.getNOMBRES() + "-"+ docente.getAPELLIDOS());
+                        this.jfredit.comboTutorDocente.addItem(docente.getCEDULA() + "-" + docente.getNOMBRES() + "-"+ docente.getAPELLIDOS());
                     }
 
                     this.jfredit.comboTutorEmpresarial.removeAllItems();
                     List<Empleados> lemp = emdao.AllEmpleados();
                     for (Empleados empleados : lemp) {
-                        this.jfredit.comboTutorEmpresarial.addItem(empleados.getNOMBRES() + "-" + empleados.getAPELLIDOS());
+                        this.jfredit.comboTutorEmpresarial.addItem(empleados.getCEDULA() + "-" + empleados.getNOMBRES() + "-" + empleados.getAPELLIDOS());
                     }
                     
                     this.jfredit.txtCodigo.setText(this.jfrestudiante.tableEstudiantes.getValueAt(this.jfrestudiante.tableEstudiantes.getSelectedRow(), 0).toString());
@@ -350,8 +339,10 @@ public class EstudiantesController implements ActionListener{
                     this.jfredit.comboPeriodoAcademico.setSelectedItem(est.getPeriodoAcademico().getFECHA_INICIO_PERIODO());
                     this.jfredit.comboSeccion.setSelectedItem(est.getSeccion().getDESCRIPCION());
                     this.jfredit.comboTipoDocumento.setSelectedItem(est.getTipoDocumentoPracticas().getDescripcion());                    
-                    this.jfredit.comboTutorDocente.setSelectedItem(est.getDocente().getNOMBRES() + "-" + est.getDocente().getAPELLIDOS());
-                    this.jfredit.comboTutorEmpresarial.setSelectedItem(est.getEmpleado().getNOMBRES() + "-" + est.getEmpleado().getAPELLIDOS());
+                    
+                    this.jfredit.comboTutorDocente.setSelectedItem(est.getDocente().getCEDULA() + "-" + est.getDocente().getNOMBRES() + "-" + est.getDocente().getAPELLIDOS());
+                    this.jfredit.comboTutorEmpresarial.setSelectedItem(est.getEmpleado().getCEDULA() + "-" + est.getEmpleado().getNOMBRES() + "-" + est.getEmpleado().getAPELLIDOS());
+                    
                     this.jfredit.comboEstado.setSelectedItem(est.getESTADO());
                     
                     ImageIcon img = new ImageIcon(est.getFOTO());
@@ -412,13 +403,13 @@ public class EstudiantesController implements ActionListener{
             this.nuevo.comboTutorDocente.removeAllItems();
             List<Docente> ldocente = ddao.AllDocente();
             for (Docente docente : ldocente) {
-                this.nuevo.comboTutorDocente.addItem(docente.getNOMBRES() + "-"+ docente.getAPELLIDOS());
+                this.nuevo.comboTutorDocente.addItem(docente.getCEDULA() + "-" + docente.getNOMBRES() + "-" + docente.getAPELLIDOS());
             }
             
             this.nuevo.comboTutorEmpresarial.removeAllItems();
             List<Empleados> lemp = emdao.AllEmpleados();
             for (Empleados empleados : lemp) {
-                this.nuevo.comboTutorEmpresarial.addItem(empleados.getNOMBRES() + "-" + empleados.getAPELLIDOS());
+                this.nuevo.comboTutorEmpresarial.addItem(empleados.getCEDULA() + "-" + empleados.getNOMBRES() + "-" + empleados.getAPELLIDOS());
             }
             
             this.jfrestudiante.dispose();
@@ -436,11 +427,14 @@ public class EstudiantesController implements ActionListener{
                     JOptionPane.showMessageDialog(this.nuevo, "El nombre es requerido");                
                 }else if(this.nuevo.txtApellidos.getText().toString().isEmpty()){
                     JOptionPane.showMessageDialog(this.nuevo, "El apellido es requerido");                                
-                }else{
+                }else{  
+                    Estudiantes estu = null;
                     try {
-                        Estudiantes estu = estdao.findEstudianteByCedula(this.nuevo.txtCedula.getText().toString());
-                        JOptionPane.showMessageDialog(this.nuevo, "Este estudiante con cédula " + estu.getCEDULA()+ " ya existe en el sistema");
-                    } catch (Exception err) {
+                        estu = estdao.findEstudianteByCedula(this.nuevo.txtCedula.getText().toString());    
+                    } catch (Exception er) {
+                        System.out.println("Errosito: " + er.getMessage());
+                    }
+                    if (estu.getCEDULA() == null) {
                         Estudiantes est = new Estudiantes();
                         est.setAPELLIDOS(this.nuevo.txtApellidos.getText().toString().toUpperCase());
                         est.setNOMBRES(this.nuevo.txtNombre.getText().toString().toUpperCase());
@@ -460,21 +454,21 @@ public class EstudiantesController implements ActionListener{
                         Seccion seccion = sdao.findSeccionByDescription(this.nuevo.comboSeccion.getSelectedItem().toString());
                         est.setSeccion(seccion);
 
-                        est.setDIRECCION(this.nuevo.txtDireccion.getText().toString());
+                        est.setDIRECCION(this.nuevo.txtDireccion.getText().toString().toUpperCase());
 
                         String [] profesor = this.nuevo.comboTutorDocente.getSelectedItem().toString().split("-");
-                        Docente docente = ddao.findDocenteByLastNameAndName(profesor[0], profesor[1]);
+                        Docente docente = ddao.findDocenteByCedula(profesor[0]);
                         est.setDocente(docente);
 
                         String [] tutorEmpresarial = this.nuevo.comboTutorEmpresarial.getSelectedItem().toString().split("-");                    
-                        Empleados empleado = emdao.findEmpleadosByLastNameAndName(tutorEmpresarial[0], tutorEmpresarial[1]);
+                        Empleados empleado = emdao.findEmpleadoByCedula(tutorEmpresarial[0]);
                         est.setEmpleado(empleado);
 
                         PeriodoAcademico periodo = padao.findPeriodoAcademicoByStartDate(this.nuevo.comboPeriodoAcademico.getSelectedItem().toString());                    
                         est.setPeriodoAcademico(periodo);
-
+                        
                         est.setFOTO(bImg);
-
+                                               
                         TipoDocumentoPracticas tdp = tdpdao.findTipoDocumentoPracticasByDescription(this.nuevo.comboTipoDocumento.getSelectedItem().toString());
                         est.setTipoDocumentoPracticas(tdp);
 
@@ -483,8 +477,8 @@ public class EstudiantesController implements ActionListener{
 
                         est.setTELEFONO(this.nuevo.txtTelefono.getText().toString());
 
-                        int iduser = AuthController.id;
-                        Usuarios usuario = udao.findUsuarioById(iduser);
+                        Usuarios usuario = new Usuarios();
+                        usuario.setId_usuario(AuthController.id);
                         est.setUsuario(usuario);
 
                         est.setESTADO("ACTIVO");
@@ -510,11 +504,13 @@ public class EstudiantesController implements ActionListener{
                         this.nuevo.lbFotoPasante.setIcon(null);
                         this.nuevo.repaint();
                         this.nuevo.txtCedula.requestFocus();
-                    }   
+                    }else{
+                        JOptionPane.showMessageDialog(this.nuevo, "Este estudiante con cédula " + estu.getCEDULA()+ " ya existe en el sistema");
+                    }                    
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this.nuevo, "Error: " + ex.getMessage());
-            }            
+                JOptionPane.showMessageDialog(this.nuevo, "Error al ingresar: " + ex.getMessage());
+            }           
         }
         if (e.getSource() == this.nuevo.btnRegresar) {
             this.nuevo.dispose();
@@ -562,23 +558,26 @@ public class EstudiantesController implements ActionListener{
                 PeriodoAcademico periodo = padao.findPeriodoAcademicoByStartDate(this.jfredit.comboPeriodoAcademico.getSelectedItem().toString());
                 est.setPeriodoAcademico(periodo);
                 String profesor[] = this.jfredit.comboTutorDocente.getSelectedItem().toString().split("-");
-                Docente docente = ddao.findDocenteByLastNameAndName(profesor[0], profesor[1]);
+                Docente docente = ddao.findDocenteByCedula(profesor[0]);
                 est.setDocente(docente);
                 String emplead [] = this.jfredit.comboTutorEmpresarial.getSelectedItem().toString().split("-");
-                Empleados empleado = emdao.findEmpleadosByLastNameAndName(emplead[0], emplead[1]);
+                Empleados empleado = emdao.findEmpleadoByCedula(emplead[0]);
                 est.setEmpleado(empleado);
                 TipoDocumentoPracticas tdp = tdpdao.findTipoDocumentoPracticasByDescription(this.jfredit.comboTipoDocumento.getSelectedItem().toString());
                 est.setTipoDocumentoPracticas(tdp);
                 HorarioPasantias horario =  hpdao.findHorarioPasantiaByDescription(this.jfredit.comboHorario.getSelectedItem().toString());
                 est.setHorarioPasantias(horario);
-                Usuarios usuario = udao.findUsuarioById(AuthController.id);
+                
+                Usuarios usuario = new Usuarios();
+                usuario.setId_usuario(AuthController.id);
                 est.setUsuario(usuario);        
+                
                 est.setESTADO(this.jfredit.comboEstado.getSelectedItem().toString());               
                 
                 if (returnVal2 == JFileChooser.APPROVE_OPTION) {
                     est.setFOTO(bImg2);               
                 }else{
-                    Estudiantes estudiante = estdao.findEstudianteById(this.jfredit.txtCodigo.getText().toString());                                   
+                    Estudiantes estudiante = estdao.findEstudianteById(Integer.parseInt(this.jfredit.txtCodigo.getText().toString()));                                   
                     est.setFOTO(estudiante.getFOTO());
                 }            
                 estdao.updateEstudiante(est);
@@ -679,9 +678,9 @@ public class EstudiantesController implements ActionListener{
                     data[7] = est.getCORREO();                    
                     data[8] = est.getCarrera().getDESCRIPCION();
                     data[9] = est.getNivel().getSEMESTRE();
-                    data[10] = est.getGenero();
-                    data[11] = est.getPeriodoAcademico();
-                    data[12] = est.getSeccion();
+                    data[10] = est.getGenero().getDESCRIPCION();
+                    data[11] = est.getPeriodoAcademico().getFECHA_INICIO_PERIODO();
+                    data[12] = est.getSeccion().getDESCRIPCION();
                     data[13] = est.getDocente().getAPELLIDOS() + "-" + est.getDocente().getNOMBRES();
                     data[14] = est.getEmpleado().getAPELLIDOS() + "-" + est.getEmpleado().getNOMBRES();
                     data[15] = est.getTipoDocumentoPracticas().getDescripcion();

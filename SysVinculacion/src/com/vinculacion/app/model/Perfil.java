@@ -1,36 +1,13 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="PERFIL")
-public class Perfil implements Serializable {
+public class Perfil{
     
-    @Id
-    @Column(name="id_perfil")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)	    
     private int id_perfil;
     
-    @Column(name="descripcion")
     private String descripcion;
     
-    @Column(name="ESTADO")
     private String ESTADO;
       
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "perfil", cascade = CascadeType.ALL)
-    private List<Usuarios> usuarios = new ArrayList<>();
-
     public Perfil() {
     }
 
@@ -62,14 +39,6 @@ public class Perfil implements Serializable {
 
     public void setESTADO(String ESTADO) {
         this.ESTADO = ESTADO;
-    }
-    
-    public List<Usuarios> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuarios> usuarios) {
-        this.usuarios = usuarios;
     }
     
 }

@@ -113,7 +113,7 @@ public class CarrerasController implements ActionListener{
         if (e.getSource() == this.jfrnuevacarrera.btnGuardar) {
             try {
                 if (this.jfrnuevacarrera.txtDescripcion.getText().toString().isEmpty()) {
-                    JOptionPane.showMessageDialog(this.jfrnuevacarrera, "La descripción de la carrera es requeridad !!");
+                    JOptionPane.showMessageDialog(this.jfrnuevacarrera, "La descripción de la carrera es requerida !!");
                 }else{
                     Carreras carrera = new Carreras();
                     carrera.setDESCRIPCION((this.jfrnuevacarrera.txtDescripcion.getText().toString()).toUpperCase());

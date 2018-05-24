@@ -1,16 +1,19 @@
 package com.vinculacion.app.dao;
 
 import com.vinculacion.app.Interface.NivelDaoInterface;
-import com.vinculacion.app.Persistence.FactorFactory;
+import com.vinculacion.app.Persistence.Config;
 import com.vinculacion.app.model.Nivel;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
 
 /**
  *
  * @author jorge
  */
-public class NivelDAO extends FactorFactory implements NivelDaoInterface{
+public class NivelDAO extends Config implements NivelDaoInterface{
 
     public NivelDAO() {
         super();
@@ -18,59 +21,92 @@ public class NivelDAO extends FactorFactory implements NivelDaoInterface{
     
     @Override
     public void saveNivel(Nivel nivel) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.persist(nivel);
-        manager.getTransaction().commit();
-        manager.close();
+        try {
+            PreparedStatement ps = con.prepareStatement("insert into nivel (semestre, estado) values(?,?)");
+            ps.setString(1, nivel.getSEMESTRE());
+            ps.setString(2, nivel.getESTADO());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
     public List<Nivel> AllNiveles() {
-        EntityManager manager = emf.createEntityManager();        
-        List<Nivel> lnivel = (List<Nivel>)manager.createQuery("FROM Nivel WHERE ESTADO = 'ACTIVO' order by ID_NIVEL desc")
-                .getResultList();
-        manager.close();
+        List<Nivel> lnivel = new ArrayList<Nivel>();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM nivel WHERE ESTADO = 'ACTIVO' order by ID_NIVEL desc");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Nivel nivel = new Nivel();
+                nivel.setID_NIVEL(rs.getInt("id_nivel"));
+                nivel.setSEMESTRE(rs.getString("semestre"));
+                nivel.setESTADO(rs.getString("estado"));
+                lnivel.add(nivel);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return lnivel;
     }
 
     @Override
     public void updateNivel(Nivel nivel) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.merge(nivel);
-        manager.getTransaction().commit();
-        manager.close();
+        try {
+            PreparedStatement ps = con.prepareStatement("update nivel set semestre = ?, estado = ? where id_nivel = ?");
+            ps.setString(1, nivel.getSEMESTRE());
+            ps.setString(2, nivel.getESTADO());
+            ps.setInt(3, nivel.getID_NIVEL());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
     public void deleteNivel(int id) {
-        Nivel nivel = findNivelById(id);
-        if (nivel != null) {
-            nivel.setESTADO("INACTIVO");
-            EntityManager manager = emf.createEntityManager();
-            manager.getTransaction().begin();
-            manager.merge(nivel);
-            manager.getTransaction().commit();
-            manager.close();
+        try {
+            PreparedStatement ps = con.prepareStatement("delete from nivel where id_nivel = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
     @Override
     public Nivel findNivelById(int id) {
-        EntityManager manager = emf.createEntityManager();        
-        Nivel nivel = manager.find(Nivel.class, id);
-        manager.close();
+        Nivel nivel = new Nivel();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM nivel WHERE ESTADO = 'ACTIVO' and ID_NIVEL = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                nivel.setID_NIVEL(rs.getInt("id_nivel"));
+                nivel.setSEMESTRE(rs.getString("semestre"));
+                nivel.setESTADO(rs.getString("estado"));
+            }
+        }catch(Exception ex){
+            System.out.println("Error: " + ex.getMessage());
+        }
         return nivel;
     }
 
     @Override
     public Nivel findNivelBySemestre(String semestre) {
-        EntityManager manager = emf.createEntityManager();        
-        Nivel nivel = (Nivel) manager.createQuery("FROM Nivel WHERE ESTADO = 'ACTIVO' and SEMESTRE = :semest")
-                .setParameter("semest", semestre)
-                .getSingleResult();
-        manager.close();
+        Nivel nivel = new Nivel();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Nivel WHERE ESTADO = 'ACTIVO' and SEMESTRE = ?");
+            ps.setString(1, semestre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                nivel.setID_NIVEL(rs.getInt("id_nivel"));
+                nivel.setSEMESTRE(rs.getString("semestre"));
+                nivel.setESTADO(rs.getString("estado"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
         return nivel;
     }
     

@@ -1,33 +1,11 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="HORARIO_PASANTIAS")
-public class HorarioPasantias implements Serializable{
+public class HorarioPasantias{
    
-    @Id
-    @Column(name="ID_HORARIO_PASANTIAS")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)  
     private int ID_HORARIO_PASANTIAS;
     
-    @Column(name="DESCRIPCION_HORARIO")
     private String DESCRIPCION_HORARIO; 
-    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "horarioPasantias", cascade = CascadeType.ALL)
-    private List<Estudiantes> estudiantes = new ArrayList<>();
-    
+        
     public HorarioPasantias(int ID_HORARIO_PASANTIAS, String DESCRIPCION_HORARIO) {
         this.ID_HORARIO_PASANTIAS = ID_HORARIO_PASANTIAS;
         this.DESCRIPCION_HORARIO = DESCRIPCION_HORARIO;
@@ -52,12 +30,4 @@ public class HorarioPasantias implements Serializable{
         this.DESCRIPCION_HORARIO = DESCRIPCION_HORARIO;
     }
 
-    public List<Estudiantes> getEstudiantes() {
-        return estudiantes;
-    }
-
-    public void setEstudiantes(List<Estudiantes> estudiantes) {
-        this.estudiantes = estudiantes;
-    }
-    
 }

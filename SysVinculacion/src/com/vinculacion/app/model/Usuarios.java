@@ -1,53 +1,22 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="USUARIOS")
-public class Usuarios implements Serializable {
+public class Usuarios{
     
-    @Id
-    @Column(name="id_usuario")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id_usuario;
     
-    @Column(name="nombres")
     private String nombres;
     
-    @Column(name="apellidos")
     private String apellidos;
     
-    @Column(name="correo")
     private String correo;
     
-    @Column(name="nom_usuario")
     private String nom_usuario;
     
-    @Column(name="contrasena")
     private String contrasena;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_perfil")    
     private Perfil perfil;
     
-    @Column(name="estado")
     private String estado;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Estudiantes> estudiantes = new ArrayList<>();
     
     public Usuarios() {
     }
@@ -125,14 +94,6 @@ public class Usuarios implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public List<Estudiantes> getEstudiantes() {
-        return estudiantes;
-    }
-
-    public void setEstudiantes(List<Estudiantes> estudiantes) {
-        this.estudiantes = estudiantes;
     }
     
 }

@@ -56,9 +56,16 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel3" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jPanel3" pref="0" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="264" max="32767" attributes="0"/>
+                  <Component id="btnGuardar" min="-2" pref="174" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="btnRegresar" min="-2" pref="176" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="251" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -66,11 +73,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jPanel1" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jPanel3" max="32767" attributes="0"/>
+                      <Component id="jPanel1" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnRegresar" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="btnGuardar" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -118,11 +130,6 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnGuardar" min="-2" pref="164" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="btnRegresar" max="32767" attributes="0"/>
-                                  </Group>
                                   <Component id="comboPeriodoAcademico" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="comboGenero" min="-2" pref="172" max="-2" attributes="0"/>
@@ -215,11 +222,6 @@
                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="comboPeriodoAcademico" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnGuardar" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnRegresar" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
-                      </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -392,25 +394,6 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="btnGuardar">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Guardar"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnRegresar">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Regresar"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel3">
@@ -425,14 +408,6 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="71" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="btnSeleccionarFoto" alignment="1" min="-2" pref="286" max="-2" attributes="0"/>
-                          <Component id="lbFotoPasante" alignment="1" min="-2" pref="286" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -448,6 +423,19 @@
                           <Component id="comboEstado" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="btnSeleccionarFoto" min="-2" pref="286" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="lbFotoPasante" min="-2" pref="233" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -474,11 +462,11 @@
                       <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="comboEstado" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="29" max="32767" attributes="0"/>
-                      <Component id="lbFotoPasante" min="-2" pref="266" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lbFotoPasante" min="-2" pref="206" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnSeleccionarFoto" min="-2" pref="32" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="21" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -592,6 +580,25 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="btnRegresar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Regresar"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnGuardar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Guardar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

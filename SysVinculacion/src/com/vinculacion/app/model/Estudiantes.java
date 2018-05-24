@@ -1,98 +1,46 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="ESTUDIANTES")
-public class Estudiantes implements Serializable{
+public class Estudiantes {
     
-    @Id
-    @Column(name="CODIGO")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int CODIGO;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_CARRERA")
     private Carreras carrera;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_NIVEL")
     private Nivel nivel;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_GENERO")
     private Genero genero;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_PERIODO_ACADEMICO")
     private PeriodoAcademico periodoAcademico;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_SECCION")
     private Seccion seccion;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_TUTOR_DOCENTE")
     private Docente docente;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_TUTOR_EMPRESARIAL")
     private Empleados empleado;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_USUARIO")
     private Usuarios usuario;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_TIPO_DOCUMENTO_PRACTICAS")
     private TipoDocumentoPracticas tipoDocumentoPracticas;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_HORARIO_PASANTIAS")
     private HorarioPasantias horarioPasantias;
     
-    @Column(name="COD_MATRICULA")
     private String COD_MATRICULA;
     
-    @Column(name="NOMBRES")
     private String NOMBRES;
     
-    @Column(name="APELLIDOS")
     private String APELLIDOS;
 	
-    @Column(name="CEDULA")
     private String CEDULA;
     
-    @Column(name="DIRECCION")
     private String DIRECCION;
     
-    @Column(name="TELEFONO")
     private String TELEFONO;
     
-    @Column(name="CORREO")
     private String CORREO;
     
-    @Column(name="FOTO")
     private byte[] FOTO;
     
-    @Column(name="ESTADO")
     private String ESTADO;
-      
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "estudiantes", cascade = CascadeType.ALL)
-    private List<InformePasantias> informePasantias = new ArrayList<>();
     
     public Estudiantes(int CODIGO, Carreras carrera, Nivel nivel, Genero genero, PeriodoAcademico periodoAcademico, Seccion seccion, Docente docente, Empleados empleado, Usuarios usuario, TipoDocumentoPracticas tipoDocumentoPracticas, HorarioPasantias horarioPasantias, String COD_MATRICULA, String NOMBRES, String APELLIDOS, String CEDULA, String DIRECCION, String TELEFONO, String CORREO, byte[] FOTO, String Estado) {
         this.CODIGO = CODIGO;
@@ -280,13 +228,5 @@ public class Estudiantes implements Serializable{
     public void setESTADO(String ESTADO) {
         this.ESTADO = ESTADO;
     }
-    
-    public List<InformePasantias> getInformePasantias() {
-        return informePasantias;
-    }
-
-    public void setInformePasantias(List<InformePasantias> informePasantias) {
-        this.informePasantias = informePasantias;
-    }
-    
+   
 }

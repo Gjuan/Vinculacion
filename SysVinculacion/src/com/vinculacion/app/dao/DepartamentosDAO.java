@@ -1,17 +1,20 @@
 package com.vinculacion.app.dao;
 
 import com.vinculacion.app.Interface.DepartamentosDaoInterface;
-import com.vinculacion.app.Persistence.FactorFactory;
+import com.vinculacion.app.Persistence.Config;
 import com.vinculacion.app.model.Departamentos;
 import com.vinculacion.app.model.Empresa;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
 
 /**
  *
  * @author jorge
  */
-public class DepartamentosDAO extends FactorFactory implements DepartamentosDaoInterface{
+public class DepartamentosDAO extends Config implements DepartamentosDaoInterface{
 
     public DepartamentosDAO() {
         super();
@@ -19,75 +22,136 @@ public class DepartamentosDAO extends FactorFactory implements DepartamentosDaoI
     
     @Override
     public void saveDepartamentos(Departamentos departamento) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.persist(departamento);
-        manager.getTransaction().commit();
-        manager.close();
-    }
-
-    @Override
-    public List<Departamentos> AllDepartamentos() {
-        EntityManager manager = emf.createEntityManager();        
-        List<Departamentos> lcarreras = (List<Departamentos>)manager.createQuery("FROM Departamentos WHERE ESTADO = 'ACTIVO' order by ID_DEPARTAMENTO desc")
-                .getResultList();
-        manager.close();
-        return lcarreras;
-    }
-
-    @Override
-    public void updateDepartamentos(Departamentos departamento) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.merge(departamento);
-        manager.getTransaction().commit();
-        manager.close();
-    }
-
-    @Override
-    public void deleteDepartamentos(int id) {
-        Departamentos departamento = findDepartamentoById(id);
-        if (departamento != null) {
-            departamento.setESTADO("INACTIVO");
-            EntityManager manager = emf.createEntityManager();
-            manager.getTransaction().begin();
-            manager.merge(departamento);
-            manager.getTransaction().commit();
-            manager.close();
+        try {
+            PreparedStatement ps = con.prepareStatement("insert into departamentos (id_empresa, nombre_departamento, estado) values(?,?,?)");
+            ps.setInt(1, departamento.getEmpresa().getID_EMPRESA());
+            ps.setString(2, departamento.getNOMBRE_DEPARTAMENTO());
+            ps.setString(3, departamento.getESTADO());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
     @Override
+    public List<Departamentos> AllDepartamentos() {
+        List<Departamentos> ldep = new ArrayList<Departamentos>();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT d.id_departamento, e.nombre_empresa, d.nombre_departamento, d.estado as estado_departamento FROM departamentos d, empresa e WHERE d.ESTADO = 'ACTIVO' and d.id_empresa = e.id_empresa order by d.ID_DEPARTAMENTO desc;");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Departamentos departamento = new Departamentos();
+                departamento.setID_DEPARTAMENTO(rs.getInt("id_departamento"));
+                
+                Empresa empresa = new Empresa();
+                empresa.setNOMBRE_EMPRESA(rs.getString("nombre_empresa"));
+                departamento.setEmpresa(empresa);
+                
+                departamento.setNOMBRE_DEPARTAMENTO(rs.getString("nombre_departamento"));
+                departamento.setESTADO(rs.getString("estado_departamento"));
+                ldep.add(departamento);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        return ldep;
+    }
+
+    @Override
+    public void updateDepartamentos(Departamentos departamento) {
+        try {
+            PreparedStatement ps = con.prepareStatement("update departamentos set id_empresa = ?, nombre_departamento = ?, estado = ? where id_departamento = ?");
+            ps.setInt(1, departamento.getEmpresa().getID_EMPRESA());
+            ps.setString(2, departamento.getNOMBRE_DEPARTAMENTO());
+            ps.setString(3, departamento.getESTADO());
+            ps.setInt(4, departamento.getID_DEPARTAMENTO());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteDepartamentos(int id) {
+        try {
+            PreparedStatement ps = con.prepareStatement("delete from departamentos where id_departamento = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+    
+    @Override
     public Departamentos findDepartamentoByName(String name, String nameEmpresa) {
-        EmpresaDAO edao = new EmpresaDAO();
-        Empresa empresa = edao.findEmpresaByName(nameEmpresa);
-        
-        EntityManager manager = emf.createEntityManager();
-        Departamentos departamento = (Departamentos)  manager.createQuery("FROM Departamentos where NOMBRE_DEPARTAMENTO = :name and empresa = :empresa and ESTADO = 'ACTIVO'")
-                .setParameter("name", name)
-                .setParameter("empresa", empresa)
-                .getSingleResult();
-        manager.close();
+        Departamentos departamento = new Departamentos();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT d.id_departamento, e.nombre_empresa, d.nombre_departamento, d.estado as estado_departamento FROM departamentos d, empresa e WHERE d.ESTADO = 'ACTIVO' and d.id_empresa = e.id_empresa and d.nombre_departamento = ? and e.nombre_empresa = ?;");
+            ps.setString(1, name);
+            ps.setString(2, nameEmpresa);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                departamento.setID_DEPARTAMENTO(rs.getInt("id_departamento"));
+                
+                Empresa empresa = new Empresa();
+                empresa.setNOMBRE_EMPRESA(rs.getString("nombre_empresa"));
+                departamento.setEmpresa(empresa);
+                
+                departamento.setNOMBRE_DEPARTAMENTO(rs.getString("nombre_departamento"));
+                departamento.setESTADO(rs.getString("estado_departamento"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return departamento;
     }
 
     @Override
     public Departamentos findDepartamentoById(int id) {
-        EntityManager manager = emf.createEntityManager();
-        Departamentos departamento = manager.find(Departamentos.class, id);
-        manager.close();
+        Departamentos departamento = new Departamentos();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT d.id_departamento, e.nombre_empresa, d.nombre_departamento, d.estado as estado_departamento FROM departamentos d, empresa e WHERE d.ESTADO = 'ACTIVO' and d.id_empresa = e.id_empresa and d.id_departamento = ?;");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                departamento.setID_DEPARTAMENTO(rs.getInt("id_departamento"));
+                
+                Empresa empresa = new Empresa();
+                empresa.setNOMBRE_EMPRESA(rs.getString("nombre_empresa"));
+                departamento.setEmpresa(empresa);
+                
+                departamento.setNOMBRE_DEPARTAMENTO(rs.getString("nombre_departamento"));
+                departamento.setESTADO(rs.getString("estado_departamento"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return departamento;
     }
 
     @Override
     public List<Departamentos> AllDepartamentosByEmpresa(String name) {
-        EmpresaDAO edao = new EmpresaDAO();
-        Empresa empresa = edao.findEmpresaByName(name);
-        EntityManager manager = emf.createEntityManager();
-        List<Departamentos> ldepartamento = (List<Departamentos>) manager.createQuery("FROM Departamentos WHERE empresa = :emp AND ESTADO = 'ACTIVO'")
-                .setParameter("emp", empresa)
-                .getResultList();
-        return ldepartamento;
+        List<Departamentos> ldep = new ArrayList<Departamentos>();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT d.id_departamento, e.nombre_empresa, d.nombre_departamento, d.estado as estado_departamento FROM departamentos d, empresa e WHERE d.ESTADO = 'ACTIVO' and d.id_empresa = e.id_empresa and e.nombre_empresa = ? order by d.ID_DEPARTAMENTO desc;");
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Departamentos departamento = new Departamentos();
+                departamento.setID_DEPARTAMENTO(rs.getInt("id_departamento"));
+                
+                Empresa empresa = new Empresa();
+                empresa.setNOMBRE_EMPRESA(rs.getString("nombre_empresa"));
+                departamento.setEmpresa(empresa);
+                
+                departamento.setNOMBRE_DEPARTAMENTO(rs.getString("nombre_departamento"));
+                departamento.setESTADO(rs.getString("estado_departamento"));
+                ldep.add(departamento);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        return ldep;
     }
     
 }

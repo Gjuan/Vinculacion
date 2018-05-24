@@ -1,38 +1,15 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="INFORME_PASANTIAS")
-public class InformePasantias implements Serializable{
+public class InformePasantias{
     
-    @Id
-    @Column(name="ID_PASANTIAS_ESTUDIANTES")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_PASANTIAS_ESTUDIANTES;
 	
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_PASANTIAS")
     private Pasantias pasantias;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="CODIGO_ESTUDIANTE")
     private Estudiantes estudiantes;
     
-    @Column(name="FECHA_ENTREGA_INFORME")
     private String FECHA_ENTREGA_INFORME;
     
-    @Column(name="ESTADO")
     private String ESTADO;
       
     public InformePasantias() {

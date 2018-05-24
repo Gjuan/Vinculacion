@@ -1,7 +1,6 @@
 package com.vinculacion.app.informes;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import com.vinculacion.app.Persistence.Config;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,23 +15,10 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author jorge
  */
-public class InformesFinales {
+public class InformesFinales extends Config{
     
-    private Connection con = null;
-    private String user = "postgres";
-    private String pass = "admin";
-   
-    public InformesFinales(){
-        try {
-            Class.forName("org.postgresql.Driver");
-            con = DriverManager.getConnection("jdbc:postgresql://192.168.1.6:5432/vinculo", user, pass);
-            if (con != null)
-                System.out.println("Conectado!!");
-            else
-                System.out.println("Error al conectarse!");
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+    public InformesFinales() {
+        super();
     }
     
     public void InformeDocenteByCedula(String cedula){
@@ -231,12 +217,12 @@ public class InformesFinales {
         }
     }
     
-    public void cerrar(){
+    /*public void cerrar(){
         try {
             con.close();
             System.out.println("Conexión cerrada");
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
-    }
+    }*/
 }

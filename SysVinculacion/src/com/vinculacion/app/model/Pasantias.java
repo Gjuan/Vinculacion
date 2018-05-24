@@ -1,50 +1,23 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="PASANTIAS")
-public class Pasantias implements Serializable{
+public class Pasantias{
     
-    @Id
-    @Column(name="ID_PASANTIAS")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_PASANTIAS;
     
-    @Column(name="TITULO_PROYECTO")
     private String TITULO_PROYECTO;
     
-    @Column(name="TIEMPO_COMPLETO")
     private int TIEMPO_COMPLETO;
     
-    @Column(name="MEDIO_TIEMPO")
     private int MEDIO_TIEMPO;
     
-    @Column(name="TOTAL_HORAS")
     private int TOTAL_HORAS;
     
-    @Column(name="FECHA_INICIO")
     private String FECHA_INICIO;
     
-    @Column(name="FECHA_CULMINACION")
     private String FECHA_CULMINACION;
     
-    @Column(name="ESTADO")
     private String ESTADO;
       
-    @OneToMany(mappedBy = "pasantias", cascade = CascadeType.ALL)
-    private List<InformePasantias> informePasantias = new ArrayList<>();
-    
     public Pasantias() {
     }
 
@@ -114,15 +87,7 @@ public class Pasantias implements Serializable{
     public void setESTADO(String ESTADO) {
         this.ESTADO = ESTADO;
     }
-    
-    public List<InformePasantias> getInformePasantias() {
-        return informePasantias;
-    }
-
-    public void setInformePasantias(List<InformePasantias> informePasantias) {
-        this.informePasantias = informePasantias;
-    }
-
+   
     public String getTITULO_PROYECTO() {
         return TITULO_PROYECTO;
     }

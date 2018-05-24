@@ -19,10 +19,10 @@ public interface DocentesDaoInterface {
     
     Docente findDocenteByCedula(String cedula);
     
-    List<Docente> findDocenteByTipoDedicacion (String descripcionTipoDedicacion);
+    /*List<Docente> findDocenteByTipoDedicacion (String descripcionTipoDedicacion);
     
     List<Docente> findDocenteByCarrera (String descripcionCarrera);    
-    
+    */
     Docente findDocenteByLastNameAndName (String name, String lastName);
     
 }

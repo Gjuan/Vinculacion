@@ -1,19 +1,20 @@
 package com.vinculacion.app.dao;
 
 import com.vinculacion.app.Interface.EscuelaDaoInterface;
-import com.vinculacion.app.Persistence.FactorFactory;
+import com.vinculacion.app.Persistence.Config;
 import com.vinculacion.app.model.Escuela;
 import com.vinculacion.app.model.Facultad;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 
 /**
  *
  * @author jorge
  */
-public class EscuelaDAO extends FactorFactory implements EscuelaDaoInterface{
+public class EscuelaDAO extends Config implements EscuelaDaoInterface{
 
     public EscuelaDAO() {
         super();
@@ -21,74 +22,141 @@ public class EscuelaDAO extends FactorFactory implements EscuelaDaoInterface{
 
     @Override
     public void saveEscuela(Escuela escuela) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.persist(escuela);
-        manager.getTransaction().commit();
-        manager.close();
+        try {
+            PreparedStatement ps = con.prepareStatement("insert into escuela (nombre_escuela, descripcion, id_facultad, estado) values(?,?,?,?)");
+            ps.setString(1, escuela.getNOMBRE_ESCUELA());
+            ps.setString(2, escuela.getDESCRIPCION());
+            ps.setInt(3, escuela.getFacultad().getID_FACULTAD());
+            ps.setString(4, escuela.getESTADO());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
-
+    
     @Override
     public List<Escuela> AllEscuelas() {
-        EntityManager manager = emf.createEntityManager();        
-        List<Escuela> lescuela = (List<Escuela>) manager.createQuery("FROM Escuela Where ESTADO = 'ACTIVO' order by ID_ESCUELA desc")
-                .getResultList();
-        manager.close();
+        List<Escuela> lescuela = new ArrayList<Escuela>();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT e.id_escuela, e.nombre_escuela, e.descripcion as des_escuela, f.descripcion as des_facultad, e.estado as estado_escuela FROM facultad f, escuela e WHERE e.ESTADO = 'ACTIVO' and e.id_facultad = f.id_facultad order by e.ID_ESCUELA desc;");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Escuela escuela = new Escuela();
+                escuela.setID_ESCUELA(rs.getInt("id_escuela"));
+                escuela.setNOMBRE_ESCUELA(rs.getString("nombre_escuela"));
+                escuela.setDESCRIPCION(rs.getString("des_escuela"));
+                
+                Facultad facultad = new Facultad();
+                facultad.setDESCRIPCION(rs.getString("des_facultad"));
+                escuela.setFacultad(facultad);
+                
+                escuela.setESTADO(rs.getString("estado_escuela"));
+                lescuela.add(escuela);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return lescuela;
     }
 
     @Override
     public void deleteEscuelaById(int id) {
-        Escuela escuela = findEscuelaById(id);
-        escuela.setESTADO("INACTIVO");
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.merge(escuela);
-        manager.getTransaction().commit();
-        manager.close();
+        try {
+            PreparedStatement ps = con.prepareStatement("delete from escuela where id_escuela = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
     public void updateEscuela(Escuela escuela) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.merge(escuela);
-        manager.getTransaction().commit();
-        manager.close();
+        try {
+            PreparedStatement ps = con.prepareStatement("update escuela set nombre_escuela = ?, descripcion = ?, id_facultad = ?, estado = ? where id_escuela = ?");
+            ps.setString(1, escuela.getNOMBRE_ESCUELA());
+            ps.setString(2, escuela.getDESCRIPCION());
+            ps.setInt(3, escuela.getFacultad().getID_FACULTAD());
+            ps.setString(4, escuela.getESTADO());
+            ps.setInt(5, escuela.getID_ESCUELA());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
     public Escuela findEscuelaById(int id) {
-        EntityManager manager = emf.createEntityManager();
-        Escuela escuela = manager.find(Escuela.class, id);
-        manager.close();
+        Escuela escuela = new Escuela();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT e.id_escuela, e.nombre_escuela, e.descripcion as des_escuela, f.descripcion as des_facultad, e.estado as estado_escuela FROM facultad f, escuela e WHERE e.ESTADO = 'ACTIVO' and e.id_facultad = f.id_facultad and e.id_escuela = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                escuela.setID_ESCUELA(rs.getInt("id_escuela"));
+                escuela.setNOMBRE_ESCUELA(rs.getString("nombre_escuela"));
+                escuela.setDESCRIPCION(rs.getString("des_escuela"));
+                
+                Facultad facultad = new Facultad();
+                facultad.setDESCRIPCION(rs.getString("des_facultad"));
+                escuela.setFacultad(facultad);
+                
+                escuela.setESTADO(rs.getString("estado_escuela"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return escuela;
     }
 
     @Override
     public Escuela findEscuelaByName(String name) {
-        EntityManager manager = emf.createEntityManager();
-        Escuela escuela = (Escuela)  manager.createQuery("From Escuela where ESTADO = 'ACTIVO' and NOMBRE_ESCUELA = :name")
-                    .setParameter("name", name).getSingleResult();
-        manager.close();
-        return escuela;        
+        Escuela escuela = new Escuela();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT e.id_escuela, e.nombre_escuela, e.descripcion as des_escuela, f.descripcion as des_facultad, e.estado as estado_escuela FROM facultad f, escuela e WHERE e.ESTADO = 'ACTIVO' and e.id_facultad = f.id_facultad and e.nombre_escuela = ?");
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                escuela.setID_ESCUELA(rs.getInt("id_escuela"));
+                escuela.setNOMBRE_ESCUELA(rs.getString("nombre_escuela"));
+                escuela.setDESCRIPCION(rs.getString("des_escuela"));
+                
+                Facultad facultad = new Facultad();
+                facultad.setDESCRIPCION(rs.getString("des_facultad"));
+                escuela.setFacultad(facultad);
+                
+                escuela.setESTADO(rs.getString("estado_escuela"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        return escuela;
     }
 
     @Override
     public List<Escuela> findEscuelaByFacultad(String description) {
-        List<Escuela> escuela = new ArrayList<Escuela>();    
-        Facultad facultad = null;
-        try{
-            EntityManager manager = emf.createEntityManager();                     
-            facultad = (Facultad) manager.createQuery("FROM Facultad where DESCRIPCION = :des AND ESTADO = 'ACTIVO'")
-                    .setParameter("des", description).getSingleResult(); 
-            escuela = (List<Escuela>) manager.createQuery("FROM Escuela where ESTADO = 'ACTIVO' and facultad = :fac")
-                .setParameter("fac", facultad)
-                .getResultList();  
-            manager.close();
-        }catch (NoResultException nre){
+        List<Escuela> lescuela = new ArrayList<Escuela>();    
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT e.id_escuela, e.nombre_escuela, e.descripcion as des_escuela, f.descripcion as des_facultad, e.estado as estado_escuela FROM facultad f, escuela e WHERE e.ESTADO = 'ACTIVO' and e.id_facultad = f.id_facultad and f.descripcion = ?;");
+            ps.setString(1, description);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Escuela escuela = new Escuela();
+                escuela.setID_ESCUELA(rs.getInt("id_escuela"));
+                escuela.setNOMBRE_ESCUELA(rs.getString("nombre_escuela"));
+                escuela.setDESCRIPCION(rs.getString("des_escuela"));
+                
+                Facultad facultad = new Facultad();
+                facultad.setDESCRIPCION(rs.getString("des_facultad"));
+                escuela.setFacultad(facultad);
+                
+                escuela.setESTADO(rs.getString("estado_escuela"));
+                lescuela.add(escuela);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
         }
-        return escuela;
+        return lescuela;
     }
     /*public static void main(String[] args) {
         EscuelaDAO e = new EscuelaDAO();

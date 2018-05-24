@@ -1,36 +1,13 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="CARGO")
-public class Cargo implements Serializable{
+public class Cargo{
     
-    @Id
-    @Column(name="ID_CARGO")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_CARGO;
     
-    @Column(name="DESCRIPCION")
     private String DESCRIPCION;
     
-    @Column(name="ESTADO")
     private String ESTADO;
-    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cargos", cascade = CascadeType.ALL)
-    private List<DetalleCargoDocente> detalleCargoDocente = new ArrayList<>();
-    
+        
     public Cargo(int ID_CARGO, String DESCRIPCION, String ESTADO) {
         this.ID_CARGO = ID_CARGO;
         this.DESCRIPCION = DESCRIPCION;
@@ -63,13 +40,4 @@ public class Cargo implements Serializable{
     public void setESTADO(String ESTADO) {
         this.ESTADO = ESTADO;
     }
-
-    public List<DetalleCargoDocente> getDetalleCargoDocente() {
-        return detalleCargoDocente;
-    }
-
-    public void setDetalleCargoDocente(List<DetalleCargoDocente> detalleCargoDocente) {
-        this.detalleCargoDocente = detalleCargoDocente;
-    }
-    
 }

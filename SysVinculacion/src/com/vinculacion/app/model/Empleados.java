@@ -1,58 +1,25 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="EMPLEADOS")
-public class Empleados implements Serializable{
+public class Empleados{
     
-    @Id
-    @Column(name="ID_EMPLEADO")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_EMPLEADO;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_CARGO_EMPRESARIAL")
     private CargoDepartamental cargoDepartamental;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_DEPARTAMENTO")
     private Departamentos departamentos;
     
-    @Column(name="NOMBRES")
     private String NOMBRES;
     
-    @Column(name="APELLIDOS")
     private String APELLIDOS;
    
-    @Column(name="CEDULA")
     private String CEDULA;
     
-    @Column(name="CORREO")
     private String CORREO;
 
-    @Column(name="TELEFONO")
     private String TELEFONO;
     
-    @Column(name="ESTADO")
     private String ESTADO;
       
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "empleado", cascade = CascadeType.ALL)
-    private List<Estudiantes> estudiantes = new ArrayList<>();
-
     public Empleados(int ID_EMPLEADO, CargoDepartamental cargoDepartamental, Departamentos departamentos, String NOMBRES, String APELLIDOS, String CEDULA, String CORREO, String TELEFONO, String ESTADO) {
         this.ID_EMPLEADO = ID_EMPLEADO;
         this.cargoDepartamental = cargoDepartamental;
@@ -139,13 +106,5 @@ public class Empleados implements Serializable{
     public void setESTADO(String ESTADO) {
         this.ESTADO = ESTADO;
     }
-    
-    public List<Estudiantes> getEstudiantes() {
-        return estudiantes;
-    }
-
-    public void setEstudiantes(List<Estudiantes> estudiantes) {
-        this.estudiantes = estudiantes;
-    }
-    
+      
 }

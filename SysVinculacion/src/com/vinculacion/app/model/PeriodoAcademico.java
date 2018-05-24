@@ -1,46 +1,19 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="PERIODO_ACADEMICO")
-public class PeriodoAcademico implements Serializable{
+public class PeriodoAcademico{
     
-    @Id
-    @Column(name="ID_PERIODO_ACADEMICO")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_PERIODO_ACADEMICO;
     
-    @Column(name="ANIO_ACADEMICO")
     private int ANIO_ACADEMICO;
 
-    @Column(name="NOMBRE_PERIODO")
     private String NOMBRE_PERIODO;
 
-    @Column(name="FECHA_INICIO_PERIODO")
     private String FECHA_INICIO_PERIODO;
 
-    @Column(name="FECHA_FIN_PERIODO")
     private String FECHA_FIN_PERIODO;
     
-    @Column(name="ESTADO")
     private String ESTADO;
       
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "periodoAcademico", cascade = CascadeType.ALL)
-    private List<Estudiantes> estudiantes = new ArrayList<>();
-    
     public PeriodoAcademico() {
     }
 
@@ -99,14 +72,6 @@ public class PeriodoAcademico implements Serializable{
 
     public void setESTADO(String ESTADO) {
         this.ESTADO = ESTADO;
-    }
-    
-    public List<Estudiantes> getEstudiantes() {
-        return estudiantes;
-    }
-
-    public void setEstudiantes(List<Estudiantes> estudiantes) {
-        this.estudiantes = estudiantes;
     }
     
 }

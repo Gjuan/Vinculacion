@@ -1,12 +1,15 @@
 package com.vinculacion.app.dao;
 
-import com.vinculacion.app.Persistence.FactorFactory;
+import com.vinculacion.app.Persistence.Config;
 import com.vinculacion.app.model.Perfil;
 import java.util.List;
 import com.vinculacion.app.Interface.PerfilDaoInterface;
-import javax.persistence.EntityManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class PerfilDAO extends FactorFactory implements PerfilDaoInterface{
+public class PerfilDAO extends Config implements PerfilDaoInterface{
 
     public PerfilDAO() {
         super();
@@ -14,58 +17,92 @@ public class PerfilDAO extends FactorFactory implements PerfilDaoInterface{
     
     @Override
     public void savePerfil(Perfil perfil) {
-       EntityManager manager = emf.createEntityManager();
-       manager.getTransaction().begin();
-       manager.persist(perfil);
-       manager.getTransaction().commit();
-       manager.close();
+       try {
+            PreparedStatement ps = con.prepareStatement("insert into perfil (descripcion, estado) values(?,?)");
+            ps.setString(1, perfil.getDescripcion());
+            ps.setString(2, perfil.getESTADO());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
     public List<Perfil> AllPerfil() {
-        EntityManager manager = emf.createEntityManager();       
-        List<Perfil> lperfil = (List<Perfil>)manager.createQuery("FROM Perfil WHERE ESTADO = 'ACTIVO' order by id_perfil desc").getResultList();
-        manager.close();
-        return lperfil;
+       List<Perfil> lp = new ArrayList<Perfil>();
+        try {
+            PreparedStatement ps = con.prepareStatement("select * from perfil order by id_perfil desc");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Perfil perfil = new Perfil();
+                perfil.setId_perfil(rs.getInt("id_perfil"));
+                perfil.setDescripcion(rs.getString("descripcion"));
+                perfil.setESTADO(rs.getString("estado"));
+                lp.add(perfil);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        return lp;
     }
 
     @Override
     public void deletePerfilById(int id) {
-        Perfil perfil = findPerfilById(id);
-        if (perfil != null) {
-            perfil.setESTADO("INACTIVO");            
-            EntityManager manager = emf.createEntityManager();                   
-            manager.getTransaction().begin();
-            manager.merge(perfil);
-            manager.getTransaction().commit();
-            manager.close();
-        }       
+        try {
+            PreparedStatement ps = con.prepareStatement("delete from perfil where id_perfil = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
     public void updatePerfil(Perfil perfil) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.merge(perfil);
-        manager.getTransaction().commit();
-        manager.close();
+        try {
+            PreparedStatement ps = con.prepareStatement("update perfil set descripcion = ?, estado = ? where id_perfil = ?");
+            ps.setString(1, perfil.getDescripcion());
+            ps.setString(2, perfil.getESTADO());
+            ps.setInt(3, perfil.getId_perfil());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
     public Perfil findPerfilById(int id) {
-       EntityManager manager = emf.createEntityManager();        
-       Perfil perfil = manager.find(Perfil.class, id);
-       manager.close();
-       return perfil;
+        Perfil perfil = new Perfil();            
+        try {
+            PreparedStatement ps = con.prepareStatement("select * from perfil where id_perfil = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                perfil.setId_perfil(rs.getInt("id_perfil"));
+                perfil.setDescripcion(rs.getString("descripcion"));
+                perfil.setESTADO(rs.getString("estado"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        return perfil;
     }      
 
     @Override
     public Perfil findPerfilByDescription(String description) {
-        EntityManager manager = emf.createEntityManager();
-        Perfil perfil = (Perfil) manager.createQuery("FROM Perfil WHERE ESTADO = 'ACTIVO' and descripcion = :des")
-                .setParameter("des", description)
-                .getSingleResult();
-        manager.close();
+        Perfil perfil = new Perfil();            
+        try {
+            PreparedStatement ps = con.prepareStatement("select * from perfil where descripcion = ?");
+            ps.setString(1, description);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                perfil.setId_perfil(rs.getInt("id_perfil"));
+                perfil.setDescripcion(rs.getString("descripcion"));
+                perfil.setESTADO(rs.getString("estado"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return perfil;
     }
 }

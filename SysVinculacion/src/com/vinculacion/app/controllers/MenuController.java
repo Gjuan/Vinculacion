@@ -344,7 +344,6 @@ public class MenuController implements ActionListener{
             try {
                 InformesFinales informe = new InformesFinales();
                 informe.InformeDocenteCargos();
-                informe.cerrar();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this.mp, "Informe vacío");
             }            
@@ -353,7 +352,6 @@ public class MenuController implements ActionListener{
             try {
                 InformesFinales informe = new InformesFinales();
                 informe.InformePasantes();
-                informe.cerrar();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this.mp, "Informe vacío");
             }
@@ -362,7 +360,6 @@ public class MenuController implements ActionListener{
             try {
                 InformesFinales informe = new InformesFinales();
                 informe.InformeEmpresas();
-                informe.cerrar();        
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this.mp, "Informe vacío");
             }

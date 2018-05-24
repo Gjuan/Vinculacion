@@ -114,14 +114,14 @@
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btnBuscar" max="32767" attributes="0"/>
-                      <Component id="btnImprimir" pref="172" max="32767" attributes="0"/>
+                      <Component id="btnImprimir" pref="123" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btnEditar" max="32767" attributes="0"/>
-                      <Component id="btnDarBaja" pref="107" max="32767" attributes="0"/>
+                      <Component id="btnDarBaja" pref="119" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

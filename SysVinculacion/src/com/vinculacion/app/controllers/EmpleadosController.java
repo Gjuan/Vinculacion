@@ -151,10 +151,13 @@ public class EmpleadosController implements ActionListener{
                 }else if(this.jfrnuevo.txtCorreo.getText().isEmpty()){
                     JOptionPane.showMessageDialog(this.jfrnuevo, "El correo es requerido");                
                 }else{
+                    Empleados emplead = null;
                     try {
-                        Empleados emplead = edao.findEmpleadoByCedula(this.jfrnuevo.txtCedula.getText().toString());
-                        JOptionPane.showMessageDialog(this.jfrnuevo, "El empleado con cédula "+emplead.getCEDULA()+" ya existe");
-                    } catch (Exception err) {
+                        emplead = edao.findEmpleadoByCedula(this.jfrnuevo.txtCedula.getText().toString());                           
+                    } catch (Exception er) {
+                        System.out.println("Error: " + er.getMessage());
+                    }
+                    if (emplead.getCEDULA() == null) {
                         Empleados empl = new Empleados();
                         empl.setCEDULA(this.jfrnuevo.txtCedula.getText().toString());
                         empl.setNOMBRES(this.jfrnuevo.txtNombres.getText().toString().toUpperCase());
@@ -175,6 +178,8 @@ public class EmpleadosController implements ActionListener{
                         this.jfrnuevo.txtNombres.setText("");
                         this.jfrnuevo.txtCorreo.setText("");
                         this.jfrnuevo.txtTelefono.setText("");
+                    }else{
+                        JOptionPane.showMessageDialog(this.jfrnuevo, "El empleado con cédula "+emplead.getCEDULA()+" ya existe");
                     }
                 } 
             } catch (Exception ex) {

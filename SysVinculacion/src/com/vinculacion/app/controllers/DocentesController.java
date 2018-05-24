@@ -148,7 +148,7 @@ public class DocentesController implements ActionListener{
             
             List<Docente> ldocente = ddao.AllDocente();
             for (Docente docente : ldocente) {
-                this.nuevodocent.comboDocente.addItem(docente.getNOMBRES()+ "-"+ docente.getAPELLIDOS());
+                this.nuevodocent.comboDocente.addItem(docente.getCEDULA() + "-" + docente.getNOMBRES()+ "-"+ docente.getAPELLIDOS());
             }
             this.jfrdocente.dispose();
         }
@@ -213,7 +213,7 @@ public class DocentesController implements ActionListener{
         if (e.getSource() == this.jfrdocente.btnEliminar) {
             try {
                 int id = Integer.parseInt(this.jfrdocente.tableDocentes.getValueAt(this.jfrdocente.tableDocentes.getSelectedRow(), 0).toString());
-                int i = JOptionPane.showConfirmDialog(this.jfrdocente, "¿Desea dejar inactivo el registro con el código "+id+" ?","Confirmar",JOptionPane.YES_NO_OPTION);
+                int i = JOptionPane.showConfirmDialog(this.jfrdocente, "¿Desea borrar el registro con el código "+id+" ?","Confirmar",JOptionPane.YES_NO_OPTION);
                 if(i == 0){                    
                     if (this.jfrdocente.comboMostrarDocentes.getSelectedIndex() == 1) {
                             this.dcddao.deleteDetalleCargoDocente(id);
@@ -266,10 +266,13 @@ public class DocentesController implements ActionListener{
                 }else if(this.nuevodocent.txtApellidos.getText().toString().isEmpty()){
                     JOptionPane.showMessageDialog(nuevodocent, "El apellido es requerido");
                 }else{
+                    Docente d = null;    
                     try {
-                        Docente d = ddao.findDocenteByCedula(this.nuevodocent.txtCedula.getText().toString());
-                        JOptionPane.showMessageDialog(nuevodocent, "El docente con cédula " + d.getCEDULA() + " ya existe en el sistema");
-                    } catch (Exception err) {                    
+                        d = ddao.findDocenteByCedula(this.nuevodocent.txtCedula.getText().toString());    
+                    } catch (Exception err) {
+                        System.out.println("Error: " + err.getMessage());
+                    }                    
+                    if (d.getCEDULA() == null) {
                         Docente docente = new Docente();
                         docente.setCEDULA(this.nuevodocent.txtCedula.getText().toString());
                         docente.setNOMBRES(this.nuevodocent.txtNombres.getText().toString().toUpperCase());
@@ -288,9 +291,11 @@ public class DocentesController implements ActionListener{
                         this.nuevodocent.comboDocente.removeAllItems();
                         List<Docente> ldocente = ddao.AllDocente();
                         for (Docente doc : ldocente) {
-                            this.nuevodocent.comboDocente.addItem(doc.getNOMBRES()+ "-"+ doc.getAPELLIDOS()); 
-                        }                                        
-                    }   
+                            this.nuevodocent.comboDocente.addItem(doc.getCEDULA() + "-" +doc.getNOMBRES()+ "-"+ doc.getAPELLIDOS()); 
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(nuevodocent, "El docente con cédula " + d.getCEDULA() + " ya existe en el sistema");
+                    }                     
                 }                              
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(nuevodocent, "Error: "+ex.getMessage());
@@ -305,7 +310,7 @@ public class DocentesController implements ActionListener{
                 DetalleDocenteAsignatura dda = new DetalleDocenteAsignatura();
 
                 String [] datos = this.nuevodocent.comboDocente.getSelectedItem().toString().split("-");
-                Docente docente = ddao.findDocenteByLastNameAndName(datos[0], datos[1]);                        
+                Docente docente = ddao.findDocenteByCedula(datos[0]);                        
 
                 Asignaturas asignatura = adao.findAsignaturaByName(this.nuevodocent.comboAsignaturas.getSelectedItem().toString());
 
@@ -323,7 +328,7 @@ public class DocentesController implements ActionListener{
                 DetalleCargoDocente dcd = new DetalleCargoDocente();
 
                 String [] datos = this.nuevodocent.comboDocente.getSelectedItem().toString().split("-");
-                Docente docente = ddao.findDocenteByLastNameAndName(datos[0], datos[1]);                        
+                Docente docente = ddao.findDocenteByCedula(datos[0]);                        
 
                 Cargo cargo = cdao.findCargoByDescription(this.nuevodocent.comboCargos.getSelectedItem().toString());
                 

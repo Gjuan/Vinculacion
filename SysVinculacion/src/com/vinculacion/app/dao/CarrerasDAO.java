@@ -1,17 +1,20 @@
 package com.vinculacion.app.dao;
 
 import com.vinculacion.app.Interface.CarrerasDaoInterface;
-import com.vinculacion.app.Persistence.FactorFactory;
+import com.vinculacion.app.Persistence.Config;
 import com.vinculacion.app.model.Carreras;
 import com.vinculacion.app.model.Escuela;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
 
 /**
  *
  * @author jorge
  */
-public class CarrerasDAO extends FactorFactory implements CarrerasDaoInterface{
+public class CarrerasDAO extends Config implements CarrerasDaoInterface{
 
     public CarrerasDAO() {
         super();
@@ -19,81 +22,134 @@ public class CarrerasDAO extends FactorFactory implements CarrerasDaoInterface{
 
     @Override
     public void saveCarreras(Carreras carrera) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.persist(carrera);
-        manager.getTransaction().commit();
-        manager.close();
+       try {
+            PreparedStatement ps = con.prepareStatement("insert into carreras (descripcion, id_escuela, estado) values(?,?,?)");
+            ps.setString(1, carrera.getDESCRIPCION());
+            ps.setInt(2, carrera.getEscuela().getID_ESCUELA());
+            ps.setString(3, carrera.getESTADO());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
     public List<Carreras> AllCarreras() {
-        EntityManager manager = emf.createEntityManager();        
-        List<Carreras> lcarreras = (List<Carreras>)manager.createQuery("FROM Carreras WHERE ESTADO = 'ACTIVO' order by ID_CARRERA desc")
-                .getResultList();
-        manager.close();
+        List<Carreras> lcarreras = new ArrayList<Carreras>();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT c.id_carrera, c.descripcion as des_carrera, e.nombre_escuela, c.estado as estado_carrera FROM carreras c, escuela e WHERE c.ESTADO = 'ACTIVO' and c.id_escuela = e.id_escuela order by c.ID_CARRERA desc");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Carreras carrera = new Carreras();
+                carrera.setID_CARRERA(rs.getInt("id_carrera"));
+                carrera.setDESCRIPCION(rs.getString("des_carrera"));
+                
+                Escuela escuela = new Escuela();
+                escuela.setNOMBRE_ESCUELA(rs.getString("nombre_escuela"));
+                carrera.setEscuela(escuela);
+                
+                carrera.setESTADO(rs.getString("estado_carrera"));
+                lcarreras.add(carrera);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return lcarreras;
     }
 
     @Override
     public void deleteCarreraById(int id) {
-        Carreras carrera = findCarreraById(id);
-        if (carrera != null) {
-            carrera.setESTADO("INACTIVO");
-            EntityManager manager = emf.createEntityManager();
-            manager.getTransaction().begin();
-            manager.merge(carrera);
-            manager.getTransaction().commit();
-            manager.close();
-        }        
+        try {
+            PreparedStatement ps = con.prepareStatement("delete from carreras where id_carrera = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
     public void updateCarrera(Carreras carrera) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.merge(carrera);
-        manager.getTransaction().commit();
-        manager.close();
+        try {
+            PreparedStatement ps = con.prepareStatement("update carreras set descripcion = ?, id_escuela = ?, estado = ? where id_carrera = ?");
+            ps.setString(1, carrera.getDESCRIPCION());
+            ps.setInt(2, carrera.getEscuela().getID_ESCUELA());
+            ps.setString(3, carrera.getESTADO());
+            ps.setInt(4, carrera.getID_CARRERA());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     @Override
     public Carreras findCarreraById(int id) {
-        EntityManager manager = emf.createEntityManager();
-        Carreras carrera = manager.find(Carreras.class, id);
-        manager.close();
+        Carreras carrera = new Carreras();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT c.id_carrera, c.descripcion as des_carrera, e.nombre_escuela, c.estado as estado_carrera FROM carreras c, escuela e WHERE c.ESTADO = 'ACTIVO' and c.id_escuela = e.id_escuela and c.id_carrera = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                carrera.setID_CARRERA(rs.getInt("id_carrera"));
+                carrera.setDESCRIPCION(rs.getString("des_carrera"));
+                
+                Escuela escuela = new Escuela();
+                escuela.setNOMBRE_ESCUELA(rs.getString("nombre_escuela"));
+                carrera.setEscuela(escuela);
+                
+                carrera.setESTADO(rs.getString("estado_carrera"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return carrera;
     }
 
     @Override
     public Carreras findCarreraByDescription(String descripcion) {
-        EntityManager manager = emf.createEntityManager();
-        Carreras carrera = (Carreras)  manager.createQuery("From Carreras where DESCRIPCION = :des and ESTADO = 'ACTIVO'")
-                .setParameter("des", descripcion).getSingleResult();
-        manager.close();
+        Carreras carrera = new Carreras();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT c.id_carrera, c.descripcion as des_carrera, e.nombre_escuela, c.estado as estado_carrera FROM carreras c, escuela e WHERE c.ESTADO = 'ACTIVO' and c.id_escuela = e.id_escuela and c.descripcion = ?");
+            ps.setString(1, descripcion);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                carrera.setID_CARRERA(rs.getInt("id_carrera"));
+                carrera.setDESCRIPCION(rs.getString("des_carrera"));
+                
+                Escuela escuela = new Escuela();
+                escuela.setNOMBRE_ESCUELA(rs.getString("nombre_escuela"));
+                carrera.setEscuela(escuela);
+                
+                carrera.setESTADO(rs.getString("estado_carrera"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return carrera;
     }
-   /* public static void main(String[] args) {
-        CarrerasDAO c = new CarrerasDAO();
-        List<Carreras> le = c.AllCarreras();
-        for (Carreras carrera : le) {
-            if (carrera.getEscuela().getESTADO().equals("ACTIVO") && carrera.getEscuela().getFacultad().getESTADO().equals("ACTIVO")) {
-                System.out.println("-------------------------------");
-                System.out.println("ID: " + carrera.getID_CARRERA());
-                System.out.println("Carrera: "+carrera.getDESCRIPCION());
-            }           
-        }
-    }*/
 
     @Override
     public List<Carreras> findCarrerasByEscuela(String nombreEscuela) {
-        EscuelaDAO edao = new EscuelaDAO();
-        Escuela escuela = edao.findEscuelaByName(nombreEscuela);
-        EntityManager manager = emf.createEntityManager();
-        List<Carreras> lcarreras = manager.createQuery("FROM Carreras WHERE ESTADO = 'ACTIVO' AND escuela = :esc order by ID_CARRERA desc")
-                .setParameter("esc", escuela)
-                .getResultList();
-        manager.close();
+        List<Carreras> lcarreras = new ArrayList<Carreras>();
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT c.id_carrera, c.descripcion as des_carrera, e.nombre_escuela, c.estado as estado_carrera FROM carreras c, escuela e WHERE c.ESTADO = 'ACTIVO' and c.id_escuela = e.id_escuela and e.nombre_escuela = ?;");
+            ps.setString(1, nombreEscuela);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Carreras carrera = new Carreras();
+                carrera.setID_CARRERA(rs.getInt("id_carrera"));
+                carrera.setDESCRIPCION(rs.getString("des_carrera"));
+                
+                Escuela escuela = new Escuela();
+                escuela.setNOMBRE_ESCUELA(rs.getString("nombre_escuela"));
+                carrera.setEscuela(escuela);
+                
+                carrera.setESTADO(rs.getString("estado_carrera"));
+                lcarreras.add(carrera);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return lcarreras;
     }
 }

@@ -1,34 +1,13 @@
 package com.vinculacion.app.model;
 
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="DETALLE_DOCENTE_ASIGNATURA")
-public class DetalleDocenteAsignatura implements Serializable{
+public class DetalleDocenteAsignatura{
     
-    @Id
-    @Column(name="ID_DETALLE_DOCENTE_ASIG")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ID_DETALLE_DOCENTE_ASIG;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_DOCENTE")
     private Docente docentes;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ID_ASIGNATURA")
     private Asignaturas asignaturas;
     
-    @Column(name="ESTADO")
     private String ESTADO;
 
     public DetalleDocenteAsignatura(int ID_DETALLE_DOCENTE_ASIG, Docente docentes, Asignaturas asignaturas, String ESTADO) {
