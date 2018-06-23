@@ -12,7 +12,7 @@ public class Config {
     public Config(){
         try {
             Class.forName("org.postgresql.Driver");
-            con = DriverManager.getConnection("jdbc:postgresql://192.168.1.5:5432/vinculo", user, pass);
+            con = DriverManager.getConnection("jdbc:postgresql://192.168.1.7:5432/vinculo", user, pass);
             if (con != null)
                 System.out.println("Conectado!!");
             else

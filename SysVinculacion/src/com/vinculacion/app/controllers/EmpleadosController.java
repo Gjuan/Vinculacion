@@ -153,33 +153,33 @@ public class EmpleadosController implements ActionListener{
                 }else{
                     Empleados emplead = null;
                     try {
-                        emplead = edao.findEmpleadoByCedula(this.jfrnuevo.txtCedula.getText().toString());                           
+                        emplead = edao.findEmpleadoByCedula(this.jfrnuevo.txtCedula.getText().toString());  
+                        if (emplead.getCEDULA() == null) {
+                            Empleados empl = new Empleados();
+                            empl.setCEDULA(this.jfrnuevo.txtCedula.getText().toString());
+                            empl.setNOMBRES(this.jfrnuevo.txtNombres.getText().toString().toUpperCase());
+                            empl.setAPELLIDOS(this.jfrnuevo.txtApellidos.getText().toString().toUpperCase());
+                            empl.setCORREO(this.jfrnuevo.txtCorreo.getText().toString().toLowerCase());
+                            empl.setTELEFONO(this.jfrnuevo.txtTelefono.getText().toString());
+                            CargoDepartamental cd = cddao.findCargoDepartamentalByDescription(this.jfrnuevo.comboCargo.getSelectedItem().toString());
+                            String depart[] = this.jfrnuevo.comboDepartamento.getSelectedItem().toString().split("-");
+                            Departamentos d = ddao.findDepartamentoByName(depart[1], depart[0]);
+                            empl.setCargoDepartamental(cd);
+                            empl.setDepartamentos(d);
+                            empl.setESTADO("ACTIVO");
+                            edao.saveEmpleados(empl);
+                            JOptionPane.showMessageDialog(this.jfrnuevo, "El empleado ha sido ingresado correctamente!!");
+                            this.jfrnuevo.txtCedula.setText("");
+                            this.jfrnuevo.txtCedula.requestFocus();
+                            this.jfrnuevo.txtApellidos.setText("");
+                            this.jfrnuevo.txtNombres.setText("");
+                            this.jfrnuevo.txtCorreo.setText("");
+                            this.jfrnuevo.txtTelefono.setText("");
+                        }else{
+                            JOptionPane.showMessageDialog(this.jfrnuevo, "El empleado con cédula "+emplead.getCEDULA()+" ya existe");
+                        }
                     } catch (Exception er) {
-                        System.out.println("Error: " + er.getMessage());
-                    }
-                    if (emplead.getCEDULA() == null) {
-                        Empleados empl = new Empleados();
-                        empl.setCEDULA(this.jfrnuevo.txtCedula.getText().toString());
-                        empl.setNOMBRES(this.jfrnuevo.txtNombres.getText().toString().toUpperCase());
-                        empl.setAPELLIDOS(this.jfrnuevo.txtApellidos.getText().toString().toUpperCase());
-                        empl.setCORREO(this.jfrnuevo.txtCorreo.getText().toString().toLowerCase());
-                        empl.setTELEFONO(this.jfrnuevo.txtTelefono.getText().toString());
-                        CargoDepartamental cd = cddao.findCargoDepartamentalByDescription(this.jfrnuevo.comboCargo.getSelectedItem().toString());
-                        String depart[] = this.jfrnuevo.comboDepartamento.getSelectedItem().toString().split("-");
-                        Departamentos d = ddao.findDepartamentoByName(depart[1], depart[0]);
-                        empl.setCargoDepartamental(cd);
-                        empl.setDepartamentos(d);
-                        empl.setESTADO("ACTIVO");
-                        edao.saveEmpleados(empl);
-                        JOptionPane.showMessageDialog(this.jfrnuevo, "El empleado ha sido ingresado correctamente!!");
-                        this.jfrnuevo.txtCedula.setText("");
-                        this.jfrnuevo.txtCedula.requestFocus();
-                        this.jfrnuevo.txtApellidos.setText("");
-                        this.jfrnuevo.txtNombres.setText("");
-                        this.jfrnuevo.txtCorreo.setText("");
-                        this.jfrnuevo.txtTelefono.setText("");
-                    }else{
-                        JOptionPane.showMessageDialog(this.jfrnuevo, "El empleado con cédula "+emplead.getCEDULA()+" ya existe");
+                        JOptionPane.showMessageDialog(this.jfrnuevo, "Error al ingresar: " + er.getMessage());
                     }
                 } 
             } catch (Exception ex) {
